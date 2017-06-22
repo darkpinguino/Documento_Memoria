@@ -19,6 +19,11 @@
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
 \RequirePackage{changepage}
+
+\let\@tmp\@xfloat     
+\RequirePackage{fixltx2e}
+\let\@xfloat\@tmp   
+
 \selectlanguage{spanish}
 \bibliographystyle{plain}
 

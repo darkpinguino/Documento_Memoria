@@ -482,15 +482,15 @@ El desplazamiento del robot es producido por cuatro motores, estos no van en con
 Los motores son controlados por el \emph{driver} (controlador) l298n, este cuenta con dos puentes H, uno por motor, por lo que el robot utiliza dos controladores. Los controladores son alimentados con 12v y estos son los que suministran la energía a los motores.
 La fuente de energía del robot es proporcionada por baterías, se utilizan tres baterías de litio 18650 conectadas en serie, cada batería es de 3,7v, por lo que en total en conjunto se tiene un voltaje nominal de 11.1v, con las baterías al 100\% de su capacidad un voltaje de 12,6v.\\
 
-Los movimientos del robot son realizados posteriormente al cálculo de las velocidades y dirección de giro de cada rueda, esta tarea es realizada por el microcontrolador, el utilizado es un ATmega328 bajo la infraestructura de Arduino. El microcontrolador toma como entrada la velocidad y dirección a la cual debe moverse y realiza los cálculos para obtener los valores asociados a cada motor. Las salidas de control van dirigidas a los controladores de los motores, se utilizan tres líneas por cada motor, figura \ref{fig:ATmega328_L298}, dos para controlar la dirección del motor y la tercera para la velocidad, así se tiene un total de doce salidas de control para todos los motores.\\
+Los movimientos del robot son realizados posteriormente al cálculo de las velocidades y dirección de giro de cada rueda, esta tarea es realizada por el microcontrolador, el utilizado es un ATmega328 bajo la infraestructura de Arduino. El microcontrolador toma como entrada la velocidad y dirección a la cual debe moverse y realiza los cálculos para obtener los valores asociados a cada motor. Las salidas de control que van dirigías a los controladores de los motores y son 3 por cada motor, dos para controlar la dirección del motor y la tercera para la velocidad, así se tiene un total de 12 salidas de control para todos los motores.\\
 
 \begin{figure}[H]
   \centering
   \fontfamily{cmss}\selectfont{
   \includesvg[width = 400pt, svgpath = images/ATmega328_L298]{}
   }
-  \caption{Control del microcontrolador ATmega328 sobre uno de los motores, por medio del controlador L298.}
-  \label{fig:ATmega328_L298}
+  \caption{Motor del robot omnidireccional.}
+  \label{fig:motor}
 \end{figure}
 
 \chapter{Pruebas}

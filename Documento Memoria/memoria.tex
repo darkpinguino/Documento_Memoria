@@ -293,9 +293,23 @@ Para lograr que el robot se desplace en cualquier dirección es necesario calcul
 
 Un controlador para motores es un dispositivo que maneja el desempeño de un motor eléctrico, este incluye mecanismos para arrancar y detener el motor, seleccionar la dirección de rotación, si es hacia adelante o atrás y regulando la velocidad de este \cite{siskind1963electrical}. La mayoría de los controladores utilizan un circuito eléctrico llamado puente H (también referido como \emph{full-bridge}, este permite aplicar corriente sobre una carga en cualquier dirección, con esto un motor de corriente continua girar en ambas direcciones \cite{williams2002microcontroller}.\\
 
-El nombre es derivado de su representación gráfica, como se muestra en la figura \ref{}, el cual cuenta con cuatro interruptores, los que son accionados de apares, según la figura \ref{} s1 y s4 pueden estar en estado cerrado, mientras s2 y s3 en abierto, en esta configuración la corriente circula en una dirección en el motor, si en cambio s2 y s3 están cerrados y s1 y s4 abiertos la corriente sobre el motor circulara en la dirección opuesta. Los interruptores s1 y s2, al igual que s3 y s4 nunca son activados al mismo tiempo, ya que esto un corto circuito sobre la fuente de voltaje.\\
+El nombre es derivado de su representación gráfica, como se muestra en la figura \ref{fig:H bridge}.A, el cual cuenta con cuatro interruptores, los que son accionados de apares, según la figura \ref{fig:H bridge}.B S1 y S4 pueden estar en estado cerrado, mientras S2 y S3 en abierto, en esta configuración la corriente circula en una dirección en el motor, si en cambio S2 y S3 están cerrados y S1 y S4 abiertos como en la figura \ref{fig:H bridge}.C la corriente sobre el motor M circulara en la dirección opuesta. Los interruptores S1 y S2, al igual que S3 y S4 nunca son activados al mismo tiempo, ya que esto genera un corto circuito sobre la fuente de voltaje.\\
 
-El controlador utilizado es el L298, cual contiene dos puentes H compatibles con nivel lógico estándar TTL y puede manejar cargas inductivas, como motores de corriente directa. Cuenta con dos entradas de control para cada motor además de una para la habilitación del puente H. En la descripción de un puente H se mencionó el control sobre 4 interruptores, pero el controlador solo cuenta dos entradas de control por cada puente H, esto se debe a que dos interruptores nunca son activados al mismo tiempo, por ejemplo: s1 y s2, por lo que el control sobre estos puede ser compartida negando la señal de entrada a un interruptor, es decir, que cuando un interruptor está activado el otro siempre esta desactivado, esta misma situación se da para los interruptores S3 y S4. En la figura \ref{} se muestra el control lógico que realiza el l298 sobre el puente H y la utilización de transistores de canal-N  como interruptores.
+\begin{figure}[H]
+  \centering
+  \includesvg[width = 400pt, svgpath = images/H_bridge]{}
+  \caption{Funcionamiento de un puerte H. A estructura del puente H. B interruptores S1 y S4 cerrado. C interruptores S3 y S2 cerrados.}
+  \label{fig:H bridge}
+\end{figure}
+
+El controlador utilizado es el L298, cual contiene dos puentes H compatibles con nivel lógico estándar TTL y puede manejar cargas inductivas, como motores de corriente directa. Cuenta con dos entradas de control para cada motor además de una para la habilitación del puente H. En la descripción de un puente H se mencionó el control sobre 4 interruptores, pero el controlador solo cuenta dos entradas de control por cada puente H, esto se debe a que dos interruptores nunca son activados al mismo tiempo, por ejemplo: S1 y S2, por lo que el control sobre estos puede ser compartida negando la señal de entrada a un interruptor, es decir, que cuando un interruptor está activado el otro siempre esta desactivado, esta misma situación se da para los interruptores S3 y S4. En la figura \ref{fig:H bridge circuit} se muestra el control lógico que realiza el L298 sobre el puente H y la utilización de transistores de canal-N  como interruptores.\\
+
+\begin{figure}[H]
+  \centering
+  \includesvg[width = 400pt, svgpath = images/H_bridge_circuit]{}
+  \caption{Control logico dentro L298 sobre uno de sus puente H.}
+  \label{fig:H bridge circuit}
+\end{figure}
 
 \subsection{Microcomputador}
 
@@ -379,6 +393,13 @@ El diseño del robot está basado en uno del repositorio de diseños 3D thingive
 
 Cada rueda cuenta con un acople, que en un extremo va atornillado a la rueda por tres tornillos y en el otro va sujeto a presión al eje de la caja reductora del motor.\\
 
+\begin{figure}[H]
+  \centering
+  \includesvg[width = 200pt, svgpath = images/Coupling]{}
+  \caption{Acople para unir las ruedas del robot con la caja reductora de los motores.}
+  \label{fig:arm}
+\end{figure}
+
 A su vez los motores y su respectiva caja reductora están unidos por una extensión que permite unirlos al cuerpo principal, de esta forma se puede modificar el diámetro total del robot sin tener que modificar también el cuerpo principal, \ref{fig:arm}\\
 
 \begin{figure}[H]
@@ -406,9 +427,34 @@ El compartimiento para las baterías es ubicado debajo de cuerpo principal, este
   \label{fig:battery_compartment}
 \end{figure}
 
-Debajo de este, en contacto con la superficie donde se desplaza el robot, va el soporte del sensor óptico de movimiento, en la figura [imagen de referencia] se puede ver que el soporte cuenta con perforaciones por las que se atornilla al cuerpo principal por medio de separadores, para ajustar la altura del soporte para que quede posicionado de forma precisa sobre la superficie.\\
+Debajo de este, en contacto con la superficie donde se desplaza el robot, va el soporte del sensor óptico de movimiento, en la figura \ref{fig:mouse_holder} se puede ver que el soporte cuenta con perforaciones por las que se atornilla al cuerpo principal por medio de separadores, para ajustar la altura del soporte para que quede posicionado de forma precisa sobre la superficie.\\
 
-Los componentes mencionados y diseñados específicamente para el robot (ruedas omnidireccionales, extensiones para los motores, cuerpo principal, compartimiento para baterías, soporte para la cámara digital y soporte para el sensor óptico) fueron construidos con impresión 3D, por el proceso de fabricación con filamento fundido (FFF del termino en inglés: \emph{Fused Filament Fabrication}) con las siguientes especificaciones:\\
+\begin{figure}[H]
+  \centering
+  \includesvg[width = 300pt, svgpath = images/mouse_holder]{}
+  \caption{Soporte para la instalación del sensor óptico que registra las trayectorias realizadas por el robot.}
+  \label{fig:mouse_holder}
+\end{figure}
+
+Al frente del rebot va instalada la cámara digital, esta va sobre un soporte que se ajusta a sus dimensiones, el que a su vez va unido al cuerpo principal, en la figura \ref{fig:camera_holder} se muestra el diseño, que incluye una ranura para posicionar el cable de la cámara.\\
+
+\begin{figure}[H]
+  \centering
+  \includesvg[width = 300pt, svgpath = images/camera_holder]{}
+  \caption{Soporte sobre el cual va la cámara digital.}
+  \label{fig:camera_holder}
+\end{figure}
+
+El ensamble completo con todos los componentes diseñados para la construcción del robot se puede ver en la figura \ref{fig:robot_assembly}. Todos los acoples mecánicos fueron realizados con tornillos de métrica 3 (M3), cordatos una medida específica para cada unión.
+
+\begin{figure}[H]
+  \centering
+  \includesvg[width = 400pt, svgpath = images/robot_assembly]{}
+  \caption{Ensamble robot omnidireccional.}
+  \label{fig:robot_assembly}
+\end{figure}
+
+Los componentes mencionados y diseñados específicamente para el robot (ruedas omnidireccionales, extensiones para los motores, cuerpo principal, compartimiento para baterías, soporte para la cámara digital y soporte para el sensor óptico) fueron diseñados con la herramienta FreeCAD, un modelador 3D parametrico. Para el proceso de fabricación se utiliza Sli3r, que combierte los modelos 3D a instrucciones para la impresora 3D. Las piezas son construidoas con impresión 3D de filamento fundido (FFF del termino en inglés: \emph{Fused Filament Fabrication}) con las siguientes especificaciones:\\
 
 \begin{itemize}
 	\item Material: PLA 1.75mm
@@ -422,6 +468,8 @@ Los componentes mencionados y diseñados específicamente para el robot (ruedas 
 	\item Patron relleno: rectilíneo
 \end{itemize}
 
+La espesificación complera de la configuracion de la impresora se puede ver en el anexo \ref{appendix:3D printer setting}
+
 El desplazamiento del robot es producido por cuatro motores, estos no van en conexión directa con las ruedas, si no que por medio de una caja reductora y esta transmite el movimiento del motor a las ruedas. Los motores son de tamaño estándar 130 alimentados con 12v de corriente continua (DC) con una caja reductora TT a 90$^{\circ}$, de relación 120:1, como se muestra en la figura \ref{fig:motor}.\\
 
 \begin{figure}[H]
@@ -434,7 +482,16 @@ El desplazamiento del robot es producido por cuatro motores, estos no van en con
 Los motores son controlados por el \emph{driver} (controlador) l298n, este cuenta con dos puentes H, uno por motor, por lo que el robot utiliza dos controladores. Los controladores son alimentados con 12v y estos son los que suministran la energía a los motores.
 La fuente de energía del robot es proporcionada por baterías, se utilizan tres baterías de litio 18650 conectadas en serie, cada batería es de 3,7v, por lo que en total en conjunto se tiene un voltaje nominal de 11.1v, con las baterías al 100\% de su capacidad un voltaje de 12,6v.\\
 
-Los movimientos del robot son realizados posteriormente al cálculo de las velocidades y dirección de giro de cada rueda, esta tarea es realizada por el microcontrolador, el utilizado es un ATmega328 bajo la infraestructura de Arduino. El microcontrolador toma como entrada la velocidad y dirección a la cual debe moverse y realiza los cálculos para obtener los valores asociados a cada motor. Las salidas de control que van dirigías a los controladores de los motores y son 3 por cada motor, dos para controlar la dirección del motor y la tercera para la velocidad, así se tiene un total de 12 salidas de control para todos los motores.\\
+Los movimientos del robot son realizados posteriormente al cálculo de las velocidades y dirección de giro de cada rueda, esta tarea es realizada por el microcontrolador, el utilizado es un ATmega328 bajo la infraestructura de Arduino. El microcontrolador toma como entrada la velocidad y dirección a la cual debe moverse y realiza los cálculos para obtener los valores asociados a cada motor. Las salidas de control van dirigidas a los controladores de los motores, se utilizan tres líneas por cada motor, figura \ref{fig:ATmega328_L298}, dos para controlar la dirección del motor y la tercera para la velocidad, así se tiene un total de doce salidas de control para todos los motores.\\
+
+\begin{figure}[H]
+  \centering
+  \fontfamily{cmss}\selectfont{
+  \includesvg[width = 400pt, svgpath = images/ATmega328_L298]{}
+  }
+  \caption{Control del microcontrolador ATmega328 sobre uno de los motores, por medio del controlador L298.}
+  \label{fig:ATmega328_L298}
+\end{figure}
 
 \chapter{Pruebas}
 
@@ -468,8 +525,24 @@ La construcción de la pista de pruebas necesita de un material que proporcione 
 
 %% ambiente glosario
 \begin{glosario}
-  \item[El primer término:] Este es el significado del primer término, realmente no se bien lo que significa pero podría haberlo averiguado si hubiese tenido un poco mas de tiempo.
-  \item[El segundo término:] Este si se lo que significa pero me da lata escribirlo...
+	\item[Ángulo de ataque:]
+	\item[Caja reductora:]
+	\item[Circuito en serie:]
+	\item[Filtro gaussiano:]
+	\item[Grado de libertad:]
+	\item[Holonómico:]
+	\item[Impresión 3D:]
+	\item[LED:]
+	\item[Modelado Paramétrico:]
+	\item[Motor DC:]
+	\item[Open source:]
+	\item[Overflow:]
+	\item[Paso de hélice:]
+	\item[Puente h:]
+	\item[Robot:]
+	\item[Test Error:]
+	\item[Validation Set Approach:]
+	\item[Voltaje nominal:]
 \end{glosario}
 
 
@@ -482,6 +555,7 @@ La construcción de la pista de pruebas necesita de un material que proporcione 
 
 %% contenido del primer anexo
 \appendix{Configuración impresora 3D}
+\label{appendix:3D printer setting}
 Configuración completa de la impresora 3D al momento de construir las piezas para el robot omnidireccional.
 
 \begin{verbatim}
