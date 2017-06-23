@@ -1,0 +1,60 @@
+%% Creator: Inkscape inkscape 0.48.5, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'vec_proyection.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{553.76450195bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.9755976)%
+    \put(0,0){\includegraphics[width=\unitlength]{vec_proyection.pdf}}%
+    \put(0.21717425,0.49479514){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$\vec{d}$}}}%
+    \put(0.41942629,0.43700884){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$\vec{d_{y}}$}}}%
+    \put(0.2460674,0.03250476){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$\vec{d_{x}}$}}}%
+    \put(0.15891232,0.90280041){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$Y$}}}%
+    \put(0.96117283,0.09751435){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$X$}}}%
+    \put(0.23162083,0.14807736){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$\theta$}}}%
+  \end{picture}%
+\endgroup%

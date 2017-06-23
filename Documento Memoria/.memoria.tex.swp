@@ -191,7 +191,7 @@ En este caso se utilizan tres entradas, para computar la salida se introducen \e
 	\begin{split}
 	\mbox{salida} & = \begin{cases}
 		0 & \mbox{si } \sum_j w_j x_j \leq  \mbox{ activación}\\
-		1 & \mbox{si } \sum_j w_j x_j <  \mbox{ activación}
+		1 & \mbox{si } \sum_j w_j x_j >  \mbox{ activación}
 		\end{cases}
 	\end{split}
 \end{equation}\\
@@ -268,7 +268,7 @@ El método de descenso por gradiente es un mecanismo de minimización, lo que bu
 
 \subsection{Robot omnidireccional}
 
-Un robot omnidireccional (referido en este documento inherentemente como robot o robot omnidireccional) es un robot que tiene la capacidad de moverse en cualquier dirección sin tener que rotar antes de moverse, esto es posible a las ruedas omnidireccionales con que está construido el robot, esta tiene la capacidad de moverse libremente en dos direcciones, pueden rodar como una rueda normal o lateralmente con las ruedas ubicadas perpendicularmente a lo largo de la circunferencia, como se muestra en la figura \ref{fig:image_omni_whell}.\\
+Un robot omnidireccional (referido en este documento inherentemente como robot o robot omnidireccional) es un robot que tiene la capacidad de moverse en cualquier dirección sin tener que rotar antes de moverse, esto es posible por las ruedas omnidireccionales con que está construido el robot, esta tiene la capacidad de moverse libremente en dos direcciones, pueden rodar como una rueda normal o desplazarce lateralmente con las ruedas ubicadas perpendicularmente a lo largo de la circunferencia de la rueda, como se muestra en la figura \ref{fig:image_omni_whell}.\\
 
 \begin{figure}[H]
   \centering
@@ -278,10 +278,38 @@ Un robot omnidireccional (referido en este documento inherentemente como robot o
 \end{figure}
 
 
-Esto permite que el robot puede trazar un camino en línea recta, en cualquier dirección, sin tener que hacer giros, además de poder combinar el trayecto con algún tipo de rotación para cambiar la dirección a la que apunta el robot, si es necesario, esto es definido como un robot holonómico, en comparación con un robot normal no-holonómico el cual tiene 1,5 grados de libertad que puede desplazarse a través de los ejes coordenados $X$ e $Y$, pero requiere movimientos complejos para poder moverse en el eje $X$. Un robot holonómico tiene 2 grados de libertad por lo que puede moverse libremente por ambos ejes $X$ e $Y$ \cite{jayakody2015omnirobot}.\\
+Esto permite que el robot puede trazar un camino en línea recta, en cualquier dirección, sin tener que hacer giros, además de poder combinar el trayecto con algún tipo de rotación para cambiar la dirección a la que apunta el robot, si es necesario. Esto es definido como un robot holonómico, en comparación con un robot normal no-holonómico el cual tiene 1,5 grados de libertad que puede desplazarse a través de los ejes coordenados $X$ e $Y$, pero requiere movimientos complejos para poder moverse en alguno de los dos ejes. Un robot holonómico tiene 2 grados de libertad por lo que puede moverse libremente por ambos ejes $X$ e $Y$ \cite{jayakody2015omnirobot}.\\
 
-Para lograr que el robot se desplace en cualquier dirección es necesario calcular la velocidad y dirección de giro para cada rueda de forma independiente, 
+Para lograr que el robot se desplace en cualquier dirección es necesario calcular la velocidad y dirección de giro para cada rueda de forma independiente, en la figura \ref{fig:omni_movement_up_down} se muestra la dirección en la que deben girar las ruedas para mover el robot hacia adelante y atrás, en la figura \ref{fig:omni_movement_left_right} hacia la derecha e izquierda.
 
+\begin{figure}[H]
+  \centering
+  \begin{footnotesize}
+  \includesvg[width = 300pt, svgpath = images/omni_movement_up_down]{}
+  \end{footnotesize}
+  \caption{Las flechas muestran la dirección en la que las ruedas deben girar para lograr los movimientos hacia adelante y atrás.}
+  \label{fig:omni_movement_up_down}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{footnotesize}
+  \includesvg[width = 300pt, svgpath = images/omni_movement_left_right]{}
+  \end{footnotesize}
+  \caption{Las flechas muestran la dirección en la que las ruedas deben girar para lograr los movimientos hacia la derecha e izquierda.}
+  \label{fig:omni_movement_left_right}
+\end{figure}
+
+En estos movimientos la velocidad de las ruedas siempre es la misma, solo cambia su dirección de giro, al modificar la velocidad el robot puede desplazarse en una dirección que combina los movimientos de adelante y atrás con los de derecha e izquierda, como muestra la figura \ref{fig:omni_movement_combined}.
+
+\begin{figure}[H]
+  \centering
+  \begin{footnotesize}
+  \includesvg[width = 300pt, svgpath = images/omni_movement_combined]{}
+  \end{footnotesize}
+  \caption{Izquierda movimiento del robot en 45$^{\circ}$ donde solo se mueve un par de ruedas. Derecha movimiento del robot en 120$^{\circ}$ donde un par de ruedas se mueve más rápido que otro, representado por el grosor la fecha que acompaña a las ruedas.}
+  \label{fig:omni_movement_combined}
+\end{figure}
 
 \subsubsection{Rueda omnidireccional}
 
@@ -332,7 +360,8 @@ El protocolo de comunicación utilizado es PS/2 (\emph{IBM Personal System 2}), 
 El \emph{mouse} envía la información de estado de los botones, derecho, central e izquierdo, además del desplazamiento en el eje $X$ e $Y$ en un paquete de tres \emph{byte}, que se muestra en la tabla \ref{tab:ps/2 package}. El movimiento es un entero de 9 \emph{bite} a complemento 2, el \emph{bit} más significativo es $Y$ sign y $X$ sign que aparece en el primer \emph{byte}. Este valor representa la diferencia relativa a la posición del \emph{mouse} desde la última vez que se envió el paquete de datos. El rango va de -255 a +255, si el rango es excedido el correspondiente \emph{bit} de \emph{overflow} es activado \cite{ps2mouse}.\\
 
 \begin{table}
-\begin{adjustwidth*}{-3cm}{-3cm}
+\begin{scriptsize}
+\begin{adjustwidth*}{0cm}{-1cm}
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
 
 \hline
@@ -348,6 +377,7 @@ El \emph{mouse} envía la información de estado de los botones, derecho, centra
 \caption{Paquete de datos del moviento del \emph{mouse}}
 \label{tab:ps/2 package}
 \end{adjustwidth*}
+\end{scriptsize}
 \end{table}
 
 %% contenido del tercer capítulo
@@ -492,6 +522,68 @@ Los movimientos del robot son realizados posteriormente al cálculo de las veloc
   \caption{Control del microcontrolador ATmega328 sobre uno de los motores, por medio del controlador L298.}
   \label{fig:ATmega328_L298}
 \end{figure}
+
+Primero se necesita establecer un marco de referencia, el robot es capaz de desplazarse en dos dimensiones sobre un plano, este está formado por los ejes $X$ e $Y$. Cuando se menciona que el robot se mueve hacia adelante hace su recorrido avanzando sobre el eje $Y$, al contrario, cuando se mueve hacia atrás retrocede en el eje $Y$, como esta reprecentado en la figura \ref{fig:omni_direcition}. Ahora cuando se mueve a la derecha, avanza en el eje $X$ y a la izquierda retrocede. Haciendo una comparación con los cuadricopteros, el movimiento hacia adelate y atrás del robot corresponde al movimiento de \emph{pich} en el cadricoptero y los de derecha e izquierda al \emph{roll}. No está dentro de los alcances contemplar el movimiento de \emph{yaw}.\\
+
+\begin{figure}[H]
+  \centering
+  \fontfamily{cmss}\selectfont{
+  \includesvg[width = 250pt, svgpath = images/omni_direction]{}
+  }
+  \caption{Desplazamiento del robot sobre el plano conformado por los ejes $X$ e $Y$.}
+  \label{fig:omni_direcition}
+\end{figure}
+
+El movimiento del robot está determinado por dos parámetros, hacia donde debe moverse y a que velocidad. Con esto se tiene un vector, que llamaremos $\vec{d}$, donde la dirección de este es la misma que debe seguir el robot y la magnitud es la velocidad del movimiento. Dado que las ruedas del robot están dirigidas en distintas orientaciones no es posible moverse directamente en la dirección de $\vec{d}$. Cada rueda se mueve en una dirección distinta con su propio vector de movimiento, por lo que para poder desplazarse en $\vec{d}$ se tiene que realizar la suma de los vectores de cada rueda, de tal forma que el resultado coincida con $\vec{d}$.\\
+
+Si bien el robot cuenta con cuatro ruedas, con los movimientos que se tiene contemplados hacer (delante, atrás, derecha e izquierda) siempre un par de ruedas se mueven en paralelo, como muestra la figura \ref{fig:omni_vector}, así los movimientos de robot pueden descomponerse en dos vectores: $\vec{r_{1}}$ y $\vec{r_{2}}$, la magnitud de estos representa la velocidad a la que gira cada rueda. La suma de estos debe dar $\vec{d}$, como muestra la figura \ref{fig:vec_sum}.\\
+
+\begin{figure}[H]
+  \centering
+  \begin{large}
+  \includesvg[width = 200pt, svgpath = images/omni_vector]{}
+  \end{large}
+  \caption{$\vec{r_{1}}$ y $\vec{r_{2}}$ pares de ruedas que se mueven de forma paralela.}
+  \label{fig:omni_vector}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{large}
+  \includesvg[width = 200pt, svgpath = images/vec_sum]{}
+  \end{large}
+  \caption{Suma de los vectores $\vec{r_{1}}$ y $\vec{r_{2}}$ que dan como resultado la dirección del robot.}
+  \label{fig:vec_sum}
+\end{figure}
+
+Para realizar esta suma primero se obtienen las proyecciones de $\vec{d}$ sobre el eje $X$ e $Y$, dando como resultado $\vec{d_{x}}$ y $\vec{d_{y}}$. El ángulo $\theta$ se mide entre el $\vec{d}$ y el eje $X$ como muestra la figura \ref{fig:vec_proyection}.\\
+
+\begin{equation}
+	\begin{split}
+	\vec{d_{x}} & = \lvert \vec{d} \rvert \cos(\theta)\\
+	\vec{d_{y}} & = \lvert \vec{d} \rvert \sin(\theta)\\
+	\end{split}
+\end{equation}
+
+\begin{figure}[H]
+  \centering
+  \begin{large}
+  \includesvg[width = 200pt, svgpath = images/vec_proyection]{}
+  \end{large}
+  \caption{Proyeción del vector $\vec{d}$ sobre el eje $X$ e $Y$, dando los vectores $\vec{d_{x}}$ y $\vec{d_{y}}$ .}
+  \label{fig:vec_proyection}
+\end{figure}
+
+Ahora la magnitud de $\vec{r_{1}}$ y $\vec{r_{2}}$ se puede definir como:
+
+\begin{equation}
+	\begin{split}
+	\vec{r_{1}} & = \vec{d_{x}}\cos(\pi/4)  + \vec{d_{y}}\cos(\pi/4)\\
+	\vec{r_{2}} & = -\vec{d_{x}}\cos(\pi/4) + \vec{d_{y}}\cos(\pi/4)\\
+	\end{split}
+\end{equation}
+
+Donde $\pi/4$ es ángulo de $\vec{r_{1}}$ y $\vec{r_{2}}$ sobre el eje $X$. Si la magnitud de los vectores da negativa es debe invertir la dirección de las ruedas.\\
 
 \chapter{Pruebas}
 
