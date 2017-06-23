@@ -360,25 +360,30 @@ El protocolo de comunicación utilizado es PS/2 (\emph{IBM Personal System 2}), 
 El \emph{mouse} envía la información de estado de los botones, derecho, central e izquierdo, además del desplazamiento en el eje $X$ e $Y$ en un paquete de tres \emph{byte}, que se muestra en la tabla \ref{tab:ps/2 package}. El movimiento es un entero de 9 \emph{bite} a complemento 2, el \emph{bit} más significativo es $Y$ sign y $X$ sign que aparece en el primer \emph{byte}. Este valor representa la diferencia relativa a la posición del \emph{mouse} desde la última vez que se envió el paquete de datos. El rango va de -255 a +255, si el rango es excedido el correspondiente \emph{bit} de \emph{overflow} es activado \cite{ps2mouse}.\\
 
 \begin{table}
-\begin{scriptsize}
-\begin{adjustwidth*}{0cm}{-1cm}
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\makebox[\textwidth][c]{
+	\begin{small}
+	\fontfamily{cmss}\selectfont{
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
 
-\hline
-	 & Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0\\
-\hline
-	Byte 1 & Y overflow & X overflow & Y sign & X sign & always 1 & Btn central & Btn derecho & Btn izquierdo\\
-\hline
-	Byte 2 & \multicolumn{8}{c|}{Movimiento X}\\
-\hline
-	Byte 3 & \multicolumn{8}{c|}{Movimiento Y}\\
-\hline
-\end{tabular}
-\caption{Paquete de datos del moviento del \emph{mouse}}
+		\hline
+			 & Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0\\
+		\hline
+			Byte 1 & Y overflow & X overflow & Y sign & X sign & always 1 & Btn central & Btn derecho & Btn izquierdo\\
+		\hline
+			Byte 2 & \multicolumn{8}{c|}{Movimiento X}\\
+		\hline
+			Byte 3 & \multicolumn{8}{c|}{Movimiento Y}\\
+		\hline
+	\end{tabular}
+	}
+	\end{small}
+	
+}
+\caption{Paquete de datos del moviento del \emph{mouse}.}
 \label{tab:ps/2 package}
-\end{adjustwidth*}
-\end{scriptsize}
 \end{table}
+
+
 
 %% contenido del tercer capítulo
 \chapter{Implementación}
