@@ -54,8 +54,8 @@
     \put(0.12533578,0.90743106){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$Y$}}}%
     \put(0.9505115,0.10856658){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$X$}}}%
     \end{large}
-    \put(0.5188901,0.83473629){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Arriba}}}%
-    \put(0.51624517,0.16174205){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Abajo}}}%
+    \put(0.5188901,0.83473629){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Adelante}}}%
+    \put(0.51624517,0.16174205){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Atrás}}}%
     \put(0.26571185,0.581558){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Izquierda}}}%
     \put(0.76705495,0.581558){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Derecha}}}%
   \end{picture}%

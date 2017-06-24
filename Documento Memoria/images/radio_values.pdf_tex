@@ -1,6 +1,6 @@
 %% Creator: Inkscape inkscape 0.48.5, www.inkscape.org
 %% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
-%% Accompanies image file 'vec_sum.pdf' (pdf, eps, ps)
+%% Accompanies image file 'radio_values.pdf' (pdf, eps, ps)
 %%
 %% To include the image in your LaTeX document, write
 %%   \input{<filename>.pdf_tex}
@@ -36,7 +36,7 @@
   }%
   \providecommand\rotatebox[2]{#2}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{406.546875bp}%
+    \setlength{\unitlength}{573.38569336bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -48,10 +48,12 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.98783197)%
-    \put(0,0){\includegraphics[width=\unitlength]{vec_sum.pdf}}%
-    \put(0.24051654,0.55294976){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$\vec{d}$}}}%
-    \put(0.67343095,0.82844075){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$\vec{r_{2}}$}}}%
-    \put(0.59471924,0.35617049){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$\vec{r_{1}}$}}}%
+  \begin{picture}(1,0.96524098)%
+    \put(0,0){\includegraphics[width=\unitlength]{radio_values.pdf}}%
+    \put(0.70299224,0.72491722){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{(ch1, ch2)}}}%
+    \begin{large}
+    \put(0.44846401,0.8949349){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$Y$}}}%
+    \put(0.93619357,0.43391388){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$X$}}}%
+    \end{large}
   \end{picture}%
 \endgroup%

@@ -165,9 +165,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.49497475"
-     inkscape:cx="503.89088"
-     inkscape:cy="394.24952"
+     inkscape:zoom="1.4"
+     inkscape:cx="528.31473"
+     inkscape:cy="485.47501"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -200,7 +200,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -224,7 +224,7 @@
          transform="translate(-0.09530372,39.999973)"
          sodipodi:end="7.8519963"
          sodipodi:start="4.6968143"
-         d="m 169.3789,42.366893 a 39.880512,40.000141 0 1 1 0.70028,79.995347"
+         d="m 169.3789,42.366893 c 22.02273,-0.344054 40.15375,17.283537 40.49678,39.372325 0.34302,22.088792 -17.23185,40.274202 -39.25458,40.618252 -0.18063,0.003 -0.36127,0.004 -0.54192,0.005"
          sodipodi:ry="40.000141"
          sodipodi:rx="39.880512"
          sodipodi:cy="82.362183"
@@ -248,7 +248,7 @@
          transform="translate(-0.09530372,39.999973)"
          sodipodi:end="7.8519963"
          sodipodi:start="4.6968143"
-         d="m 169.3789,42.366893 a 39.880512,40.000141 0 1 1 0.70028,79.995347"
+         d="m 169.3789,42.366893 c 22.02273,-0.344054 40.15375,17.283537 40.49678,39.372325 0.34302,22.088792 -17.23185,40.274202 -39.25458,40.618252 -0.18063,0.003 -0.36127,0.004 -0.54192,0.005"
          sodipodi:ry="40.000141"
          sodipodi:rx="39.880512"
          sodipodi:cy="82.362183"
@@ -272,7 +272,7 @@
          transform="translate(-0.09530372,39.999973)"
          sodipodi:end="7.8519963"
          sodipodi:start="4.6968143"
-         d="m 169.3789,42.366893 a 39.880512,40.000141 0 1 1 0.70028,79.995347"
+         d="m 169.3789,42.366893 c 22.02273,-0.344054 40.15375,17.283537 40.49678,39.372325 0.34302,22.088792 -17.23185,40.274202 -39.25458,40.618252 -0.18063,0.003 -0.36127,0.004 -0.54192,0.005"
          sodipodi:ry="40.000141"
          sodipodi:rx="39.880512"
          sodipodi:cy="82.362183"
@@ -296,7 +296,7 @@
          transform="translate(-0.09530372,39.999973)"
          sodipodi:end="7.8519963"
          sodipodi:start="4.6968143"
-         d="m 169.3789,42.366893 a 39.880512,40.000141 0 1 1 0.70028,79.995347"
+         d="m 169.3789,42.366893 c 22.02273,-0.344054 40.15375,17.283537 40.49678,39.372325 0.34302,22.088792 -17.23185,40.274202 -39.25458,40.618252 -0.18063,0.003 -0.36127,0.004 -0.54192,0.005"
          sodipodi:ry="40.000141"
          sodipodi:rx="39.880512"
          sodipodi:cy="82.362183"
@@ -467,7 +467,7 @@
        sodipodi:cy="352.36218"
        sodipodi:rx="5"
        sodipodi:ry="5"
-       d="m 100,352.36218 a 5,5 0 1 1 -10,0 5,5 0 1 1 10,0 z" />
+       d="m 100,352.36218 c 0,2.76143 -2.238576,5 -5,5 -2.761424,0 -5,-2.23857 -5,-5 0,-2.76142 2.238576,-5 5,-5 2.761424,0 5,2.23858 5,5 z" />
     <path
        style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#DotL)"
        d="m 100,212.36218 -40,0 0,280"
@@ -482,7 +482,7 @@
        sodipodi:cy="347.36218"
        sodipodi:rx="5"
        sodipodi:ry="5"
-       d="m 670,347.36218 a 5,5 0 1 1 -10,0 5,5 0 1 1 10,0 z"
+       d="m 670,347.36218 c 0,2.76143 -2.23858,5 -5,5 -2.76142,0 -5,-2.23857 -5,-5 0,-2.76142 2.23858,-5 5,-5 2.76142,0 5,2.23858 5,5 z"
        transform="translate(0,5)" />
     <path
        style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#DotL)"
@@ -539,7 +539,7 @@
          sodipodi:role="line"
          id="tspan19576"
          x="-83.585243"
-         y="353.36209">$In_{1}$</tspan></text>
+         y="353.36209">In1</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:10px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -550,7 +550,7 @@
          sodipodi:role="line"
          id="tspan19580"
          x="-83.585243"
-         y="453.36209">$In_{2}$</tspan></text>
+         y="453.36209">In2</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:10px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -561,7 +561,7 @@
          sodipodi:role="line"
          id="tspan19584"
          x="-83.585243"
-         y="493.36209">$En$</tspan></text>
+         y="493.36209">En</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:10px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -572,7 +572,7 @@
          sodipodi:role="line"
          id="tspan19588"
          x="269.41476"
-         y="28.362103">$OUT_{1}$</tspan></text>
+         y="28.362103">OUT1</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:10px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -584,7 +584,7 @@
          sodipodi:role="line"
          id="tspan19592"
          x="560.63464"
-         y="15.81965">$OUT_{2}$</tspan></text>
+         y="15.81965">OUT2</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:10px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -596,6 +596,6 @@
          sodipodi:role="line"
          id="tspan19596"
          x="455.32626"
-         y="15.567112">$V_{in}$</tspan></text>
+         y="15.567112">Vin</tspan></text>
   </g>
 </svg>

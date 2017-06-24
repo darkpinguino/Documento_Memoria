@@ -1,6 +1,6 @@
 %% Creator: Inkscape inkscape 0.48.5, www.inkscape.org
 %% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
-%% Accompanies image file 'vec_sum.pdf' (pdf, eps, ps)
+%% Accompanies image file 'pwm.pdf' (pdf, eps, ps)
 %%
 %% To include the image in your LaTeX document, write
 %%   \input{<filename>.pdf_tex}
@@ -36,7 +36,7 @@
   }%
   \providecommand\rotatebox[2]{#2}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{406.546875bp}%
+    \setlength{\unitlength}{800.19326172bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -48,10 +48,12 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.98783197)%
-    \put(0,0){\includegraphics[width=\unitlength]{vec_sum.pdf}}%
-    \put(0.24051654,0.55294976){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$\vec{d}$}}}%
-    \put(0.67343095,0.82844075){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$\vec{r_{2}}$}}}%
-    \put(0.59471924,0.35617049){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$\vec{r_{1}}$}}}%
+  \begin{picture}(1,0.49571951)%
+    \put(0,0){\includegraphics[width=\unitlength]{pwm.pdf}}%
+    \put(0.07957062,0.04614062){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{0\%}}}%
+    \put(0.07957062,0.14611647){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{25\%}}}%
+    \put(0.07957062,0.24609231){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{50\%}}}%
+    \put(0.07957062,0.34606816){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{75\%}}}%
+    \put(0.07957062,0.44604401){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{100\%}}}%
   \end{picture}%
 \endgroup%

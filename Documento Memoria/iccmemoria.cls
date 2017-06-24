@@ -8,14 +8,14 @@
 \LoadClass{report}
 
 \RequirePackage[utf8]{inputenc}
-\RequirePackage[english,spanish]{babel}
+\RequirePackage[english,spanish, es-tabla]{babel}
 \RequirePackage{graphicx}
 \RequirePackage{setspace}
 \RequirePackage{amssymb,amsmath}
 \RequirePackage{svg}
 \RequirePackage{float}
 \RequirePackage{array}
-\RequirePackage{adjustbox}
+%\RequirePackage{adjustbox}
 
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 

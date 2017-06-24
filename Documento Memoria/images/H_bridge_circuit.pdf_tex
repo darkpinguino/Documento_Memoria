@@ -50,11 +50,11 @@
   \makeatother%
   \begin{picture}(1,0.65801609)%
     \put(0,0){\includegraphics[width=\unitlength]{H_bridge_circuit.pdf}}%
-    \put(0.02217295,0.26607546){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$In_{1}$}}}%
-    \put(0.02217295,0.15521072){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$In_{2}$}}}%
-    \put(0.02217295,0.11086482){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$En$}}}%
-    \put(0.4135255,0.62638587){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$OUT_{1}$}}}%
-    \put(0.64713956,0.62714005){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$OUT_{2}$}}}%
-    \put(0.53038969,0.62742002){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$V_{in}$}}}%
+    \put(0.02217295,0.26607546){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{In1}}}%
+    \put(0.02217295,0.15521072){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{In2}}}%
+    \put(0.02217295,0.11086482){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{En}}}%
+    \put(0.4135255,0.62638587){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{OUT1}}}%
+    \put(0.64713956,0.62714005){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{OUT2}}}%
+    \put(0.53038969,0.62742002){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Vin}}}%
   \end{picture}%
 \endgroup%

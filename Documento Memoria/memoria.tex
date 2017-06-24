@@ -334,10 +334,14 @@ El controlador utilizado es el L298, cual contiene dos puentes H compatibles con
 
 \begin{figure}[H]
   \centering
+  \fontfamily{cmss}\selectfont{
   \includesvg[width = 400pt, svgpath = images/H_bridge_circuit]{}
-  \caption{Control logico dentro L298 sobre uno de sus puente H.}
+  }
+  \caption{Control logico dentro del L298 sobre uno de sus puente H.}
   \label{fig:H bridge circuit}
 \end{figure}
+
+Además se puede ver que el controlador recibe una tercera entrada En (sigla del inglés: \emph{Enable}), está activa o desactiva el puente H dependiendo del estado lógico que presente: Si el estado es alto el puente H funcionara según corresponda con las entradas In1 e In2, pero si está en estado bajo desconecta ambas salidas OUT1 y OUT2.
 
 \subsection{Microcomputador}
 
@@ -359,7 +363,7 @@ El protocolo de comunicación utilizado es PS/2 (\emph{IBM Personal System 2}), 
 
 El \emph{mouse} envía la información de estado de los botones, derecho, central e izquierdo, además del desplazamiento en el eje $X$ e $Y$ en un paquete de tres \emph{byte}, que se muestra en la tabla \ref{tab:ps/2 package}. El movimiento es un entero de 9 \emph{bite} a complemento 2, el \emph{bit} más significativo es $Y$ sign y $X$ sign que aparece en el primer \emph{byte}. Este valor representa la diferencia relativa a la posición del \emph{mouse} desde la última vez que se envió el paquete de datos. El rango va de -255 a +255, si el rango es excedido el correspondiente \emph{bit} de \emph{overflow} es activado \cite{ps2mouse}.\\
 
-\begin{table}
+\begin{table}[H]
 \makebox[\textwidth][c]{
 	\begin{small}
 	\fontfamily{cmss}\selectfont{
@@ -396,6 +400,8 @@ El \emph{mouse} envía la información de estado de los botones, derecho, centra
 
 \section{Red neuronal}
 
+
+
 \subsection{Diseño de capas}
 
 \subsection{Entrenamiento}
@@ -417,7 +423,11 @@ Para lograr que la red neuronal aprenda se utiliza un entrenamiento del tipo \em
 
 \section{Robot omnidireccional}
 
-El diseño del robot está basado en uno del repositorio de diseños 3D thingiverse (https://www.thingiverse.com/thing:167923), de este se tomó el concepto de las ruedas omnidireccionales y se rediseñaron, la construcción consta de dos ruedas paralelas rotadas sobre el eje de giro 45$^{\circ}$ una de la otra, unidas por medio de tres tornillos. Cada una de estas ruedas cuanta a su vez con cuatro ruedas o rodillos en su circunferencia colocadas perpendicularmente separadas cada una por 90$^{\circ}$, esto permite tener un solapamiento con los rodillos de la otra rueda ubicada perpendicular a esta. Los rodillos vas fijos a un eje de 2mm que los atraviesa y puede girar libremente en el soporte de la rueda. Cada rueda tiene un diámetro de 80mm y un ancho de 40mm, en la figura \ref{fig:image_omni_whell_2} se puede ver la construcción de esta.\\
+El diseño del robot está basado en uno del repositorio de diseños 3D thingiverse (https://www.thingiverse.com/thing:167923), de este se tomó el concepto de las ruedas omnidireccionales las que se rediseñaron para este robot en espesifico.\\
+
+\subsection{Diseño del robot}
+
+La construcción consta de dos ruedas paralelas rotadas sobre el eje de giro 45$^{\circ}$ una de la otra, unidas por medio de tres tornillos. Cada una de estas ruedas cuanta a su vez con cuatro ruedas o rodillos en su circunferencia colocadas perpendicularmente separadas cada una por 90$^{\circ}$, esto permite tener un solapamiento con los rodillos de la otra rueda ubicada perpendicular a esta. Los rodillos vas fijos a un eje de 2mm que los atraviesa y puede girar libremente en el soporte de la rueda. Cada rueda tiene un diámetro de 80mm y un ancho de 40mm, en la figura \ref{fig:image_omni_whell_2} se puede ver la construcción de esta.\\
 
 \begin{figure}[H]
   \centering
@@ -505,6 +515,8 @@ Los componentes mencionados y diseñados específicamente para el robot (ruedas 
 
 La espesificación complera de la configuracion de la impresora se puede ver en el anexo \ref{appendix:3D printer setting}
 
+\subsection{Control de las ruedas}
+
 El desplazamiento del robot es producido por cuatro motores, estos no van en conexión directa con las ruedas, si no que por medio de una caja reductora y esta transmite el movimiento del motor a las ruedas. Los motores son de tamaño estándar 130 alimentados con 12v de corriente continua (DC) con una caja reductora TT a 90$^{\circ}$, de relación 120:1, como se muestra en la figura \ref{fig:motor}.\\
 
 \begin{figure}[H]
@@ -514,10 +526,11 @@ El desplazamiento del robot es producido por cuatro motores, estos no van en con
   \label{fig:motor}
 \end{figure}
 
-Los motores son controlados por el \emph{driver} (controlador) l298n, este cuenta con dos puentes H, uno por motor, por lo que el robot utiliza dos controladores. Los controladores son alimentados con 12v y estos son los que suministran la energía a los motores.
+Los motores son controlados por el \emph{driver} (controlador) l298n, este cuenta con dos puentes H, uno por motor, por lo que el robot utiliza dos controladores. Los controladores son alimentados con 12v y estos son los que suministran la energía a los motores.\\
+
 La fuente de energía del robot es proporcionada por baterías, se utilizan tres baterías de litio 18650 conectadas en serie, cada batería es de 3,7v, por lo que en total en conjunto se tiene un voltaje nominal de 11.1v, con las baterías al 100\% de su capacidad un voltaje de 12,6v.\\
 
-Los movimientos del robot son realizados posteriormente al cálculo de las velocidades y dirección de giro de cada rueda, esta tarea es realizada por el microcontrolador, el utilizado es un ATmega328 bajo la infraestructura de Arduino. El microcontrolador toma como entrada la velocidad y dirección a la cual debe moverse y realiza los cálculos para obtener los valores asociados a cada motor. Las salidas de control van dirigidas a los controladores de los motores, se utilizan tres líneas por cada motor, figura \ref{fig:ATmega328_L298}, dos para controlar la dirección del motor y la tercera para la velocidad, así se tiene un total de doce salidas de control para todos los motores.\\
+Los movimientos del robot son realizados posteriormente al cálculo de las velocidades y dirección de giro de cada rueda, esta tarea es realizada por el microcontrolador, el utilizado es un ATmega328 bajo la infraestructura de Arduino UNO. El microcontrolador toma como entrada la velocidad y dirección a la cual debe moverse y realiza los cálculos para obtener los valores asociados a cada motor. Las salidas de control van dirigidas a los controladores de los motores, se utilizan tres líneas por cada motor, figura \ref{fig:ATmega328_L298}, dos para controlar la dirección del motor y la tercera para la velocidad, por lo que se tiene un total de doce salidas de control para todos los motores.\\
 
 \begin{figure}[H]
   \centering
@@ -527,6 +540,69 @@ Los movimientos del robot son realizados posteriormente al cálculo de las veloc
   \caption{Control del microcontrolador ATmega328 sobre uno de los motores, por medio del controlador L298.}
   \label{fig:ATmega328_L298}
 \end{figure}
+
+El control sobre los motores se hace de la siguiente manera: En el controlador L298 las salidas reflejan el estado en el que se encuentran las entradas, por lo que OUT1 tendrá el mismo estado que In1, lo mismo sucede cuando con OUT2 y In2, siempre y cuando En este en estado lógico alto. La tabla \ref{tab:l298 in out} muestra el comportamiento del controlador con respecto a las distintas entradas.\\
+
+\begin{table}[H]
+\centering
+	\fontfamily{cmss}\selectfont{
+	\begin{tabular}{|c|c|c|c|c|}
+
+		\hline
+			\multicolumn{3}{|c|}{Entradas} & \multicolumn{2}{c|}{Salidas}\\
+		\hline
+			In1 = H & In2 = L & En = H & OUT1 = H & OUT2 = L\\
+		\hline
+			In1 = L & In2 = H & En = H & OUT1 = L & OUT2 = H\\
+		\hline
+			In1 = X & In2 = X & En = L & OUT1 = L & OUT2 = L\\
+		\hline
+	\end{tabular}
+	}
+\caption{Comportamiento de las salidas del controlador L298. L = estado logico bajo, H = estado logico alto y X = cualquier estado.}
+\label{tab:l298 in out}
+\end{table}
+
+De esta forma variando el estado de las entradas es posible cambiar la dirección hacia donde giran los motores, ahora para establecer la velocidad a los motores se utiliza la tercera entrada En con una señal \emph{PWM} (sigla del inglés: \emph{Pulse-width modulation}) que mediante la variación del \emph{duty cycle} (ciclo de trabajo) logra establecer la variación de la velocidad. El ciclo de trabajo se define como el tiempo en que la señal se encuentra en estado alto, por ejemplo, en un ciclo de trabajo del 50\% la mitad del tiempo la señal está en alto y la otra mitad en bajo, en un ciclo del 25\% la señal está en alto solo el 25\% y el 75\% restante del tiempo está en estado bajo \cite{barrett2006microcontrollers}, com muestra la figura \ref{fig:pwm}.\\
+
+\begin{figure}[H]
+  \centering
+  \fontfamily{cmss}\selectfont{
+  \includesvg[width = 300pt, svgpath = images/pwm]{}
+  }
+  \caption{Señal \emph{PWM} con distintos ciclos de trabajo.}
+  \label{fig:pwm}
+\end{figure}
+ 
+Esta señal de control es producida por el microcontrolador a una frecuencia de 490 Hz, con una resolución de 8 bit, es decir, el ciclo de trabajo puede ser configurado con un rango de valores entre 0 y 255, siendo 0 un ciclo de trabajo del 0\% y 255 del 100\% \cite{referenceAnalogWrite}.\\
+
+\subsection{Enlace de radio}
+
+Para dar al robot su dirección y velocidad se utiliza un enlace de radio 2.4GHz el que proporciona hasta seis canales de comunicación, para el control de robot solo se utilizan dos. Cada canal se lee desde el receptor de radio por separado por el microcontrolador, utilizando una entrada por canal. La señal se codifica mediante \emph{PWM} donde la duración del pulso determina el valor del canal, cada pulso se produce en serie uno tras otro, este valor va en el rango de 1000ms a 2000ms.\\
+
+\begin{figure}[H]
+  \centering
+  \fontfamily{cmss}\selectfont{
+  \includesvg[width = 300pt, svgpath = images/pwm_radio]{}
+  }
+  \caption{Señal \emph{PWM} de distintos canales, el pulso tiene una tiempo de duracion minimo de 1000ms y maximo de 2000ms.}
+  \label{fig:pwm}
+\end{figure}
+
+Para obtener el valor de cada canal desde el receptor con el microcontrolador se lee la señal de un canal y se toma el tiempo, en milisegundos, que esta señal permanece con un valor alto, el tiempo registrado corresponderá al valor de dicho canal, esto se repite para el resto de los canales.\\
+ 
+Los canales utilizados corresponden a uno y dos (ch1 y ch2), de estos se normalizan sus valores a un rango entre -500 y 500, con estos se conforma un vector $\vec{d}$ con coordenadas (ch1, ch2), como muetsra la figura \ref{fig:radio_values}, con este vector se calcula posteriormente el movimiento del robot.\\
+
+\begin{figure}[H]
+  \centering
+  \fontfamily{cmss}\selectfont{
+  \includesvg[width = 300pt, svgpath = images/radio_values]{}
+  }
+  \caption{Vector formado por los valores de los canales uno y dos obtenidos desde el receptor de radio.}
+  \label{fig:radio_values}
+\end{figure}
+
+\subsection{Movimiento}
 
 Primero se necesita establecer un marco de referencia, el robot es capaz de desplazarse en dos dimensiones sobre un plano, este está formado por los ejes $X$ e $Y$. Cuando se menciona que el robot se mueve hacia adelante hace su recorrido avanzando sobre el eje $Y$, al contrario, cuando se mueve hacia atrás retrocede en el eje $Y$, como esta reprecentado en la figura \ref{fig:omni_direcition}. Ahora cuando se mueve a la derecha, avanza en el eje $X$ y a la izquierda retrocede. Haciendo una comparación con los cuadricopteros, el movimiento hacia adelate y atrás del robot corresponde al movimiento de \emph{pich} en el cadricoptero y los de derecha e izquierda al \emph{roll}. No está dentro de los alcances contemplar el movimiento de \emph{yaw}.\\
 
@@ -588,7 +664,7 @@ Ahora la magnitud de $\vec{r_{1}}$ y $\vec{r_{2}}$ se puede definir como:
 	\end{split}
 \end{equation}
 
-Donde $\pi/4$ es ángulo de $\vec{r_{1}}$ y $\vec{r_{2}}$ sobre el eje $X$. Si la magnitud de los vectores da negativa es debe invertir la dirección de las ruedas.\\
+Donde $\pi/4$ es ángulo de $\vec{r_{1}}$ y $\vec{r_{2}}$ sobre el eje $X$. Si la magnitud de los vectores toma un valor negativo es debe invertir la dirección de las ruedas.\\
 
 \chapter{Pruebas}
 
