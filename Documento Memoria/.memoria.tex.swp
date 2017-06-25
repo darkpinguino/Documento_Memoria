@@ -262,11 +262,48 @@ Al ser sigma una función continua, ahora la salida de la red no es binaria, si 
   \label{fig:step}
 \end{figure}
 
+Ya se mencionó anteriormente que la forma en que la red neuronal aprende es ajustando los valores de los pesos y sesgos de las neuronas que la conforman, para conseguir este objetivo se utiliza el algoritmo de \emph{backpropagation}. Primero se le entrega un vector de entrada a la red neuronal, se conoce de antemano la salida que esta debe generar con estos valores, la red computa la salida y esta se compara con la esperada mediante una función de costo. El algoritmo tiene el objetivo de determinar qué cambios hay que hacer a los parámetros de la red para reducir la función de costo.\\
 
+Si en una neurona $j$ de la capa $l$ introducimos algún cambio en los parámetros $\Delta z^l_j$, entonces la salida de esta será $\sigma(z^l_j + \Delta z^l_j)$. Este cambio se propagara por la red para producir un cambio en la función de costo $C$ en la medida de $\frac{\partial C}{\partial z^l_j} \Delta z^l_j$, la finalidad es encontrar un $\Delta z^l_j$ que reduzca $C$. Si $\frac{\partial C}{\partial z^l_j}$ tiene una valor alto, entonces $C$ se puede reducir eligiendo $\Delta z^l_j$ que contrarreste $\frac{\partial C}{\partial z^l_j}$. En cambio sí $\frac{\partial C}{\partial z^l_j}$ tiene un valor cercano a cero, $\Delta z^l_j$ no tendrá mucha influencia a $C$ por lo que esa neurona cuenta con parámetros cercanos a los óptimos.\\
 
-Ya se mencionó anteriormente que la forma en que la red neuronal aprende es ajustando los valores de los pesos y sesgos de las neuronas que la conforman, para conseguir este objetivo se utiliza el algoritmo de \emph{backpropagation}, primero se le entrega un vector de entrada a la red neuronal, se conoce de antemano la salida esperada que debe generar la red con estos valores, la red computa la salida y esta se compara con la salida esperada con algún método de optimización, en este caso se utiliza el descenso por gradiente.\\
+Denotaremos el error en la neurona $j$ en la capa $l$ como $\delta^l_j$ y para una neurona en la salida de la red $\delta^L_j$ donde:\\
 
-El método de descenso por gradiente es un mecanismo de minimización, lo que busca minimizar es la función de error cuadrático medio entre la salida esperada y la salida que produce la red neuronal, una vez que se obtiene el gradiente del error este es propagado hacia atrás por la red modificando los pesos y los sesgos de las neuronas.
+\begin{equation}
+	\delta^L_j = \frac{\partial C}{\partial a^L_j} \sigma'(z^L_j)
+\end{equation}\\
+
+El término $\frac{\partial C}{\partial a^L_j}$ determina qué tan rápido cambia $C$ en función de la salida de la neurona $j$ en al capa $L$. $\sigma'(z^L_j)$ expresa que tan rápido cambia $\sigma$ en función de $z^L_j$.\\
+ 
+La función de error cuadrático es la función de coste, pero esta calcula el promedio de error sobre una muestra. Para aplicar \emph{backpropagation} solo se utiliza un valor de error y no una muestra de estos, por que la función $C$ será:\\
+
+\begin{equation}
+	C = \frac{1}{2} (y-a^L )^2
+\end{equation}\\
+
+Ahora podemos reescribir el error de la salida de la red $\delta^L_j$ utilizando la función de coste como:\\
+
+\begin{equation}
+	\delta^L = (a^L-y) \odot \sigma'(z^L)
+\end{equation}\\
+
+Generalizando para el resto de las capas de la red, $\delta^l$ en términos del error de la siguiente capa $\delta^{l+1}$:\\
+
+\begin{equation}
+	\delta^l = ((w^{l+1})^T \delta^{l+1}) \odot \sigma'(z^l)
+\end{equation}\\
+
+Con el error obtenido y propagado por la red solo falta modificar los pesos y sesgos, la tasa de cambio de $C$ respecto a las sesgos de red se define como:\\
+
+\begin{equation}
+	\frac{\partial C}{\partial b^l_j} =
+  \delta^l_j
+\end{equation}\\
+
+Y con respecto a los pesos:\\
+
+\begin{equation}
+	\frac{\partial C}{\partial w^l_{jk}} = a^{l-1}_k \delta^l_j
+\end{equation}\\
 
 \section{Hardware}
 
