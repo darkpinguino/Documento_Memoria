@@ -481,7 +481,7 @@ La implementación del algoritmo de \emph{backpropagation} consta de realizar el
 	\end{split}
 \end{equation}\\
 
-Donde $a^{L}$ y $z^{L}$ pertenecen a la última capa $L$, el arreglo $\delta^{L}$ representa la influencia de la salida de la red en la funcion de costo. Ahora se obtiene la difencia de los sesgos y pesos de la capa $L$:
+Donde $a^{L}$ y $z^{L}$ pertenecen a la última capa $L$, el arreglo $\delta^{L}$ representa qué tan rápido cambia la función de costo y $\sigma$ en función $a^{L}$ y $z^{L}$. Ahora se actualizan los sesgos y pesos de la capa $L$:
 
 \begin{equation}
 	\begin{split}
@@ -490,7 +490,7 @@ Donde $a^{L}$ y $z^{L}$ pertenecen a la última capa $L$, el arreglo $\delta^{L}
 	\end{split}
 \end{equation}\\
 
-Este procedimiento se propaga hacia atrás en la red por las capas $L-1, L-2, L-3...$ hasta alcanzar la primera capa. Para luego actualizar los parametros de red aplicando las diferencias obtenidas bajo un coeficiente de aprendizaje, este determina cuanto se deben modificar los parametros existentes en la red con respecto a las diferencias obtenidas del algoritmo de \emph{backpropagation}.
+Este procedimiento se propaga hacia atrás en la red por las capas $L-1, L-2, L-3...$ hasta alcanzar la primera capa.
 
 \subsection{Diseño de capas}
 
