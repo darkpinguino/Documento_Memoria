@@ -262,8 +262,6 @@ Al ser sigma una función continua, ahora la salida de la red no es binaria, si 
   \label{fig:step}
 \end{figure}
 
-
-
 Ya se mencionó anteriormente que la forma en que la red neuronal aprende es ajustando los valores de los pesos y sesgos de las neuronas que la conforman, para conseguir este objetivo se utiliza el algoritmo de \emph{backpropagation}, primero se le entrega un vector de entrada a la red neuronal, se conoce de antemano la salida esperada que debe generar la red con estos valores, la red computa la salida y esta se compara con la salida esperada con algún método de optimización, en este caso se utiliza el descenso por gradiente.\\
 
 El método de descenso por gradiente es un mecanismo de minimización, lo que busca minimizar es la función de error cuadrático medio entre la salida esperada y la salida que produce la red neuronal, una vez que se obtiene el gradiente del error este es propagado hacia atrás por la red modificando los pesos y los sesgos de las neuronas.
@@ -414,46 +412,19 @@ El flujo optico es representado por el desplazamiento que tiene $P_0$ en $P_1$, 
 
 \section{Red neuronal}
 
-La red neuronal es una adaptación de la implementada por \emph{Michael Nielsen} en del libro \emph{Neural Networks and Deep Learning} \cite{NeuralNetworksAndDeepLearning}.\\
- 
-Para representar la estructura de la red, la que cuenta con \emph{weights} y \emph{biases} (pesos y sesgos) por cada neurona, se utiliza un arreglo multidimensional por cada parámetro. Para los sesgos se utiliza una matriz de dos dimensiones, así obtenemos $b_{ij}$ que representa el sesgo para la $j$-$\acute{e}sima$ neurona en la $i$-$\acute{e}sima$ capa. La representación de los pesos se hace con una matriz de tres dimensiones, dando $w_{ijk}$ que se traduce como el peso de la $j$-$\acute{e}sima$ neurona de la $i$-$\acute{e}sima$ capa con la $k$-$\acute{e}sima$ neurona de la $i$+$1$-$\acute{e}sima$ capa.\\
- 
-La obtención de la salida de red neuronal, también llamado \emph{feedforward}, se hace ejecutando para cada capa la siguiente función:\\
+La red neuronal es una adaptacion de la implementada por \emph{Michael Nielsen} en del libro \emph{Neural Networks and Deep Learning} \cite{NeuralNetworksAndDeepLearning}.\\
+
+Para repesentar la estructura de la red, la que cuenta con \emph{weights} y \emph{biases} (pesos y sesgos) por cada neurona, se utiliza un arreglo multidimensional por cada parametro. Para los sesgos se utiliza un matriz de dos dimensiones, así obtenemos $b_{ij}$ que representa el sesgo para la $j$-$\acute{e}sima$ neurona en la $i$-$\acute{e}sima$ capa. La representacion de los pesos se hace con una matriz de tres dimensiones, dando $w_{ijk}$ que se traduce como el peso de la $j$-$\acute{e}sima$ neurona de la $i$-$\acute{e}sima$ capa con la $k$-$\acute{e}sima$ neurona de la $i$+$1$-$\acute{e}sima$ capa.\\
+
+La obtencion de la salida de red neuronal se hace ejecutando para cada capa la siguiente función:\\
 
 \begin{equation}
 	\begin{split}
-	a' = \sigma{(z)}\\
+	a' = \sigma{(wa + b)}\\
 	\end{split}
 \end{equation}\\
 
-donde $z$:\\
-
-\begin{equation}
-	\begin{split}
-	z = (wa + b)\\
-	\end{split}
-\end{equation}\\
-
-Si aplicamos la función $\sigma$ a la $i$-$\acute{e}sima$ capa usamos la función sigmoide $\sigma$ en cada elemento del arreglo $z$, $z$ contiene el resultado del producto punto entre los pesos y el arreglo $a$ más el sesgo de cada neurona. Donde $a$ es la salida de la $(i$-$1)$-$\acute{e}sima$ capa o si es la primera la entrada de la red. Dando como resultado la salida $a'$ la cual es el resultado $i$-$\acute{e}sima$ capa.\\
-
-La implementación del algoritmo de \emph{backpropagation} consta de realizar el proceso de \emph{feedforward} para una determinada entrada y poder calcular con su salida esperada $y$ la siguiente ecuación de error:\\
-
-\begin{equation}
-	\begin{split}
-	\delta^L = (a^L-y) \odot \sigma'(z^L)
-	\end{split}
-\end{equation}\\
-
-Donde $a^{L}$ y $z^{L}$ pertenecen a la última capa $L$, el arreglo $\delta^{L}$ representa qué tan rápido cambia la función de costo y $\sigma$ en función $a^{L}$ y $z^{L}$. Ahora se actualizan los sesgos y pesos de la capa $L$:
-
-\begin{equation}
-	\begin{split}
-	b^L & = \delta^L\\
-	w^L & = \delta^L \sigma(z^L)^t
-	\end{split}
-\end{equation}\\
-
-Este procedimiento se propaga hacia atrás en la red por las capas $L-1, L-2, L-3...$ hasta alcanzar la primera capa.
+Si aplicamos esta función a la $i$-$\acute{e}sima$ capa usamos la función sigmoide $\sigma$ en cada elemento del arreglo que contiene el resultado del producto punto entre los pesos y un arreglo $a$ más el sesgo de cada neurona. Donde $a$ es la salida de la $i$-1-$\acute{e}sima$ capa o si es la primera la entrada de la red. Dando como resultado la salida $a'$ de la cual es el resultado $i$-$\acute{e}sima$ capa.
 
 \subsection{Diseño de capas}
 

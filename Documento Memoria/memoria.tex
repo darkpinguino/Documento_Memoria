@@ -97,8 +97,7 @@ Dado que nosotros percibimos el mundo principalmente por medio de la vista, pare
 
 Cuando hablamos de una imagen nos estamos refiriendo a la información que nos es capaz de entregar la luz que es recibida desde el entorno o una escena, esta información varia dependiendo del contexto en que se hable, si nos referimos a un marco biológico la luz incidirá en un ojo y las células en la retina generaran las señales eléctricas que el cerebro interpretará como imágenes, si hablamos de una cámara la imagen se formará en una película fogatica o en un sensor digital \cite{bradski2008learning}.\\
 
-Dado el ámbito de este documento, es preciso profundizar en las imágenes digitales, esta puede ser definida como la integración y muestreo de información analógica (luz incidiendo en un sensor fotográfico) en un dominio espacial. Esta consiste en un arreglo rectangular de pixeles $(x, y, u)$, cada uno contiene una ubicación $(x, y) \in \mathbb{Z}^2 $ y un valor $u$, muestreado en una ubicación $(x, y)$. $\in$ es conjunto de puntos $(x, y)$ del arreglo rectangular \cite{klette2014concise}. Entonces podemos definir una imagen como:\\
-
+Dado el ámbito de este documento, es preciso profundizar en las imágenes digitales, esta puede ser definida como la integración y muestreo de información analógica (luz incidiendo en un sensor fotográfico) en un dominio espacial. Esta consiste en un arreglo rectangular de pixeles $(x, y, u)$, cada uno contiene una ubicación $(x, y) \in \mathbb{Z}^2 $ y un valor $u$, muestreado en una ubicación $(x, y)$. $\in$ es conjunto de puntos $(x, y)$ del arreglo rectangular \cite{klette2014concise}. Entonces podemos definir una imagen como:
 \begin{equation}
 	\begin{split}
 	I = \lbrace (x, y) : 1 \leq  x \leq N_{cols} \wedge 1 \leq y \leq N_{rows} \rbrace \subset \mathbb{Z}^2
@@ -134,33 +133,38 @@ Los vectores de velocidad producidos por el movimiento aparente son descritos de
 
 Para calcular el flujo óptico por medio el análisis de imágenes se utiliza el método de \emph{Lucas-Kanade}, el cual funciona bajo dos suposiciones: la intensidad de un pixel en un determinado objeto no cambia entre cuadros consecutivos, refiriéndose a que un objeto no cambia en la escena, siempre la imagen proyectada de éste en la cámara es la misma. La segunda suposición dice que los vecinos cercanos a un pixel tiene un movimiento similar a este, esto permite evaluar una zona en la imagen.\\
 
-Consideramos un pixel $I(x, y,t)$ en la primera imagen ($x$ e $y$ coordenadas dentro de la imagen y $t$ un instante de tiempo) el cual se mueve una distancia de $(dx, dy)$ en el siguiente cuadro después de un instante de tiempo $dt$, bajo las suposiciones mencionadas, podemos decir que:
+Consideramos un pixel $I(x, y,t)$ en la primera imagen ($x$ e $y$ coordenadas dentro de la imagen y $t$ un instante de tiempo) el cual se mueve una distancia de $(dx, dy)$ en el siguiente cuadro después de un instante de tiempo $dt$, bajo las suposiciones mencionadas, podemos decir que:\\
+
 \begin{equation}
 	\begin{split}
 		I(x,y,t) = I(x+dx, y+dy, t+dt)
 	\end{split}
 \end{equation}
+\\
 
-Usando series de taylor aproximamos el lado derecho de la ecuación, removiendo términos semejantes y dividendo por dt obtenemos:
+Usando series de taylor aproximamos el lado derecho de la ecuación, removiendo términos semejantes y dividendo por dt obtenemos:\\
+
 \begin{equation}
 	\begin{split}
 		f_x u + f_y v + f_t = 0
 	\end{split}
-\end{equation}
+\end{equation}\\
 
-donde:
+donde:\\
+
 \begin{equation}
 	\begin{split}
 		f_x = \frac{\partial f}{\partial x} \; ; \; f_y = \frac{\partial f}{\partial y}
 	\end{split}
-\end{equation}
+\end{equation}\\
 
-Esta es la ecuación del flujo óptico, donde $f_x$ y $f_y$ son gradientes de la imagen, como ft es gradiente del tiempo. Pero $(u, v)$ son desconocidas, por lo que no podemos resolver la ecuación con dos incognitas. Aquí es donde el método \emph{Lucas-Kanade} toma grupos de pixeles de 3x3, considerando las suposiciones mencionadas anteriormente, donde estos tiene el mismo movimiento. Ahora es posible resolver $(f_x, f_y, f_t)$ ya que contamos con nueve ecuaciones y las mismas dos incógnitas, resultando con la siguiente ecuación:
+Esta es la ecuación del flujo óptico, donde $f_x$ y $f_y$ son gradientes de la imagen, como ft es gradiente del tiempo. Pero $(u, v)$ son desconocidas, por lo que no podemos resolver la ecuación con dos incognitas. Aquí es donde el método \emph{Lucas-Kanade} toma grupos de pixeles de 3x3, considerando las suposiciones mencionadas anteriormente, donde estos tiene el mismo movimiento. Ahora es posible resolver $(f_x, f_y, f_t)$ ya que contamos con nueve ecuaciones y las mismas dos incógnitas, resultando con la siguiente ecuación:\\
+
 \begin{equation}
 	\begin{split}
 		\begin{bmatrix} u \\ v \end{bmatrix} = \begin{bmatrix} \sum_{i}{f_{x_i}}^2 & \sum_{i}{f_{x_i} f_{y_i} } \\ \sum_{i}{f_{x_i} f_{y_i}} & \sum_{i}{f_{y_i}}^2 \end{bmatrix}^{-1} \begin{bmatrix} - \sum_{i}{f_{x_i} f_{t_i}} \\ - \sum_{i}{f_{y_i} f_{t_i}} \end{bmatrix}
 	\end{split}
-\end{equation}
+\end{equation}\\
 
 De esta forma se toma un grupo de pixeles y calculamos el flujo óptico sobre ellos, pero el método descrito funciona solo con pequeños movimientos, fallando en condiciones cunado los pixeles en la imagen sufren grandes movimientos, para solucionar este problema utilizamos el algoritmo de pyramid, el cual escala la imagen removiendo los pequeños movimientos y reduciendo los grandes movimientos a pequeños \cite{OpenCV}.\\
 
@@ -195,7 +199,6 @@ En este caso se utilizan tres entradas, para computar la salida se introducen \e
 		\end{cases}
 	\end{split}
 \end{equation}\\
-
 
 La red neuronal es conformada por la interconexión de perceptrones, los que se agrupan en \emph{layers} (capas), de tal modo que las salidas de los perceptrones en la primera capa son a su vez las entradas para los perceptrones de las segunda capa, así sucesivamente por la totalidad de las capas que constituyan la red neuronal.\\
 
@@ -239,7 +242,6 @@ Remplazando el parámetro de la función por los de la neurona:\\
   \frac{1}{1+\exp(-\sum_j w_j x_j-b)}.
 \end{equation}\\
 
-
 Al ser sigma una función continua, ahora la salida de la red no es binaria, si no que valor real entre 0 y 1, como se muestra en al figura \ref{fig:sigmoid}.\\
 
 \begin{figure}[H]
@@ -259,6 +261,8 @@ Al ser sigma una función continua, ahora la salida de la red no es binaria, si 
   \caption{Función escalonada que utilza un perceptron, el que tiene una salida binaria, con valores entre 0 y 1.}
   \label{fig:step}
 \end{figure}
+
+
 
 Ya se mencionó anteriormente que la forma en que la red neuronal aprende es ajustando los valores de los pesos y sesgos de las neuronas que la conforman, para conseguir este objetivo se utiliza el algoritmo de \emph{backpropagation}, primero se le entrega un vector de entrada a la red neuronal, se conoce de antemano la salida esperada que debe generar la red con estos valores, la red computa la salida y esta se compara con la salida esperada con algún método de optimización, en este caso se utiliza el descenso por gradiente.\\
 
@@ -410,7 +414,46 @@ El flujo optico es representado por el desplazamiento que tiene $P_0$ en $P_1$, 
 
 \section{Red neuronal}
 
+La red neuronal es una adaptación de la implementada por \emph{Michael Nielsen} en del libro \emph{Neural Networks and Deep Learning} \cite{NeuralNetworksAndDeepLearning}.\\
+ 
+Para representar la estructura de la red, la que cuenta con \emph{weights} y \emph{biases} (pesos y sesgos) por cada neurona, se utiliza un arreglo multidimensional por cada parámetro. Para los sesgos se utiliza una matriz de dos dimensiones, así obtenemos $b_{ij}$ que representa el sesgo para la $j$-$\acute{e}sima$ neurona en la $i$-$\acute{e}sima$ capa. La representación de los pesos se hace con una matriz de tres dimensiones, dando $w_{ijk}$ que se traduce como el peso de la $j$-$\acute{e}sima$ neurona de la $i$-$\acute{e}sima$ capa con la $k$-$\acute{e}sima$ neurona de la $i$+$1$-$\acute{e}sima$ capa.\\
+ 
+La obtención de la salida de red neuronal, también llamado \emph{feedforward}, se hace ejecutando para cada capa la siguiente función:\\
 
+\begin{equation}
+	\begin{split}
+	a' = \sigma{(z)}\\
+	\end{split}
+\end{equation}\\
+
+donde $z$:\\
+
+\begin{equation}
+	\begin{split}
+	z = (wa + b)\\
+	\end{split}
+\end{equation}\\
+
+Si aplicamos la función $\sigma$ a la $i$-$\acute{e}sima$ capa usamos la función sigmoide $\sigma$ en cada elemento del arreglo $z$, $z$ contiene el resultado del producto punto entre los pesos y el arreglo $a$ más el sesgo de cada neurona. Donde $a$ es la salida de la $(i$-$1)$-$\acute{e}sima$ capa o si es la primera la entrada de la red. Dando como resultado la salida $a'$ la cual es el resultado $i$-$\acute{e}sima$ capa.\\
+
+La implementación del algoritmo de \emph{backpropagation} consta de realizar el proceso de \emph{feedforward} para una determinada entrada y poder calcular con su salida esperada $y$ la siguiente ecuación de error:\\
+
+\begin{equation}
+	\begin{split}
+	\delta^L = (a^L-y) \odot \sigma'(z^L)
+	\end{split}
+\end{equation}\\
+
+Donde $a^{L}$ y $z^{L}$ pertenecen a la última capa $L$, el arreglo $\delta^{L}$ representa qué tan rápido cambia la función de costo y $\sigma$ en función $a^{L}$ y $z^{L}$. Ahora se actualizan los sesgos y pesos de la capa $L$:
+
+\begin{equation}
+	\begin{split}
+	b^L & = \delta^L\\
+	w^L & = \delta^L \sigma(z^L)^t
+	\end{split}
+\end{equation}\\
+
+Este procedimiento se propaga hacia atrás en la red por las capas $L-1, L-2, L-3...$ hasta alcanzar la primera capa.
 
 \subsection{Diseño de capas}
 
@@ -654,7 +697,7 @@ Para realizar esta suma primero se obtienen las proyecciones de $\vec{d}$ sobre 
 	\vec{d_{x}} & = \lvert \vec{d} \rvert \cos(\theta)\\
 	\vec{d_{y}} & = \lvert \vec{d} \rvert \sin(\theta)\\
 	\end{split}
-\end{equation}
+\end{equation}\\
 
 \begin{figure}[H]
   \centering
@@ -665,14 +708,14 @@ Para realizar esta suma primero se obtienen las proyecciones de $\vec{d}$ sobre 
   \label{fig:vec_proyection}
 \end{figure}
 
-Ahora la magnitud de $\vec{r_{1}}$ y $\vec{r_{2}}$ se puede definir como:
+Ahora la magnitud de $\vec{r_{1}}$ y $\vec{r_{2}}$ se puede definir como:\\
 
 \begin{equation}
 	\begin{split}
 	\vec{r_{1}} & = \vec{d_{x}}\cos(\pi/4)  + \vec{d_{y}}\cos(\pi/4)\\
 	\vec{r_{2}} & = -\vec{d_{x}}\cos(\pi/4) + \vec{d_{y}}\cos(\pi/4)\\
 	\end{split}
-\end{equation}
+\end{equation}\\
 
 Donde $\pi/4$ es ángulo de $\vec{r_{1}}$ y $\vec{r_{2}}$ sobre el eje $X$. Si la magnitud de los vectores toma un valor negativo es debe invertir la dirección de las ruedas.\\
 
