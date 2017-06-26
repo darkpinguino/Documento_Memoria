@@ -687,14 +687,14 @@ Esta señal de control es producida por el microcontrolador a una frecuencia de 
 
 \subsection{Enlace de radio}
 
-Para dar al robot su dirección y velocidad se utiliza un enlace de radio 2.4GHz el que proporciona hasta seis canales de comunicación, para el control de robot solo se utilizan dos. Cada canal se lee desde el receptor de radio por separado por el microcontrolador, utilizando una entrada por canal. La señal se codifica mediante \emph{PWM} donde la duración del pulso determina el valor del canal, cada pulso se produce en serie uno tras otro, este valor va en el rango de 1000$\mu$s a 2000$\mu$s.\\
+Para dar al robot su dirección y velocidad se utiliza un enlace de radio 2.4GHz el que proporciona hasta seis canales de comunicación, para el control de robot solo se utilizan dos. Cada canal se lee desde el receptor de radio por separado por el microcontrolador, utilizando una entrada por canal. La señal se codifica mediante \emph{PWM} donde la duración del pulso determina el valor del canal, cada pulso se produce en serie uno tras otro, este valor va en el rango de 1000ms a 2000ms.\\
 
 \begin{figure}[H]
   \centering
   \fontfamily{cmss}\selectfont{
   \includesvg[width = 300pt, svgpath = images/pwm_radio]{}
   }
-  \caption{Señal \emph{PWM} de distintos canales, el pulso tiene una tiempo de duracion minimo de 1000$\mu$s y maximo de 2000$\mu$s.}
+  \caption{Señal \emph{PWM} de distintos canales, el pulso tiene una tiempo de duracion minimo de 1000ms y maximo de 2000ms.}
   \label{fig:pwm}
 \end{figure}
 

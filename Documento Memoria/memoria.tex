@@ -49,14 +49,52 @@ Aquí va el resumen (en Castellano)...
 
 \section{Descripción del contexto}
 
+\section{Definición del problema}
+
+Los cuadricopteros tiene la capacidad de mantenerse en vuelo sin la intervención de un piloto, ya sea sobre una posición específica o siguiendo una ruta programada, esto es posible gracias al controlador de vuelo que cada multirrotor tiene a bordo, este controla cada movimiento que realiza y puede llegar a realizar muchas tareas de forma autónoma, como lo es despegar, aterrizar o desplazarse a un punto en específico en el aire.\\
+ 
+Las prestaciones mencionadas son realizadas por la adición de dispositivos al controlador de vuelo, estos le entregan información en distintos ámbitos, la que puede ser la posición georeferenciada mediante GPS, la altura por la medición barométrica, los movimientos que realiza el cuadricoptero con sensores de aceleración lineal y angular (acelerómetros y giroscopios), entre otros.\\
+ 
+Si bien con toda la información que el controlador de vuelo puede recopilar del entorno, las funciones que este puede cumplir de forma autónoma tiene un paradigma proactivo, es decir, estas deben ser planeadas en detalle de antemano, por ejemplo: si se requiere que el cuadricoptero siga una determinada ruta conformada por puntos de GPS, es necesario diseñar esta de tal forma que no interfiera con algún elemento con el que este puede colisionar.\\
+ 
+Es por este motivo que las aplicaciones de conducción autónoma se realizan en espacios abiertos donde exista poca intervención del entorno, pero si se requiere que estos vuelen en espacios más confinados o donde falla la asistencia de georreferencia por ejemplo, se debe hacer un vuelo manual asistido por un piloto.\\
+ 
+Entonces la carencia que presentan los multirrotores es la capacidad de ser reactivos ante eventos que ocurran en el entorno, si estos pudieran reaccionar frente a estos sin ser previstos de antemano al momento de planificar el vuelo los cuadricopteros podrían ampliar su rango de aplicaciones.\\
+ 
+La falencia está en que no existe un sistema que proporcione una comprensión del entorno donde se realiza el vuelo y que permita tomar decisiones frente a eventualidades que puedan ocurrir durante este.\\
+
+\section{Propuesta de solución}
+
+Para solventar la falencia mencionada anteriormente se propone implementar un sistema que permita la detección de obstáculos y la evasión de estos, de esta forma agregar al cuadricoptero una herramienta que le permita enfrentar este tipo de problemáticas.\\
+
+La información de objetos será capturada por medio de una cámara digital, el video entregado por esta se procesara para obtener el flujo óptico presente en las imágenes, véase sección \ref{flujo_optico}, éste permite rescatar datos de donde se encuentran los objetos dentro de la imagen.\\
+
+Una vez que se obtenga el flujo óptico, será entregado a una red neuronal, vease seccion \ref{redes_neuronales}, la que dara como salida la dirección a la cual se debe hacer un movimiento para evadir un obstáculo.\\
+
 \section{Objetivos}
 
 \subsection{Objetivo general}
 
+Implementar un sistema que sea capaz de detectar obstáculos y entregar la información necesaria de como evadirlos, mediante flujo óptico y redes neuronales.
+
 \subsection{Objetivos específicos}
-
+ 
+\begin{itemize}
+    \item Definir herramientas que permitan la obtención de flujo óptico desde la captura de video.
+    \item Implementación de una red neuronal que permita el procesamiento del flujo óptico.
+    \item Entrenamiento de una red neuronal para que sea capaz de aprender cómo evadir obstáculos.
+    \item Implementación de un robot omnidireccional que permite la obtención de datos para entrenar la red neuronal.
+    \item Realizar pruebas con el robot para evaluar el comportamiento de la red neuronal ante obstáculos.
+\end{itemize}
+ 
 \section{Alcances}
-
+ 
+\begin{itemize}
+    \item El sistema será probado con un robot omnidireccional que solo puede moverse en un plano de dos eje.
+    \item La evasión de obstáculos solo realizará en un eje.
+    \item Solo se evadirán objetos estáticos y de uno a la vez.
+    \item Las pruebas serán realizada en una pista diseñada con este fin bajo condiciones controladas.
+\end{itemize}
 
 %% contenido del segundo capítulo
 \chapter{Marco teórico}
@@ -103,8 +141,6 @@ Dado el ámbito de este documento, es preciso profundizar en las imágenes digit
 	I = \lbrace (x, y) : 1 \leq  x \leq N_{cols} \wedge 1 \leq y \leq N_{rows} \rbrace \subset \mathbb{Z}^2
 	\end{split}
 \end{equation}
-
-\subsection{OpenNN}
 
 \subsection{Flujo óptico}\label{flujo_optico}
 
@@ -176,7 +212,7 @@ Cuando se realiza un proceso de muestreo en una señal, en este caso de una imag
 
 Es por esta razón que \emph{pyramid} aplica un filtro gaussiano para la capa $G_i$ de la pirámide antes de producir la capa $G_{i+1}$, esto reduce la frecuencia de la imagen en la capa $G_i$ dando como resultado una imagen con menor distorsión en la capa $G_{i+1}$, permitiendo tener una imagen de menor tamaño en una capa $G_j$, al final de la iteración, la cual tiene una baja distorsión frente a la imagen original en la capa $G_0$.\\
 
-\subsection{Redes neuronales}
+\subsection{Redes neuronales}\label{redes_neuronales}
 
 Una red neuronal tiene la finalidad de ser un modelo de una red neuronal biológica, que recibe un número determinado de entradas, las cuales son procesadas dentro de la red y producen una o más salidas. Una red neuronal biológica está conformada por la interconexión de neuronas, las cuales son células nerviosas que reciben estímulos y conducen el impulso nervioso, por medio de un potencial de acción, a otras neuronas \cite{cayre2002common}. De la misma forma una red neuronal está formada por neuronas, a las que nos referimos por ahora como perceptrón, este funciona tomando varias entradas $ x_{1}, x_{2}, $ \dots, para producir una sola salida binaria, como se muestra en la figura \ref{fig:perceptron}.\\
 
@@ -352,12 +388,6 @@ En estos movimientos la velocidad de las ruedas siempre es la misma, solo cambia
   \label{fig:omni_movement_combined}
 \end{figure}
 
-\subsubsection{Rueda omnidireccional}
-
-\subsubsection{Motores reductores}
-
-\subsubsection{Servo motores}
-
 \subsubsection{Controlador para motores}
 
 Un controlador para motores es un dispositivo que maneja el desempeño de un motor eléctrico, este incluye mecanismos para arrancar y detener el motor, seleccionar la dirección de rotación, si es hacia adelante o atrás y regulando la velocidad de este \cite{siskind1963electrical}. La mayoría de los controladores utilizan un circuito eléctrico llamado puente H (también referido como \emph{full-bridge}, este permite aplicar corriente sobre una carga en cualquier dirección, con esto un motor de corriente continua girar en ambas direcciones \cite{williams2002microcontroller}.\\
@@ -384,13 +414,11 @@ El controlador utilizado es el L298, cual contiene dos puentes H compatibles con
 
 Además se puede ver que el controlador recibe una tercera entrada En (sigla del inglés: \emph{Enable}), está activa o desactiva el puente H dependiendo del estado lógico que presente: Si el estado es alto el puente H funcionara según corresponda con las entradas In1 e In2, pero si está en estado bajo desconecta ambas salidas OUT1 y OUT2.
 
-\subsection{Microcomputador}
-
 \subsection{Microcontrolador}
 
 \subsection{Camara}
 
-\subsection{Sensor Óptico}
+\subsection{Sensor óptico de movimiento}
 
 El sensor óptico de movimiento acoplado al robot que tiene la función registrar las trayectorias que este sigue, proviene de un \emph{mouse} óptico (referido en este documento indistintamente como \emph{mouse} o \emph{mouse} optico. Este utiliza una fuente de luz, en este caso un LED rojo y detector de luz como una matriz de fotodiodos, los que forman una pequeña cámara digital, para detectar el movimiento relativo a una superficie.\\
 
@@ -498,7 +526,7 @@ Este procedimiento se propaga hacia atrás en la red por las capas $L-1, L-2, L-
 
 Para entrenar la red neuronal se utiliza como entrada el flujo óptico obtenido de la captura de video de la pista de pruebas y como salida esperada la dirección en la cual se mueve el robot sobre el eje $X$ de la pista. Para modificar los parametros al interior de la red (pesos y sesgos), que se traduce como el aprendizaje de la red, se utiliza la técnica de \emph{backpropagation}.\\
 
-La generación de set de datos del cual la red aprende se hace por medio de un esquema \emph{on-the-fly}, el cual tiene como objetivo que la red neuronal imite el comportamiento de un humano al realizar la misma tarea, la que cual es desplazar el robot por la pista de pruebas. Por lo que el flujo óptico y la dirección del robot se obtiene de la conducción manual del robot.\\
+La generación de set de datos del cual la red aprende se hace por medio de un esquema \emph{on-the-fly} \cite{pomerleau1989alvinn}, el cual tiene como objetivo que la red neuronal imite el comportamiento de un humano al realizar la misma tarea, la que cual es desplazar el robot por la pista de pruebas. Por lo que el flujo óptico y la dirección del robot se obtiene de la conducción manual del robot.\\
 
 La salida esperada de la red neuronal, que representa la dirección en la que se mueve el robot en forma horizontal y que es utilizada como parámetro en el entrenamiento por \emph{backpropagation}, es obtenida por el seguimiento de los movimientos que realice el robot por medio de un sensor óptico de movimiento. La arquitectura de la red neuronal tendrá una sola salida la que estará normalizada [rango de la salida], por lo que la dirección del robot será representada por un solo valor.\\
 
@@ -659,14 +687,14 @@ Esta señal de control es producida por el microcontrolador a una frecuencia de 
 
 \subsection{Enlace de radio}
 
-Para dar al robot su dirección y velocidad se utiliza un enlace de radio 2.4GHz el que proporciona hasta seis canales de comunicación, para el control de robot solo se utilizan dos. Cada canal se lee desde el receptor de radio por separado por el microcontrolador, utilizando una entrada por canal. La señal se codifica mediante \emph{PWM} donde la duración del pulso determina el valor del canal, cada pulso se produce en serie uno tras otro, este valor va en el rango de 1000ms a 2000ms.\\
+Para dar al robot su dirección y velocidad se utiliza un enlace de radio 2.4GHz el que proporciona hasta seis canales de comunicación, para el control de robot solo se utilizan dos. Cada canal se lee desde el receptor de radio por separado por el microcontrolador, utilizando una entrada por canal. La señal se codifica mediante \emph{PWM} donde la duración del pulso determina el valor del canal, cada pulso se produce en serie uno tras otro, este valor va en el rango de 1000$\mu$s a 2000$\mu$s.\\
 
 \begin{figure}[H]
   \centering
   \fontfamily{cmss}\selectfont{
   \includesvg[width = 300pt, svgpath = images/pwm_radio]{}
   }
-  \caption{Señal \emph{PWM} de distintos canales, el pulso tiene una tiempo de duracion minimo de 1000ms y maximo de 2000ms.}
+  \caption{Señal \emph{PWM} de distintos canales, el pulso tiene una tiempo de duracion minimo de 1000$\mu$s y maximo de 2000$\mu$s.}
   \label{fig:pwm}
 \end{figure}
 
@@ -768,13 +796,13 @@ Donde $y_i$ es la salida esperada y $a^L(x_i)$ es la salida que da la última ca
  
 La segunda comprobación de entrenamiento se realizará de forma empírica, comparando el comportamiento de la conducción manual del robot, contra la conducción autónoma guiada por la red neuronal, cada vez que el robot se desplace por la pista de pruebas se deja registro de su desplazamiento, por lo que se puede comparar el recorrido realizado de forma manual y el de forma autónoma. Para considerar la prueba exitosa la desviación de las dos trayectorias no debe ser mayor a [medida de desviación].\\
  
+\section{Obtención de datos de prueba}
+ 
 La obtención del conjunto datos, para realizar las pruebas, consta de conducir de forma manual el robot repetidas veces por la pista de pruebas, colocando el robot en posiciones definidas al comienzo de la pista y dirigirlo hasta el final de esta.\\
  
 Para la primera etapa, sin importar la posición de inicio, tiene como objetivo mover el robot al centro de la pista direccionando sobre el eje $X$ mientras se desplaza al final de la pista por el eje $Y$, para que de esta forma la red neuronal pueda aprender a direccionar el robot evadiendo los bordes de la pista.\\
  
 En la segunda etapa se posicionará un obstáculo dentro de la pista, al igual que en la primera etapa, también se deberá centrar el robot dentro de la pista, pero al enfrentarse a un obstáculo este debe ser evadido.\\
-
-\section{Obtención de datos de prueba}
 
 Para realizar la recopilación de datos, el inicio de la pista será dividido en [n] secciones iguales la que estarán divididas en [cm] una de otra, de donde comienza el robot, por cada una de estas secciones se registran [n] recorridos del robot sobre la pista, obteniendo la información de flujo óptico y el recorrido hecho por este. El recorrido registrado es a una velocidad constante [velocidad del robot] y recorre una distancia de [distancia a recorrer].\\
  

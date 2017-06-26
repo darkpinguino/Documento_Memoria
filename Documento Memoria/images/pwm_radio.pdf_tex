@@ -50,8 +50,8 @@
   \makeatother%
   \begin{picture}(1,0.84946891)%
     \put(0,0){\includegraphics[width=\unitlength]{pwm_radio.pdf}}%
-    \put(0.34960525,0.79802796){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{2000ms}}}%
-    \put(0.48247513,0.59134147){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{1000ms}}}%
+    \put(0.34960525,0.79802796){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{2000$\mu$s}}}%
+    \put(0.48247513,0.59134147){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{1000$\mu$s}}}%
     \put(0.08386547,0.67992139){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Canal 1}}}%
     \put(0.08386547,0.47323492){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Canal 2}}}%
     \put(0.08386547,0.26654843){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Canal 3}}}%
