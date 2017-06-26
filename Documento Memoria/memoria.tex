@@ -496,20 +496,11 @@ Este procedimiento se propaga hacia atrás en la red por las capas $L-1, L-2, L-
 
 \subsection{Entrenamiento}
 
-Para entrenar la red neuronal se utiliza como entrada el flujo óptico obtenido de la captura de video de la pista de pruebas y como salida esperada la dirección en la cual se mueve el robot [agregar marco de referencia]. Para modificar los pesos al interior de la red, que se traduce como el aprendizaje de la red, se utiliza la técnica de \emph{backpropagation}.\\
+Para entrenar la red neuronal se utiliza como entrada el flujo óptico obtenido de la captura de video de la pista de pruebas y como salida esperada la dirección en la cual se mueve el robot sobre el eje $X$ de la pista. Para modificar los parametros al interior de la red (pesos y sesgos), que se traduce como el aprendizaje de la red, se utiliza la técnica de \emph{backpropagation}.\\
 
-La generación de set de datos del cual la red aprende se hace por medio de un esquema [mejor traducción] \emph{on-the-fly}, el cual tiene como objetivo que la red neuronal imite el comportamiento de un humano al realizar la misma tarea, la que cual es desplazar el robot por la pista de pruebas. Por lo que el flujo óptico y la dirección del robot se obtiene de la conducción manual del robot.\\
+La generación de set de datos del cual la red aprende se hace por medio de un esquema \emph{on-the-fly}, el cual tiene como objetivo que la red neuronal imite el comportamiento de un humano al realizar la misma tarea, la que cual es desplazar el robot por la pista de pruebas. Por lo que el flujo óptico y la dirección del robot se obtiene de la conducción manual del robot.\\
 
-La obtención del flujo óptico se hace desde la captura de video del recorrido del robot por la pista de pruebas. Ya que la respuesta de la red neuronal sobre el robot es refleja solo sobre un eje de movimiento, solo importa rescatar desde las imágenes del video la posición de la información de forma horizontal sin importar que tan arriba o abajo se encuentre dentro de la imagen, ya que sin importar la variación de este último parámetro la respuesta de red neuronal debería ser la misma.
-Siguiendo con este tópico y los alcances de las pruebas, no se necesita la información del flujo óptico que se registre de forma vertical, solo tiene importancia para este caso el flujo que se registre en forma horizontal. Esto permite simplificar los datos obtenidos desde las imágenes reduciendo la dimensión de los vectores obtenidos, de dos dimensiones a solo una.\\
-
-Otra consideración en la obtención del flujo óptico es sobre la pista de pruebas, la cual entregara una imagen que es monótona de forma vertical [mejor descripción?], es decir, si se analiza la imagen de forma vertical los datos que se obtendrán serán muy similares, lo que conlleva a poder reducir los datos que se necesitan obtener sin reducir la información que generaliza a toda la imagen, por lo que solo basta con tomar una franja horizontal de la imagen para tener la información necesaria para la entrada de la red neuronal.\\
-
-Originalmente la representación del flujo óptico consta de un vector bidimensional por cada punto que se examine de la imagen, esta información se podría representar por dos vectores de dimensión n, donde n es la cantidad de puntos observados en la imagen, y un vector representaría la información del flujo óptico horizontal y otro vertical. Dada las consideraciones mencionadas anteriormente solo se necesita utilizar como vector de entrada para la red neuronal el que contenga la información del flujo óptico en el eje horizontal de la imagen, además la dimensionalidad de este se verá disminuida por la reducción de puntos a tomar en cuenta en la imagen.\\
-
-La salida esperada de la red neuronal, que representa la dirección en la que se mueve el robot en forma horizontal y que será utilizada como parámetro para el entrenamiento por backpropagation, será obtenida por el seguimiento de los movimientos que realice el robot por medio de un sensor óptico de movimiento. La arquitectura de la red neuronal tendrá una sola salida la que estará normalizada [rango de la salida], por lo que la dirección del robot será representada por un solo valor.\\
-
-Para lograr que la red neuronal aprenda se utiliza un entrenamiento del tipo \emph{on-the-fly}, el cual consiste en que la red logre imitar el comportamiento que tendría un humano al realizar la misma tarea, se debe entregar a la red un set de datos generados, en este caso, de la conducción manual del robot por la pista de pruebas, este set de datos consta del flujo óptico obtenido de la captura de video, que se utilizara como entrada de red neuronal, y de la dirección en la cual se movió el robot [agregar marco de referencia] \\
+La salida esperada de la red neuronal, que representa la dirección en la que se mueve el robot en forma horizontal y que es utilizada como parámetro en el entrenamiento por \emph{backpropagation}, es obtenida por el seguimiento de los movimientos que realice el robot por medio de un sensor óptico de movimiento. La arquitectura de la red neuronal tendrá una sola salida la que estará normalizada [rango de la salida], por lo que la dirección del robot será representada por un solo valor.\\
 
 \section{Robot omnidireccional}
 
@@ -758,28 +749,38 @@ Donde $\pi/4$ es ángulo de $\vec{r_{1}}$ y $\vec{r_{2}}$ sobre el eje $X$. Si l
 
 \chapter{Pruebas}
 
-Las pruebas que se realizan para comprobar si la red neuronal es capaz de evadir obstáculos se dividen en dos etapas: La primera consta en mover el robot sobre la pista de pruebas sin colocar obstáculos, solo con información visual a los costados, la que será captada como flujo óptico, esta permitirá que el robot evite los bordes de la pista y sea capaz de centrarse dentro de esta. En la segunda etapa se mantendrá el esquema de la primera, además de incluir un obstáculo en la pista de pruebas, que el robot tendrá que evadir.\\
+Las pruebas que se realizan para comprobar si la red neuronal aprende y es capaz de evadir obstáculos se dividen en dos etapas: La primera consta en mover el robot sobre la pista de pruebas sin colocar obstáculos, sólo con información visual a los costados, la que será captada como flujo óptico, esta permitirá que el robot evite los bordes de la pista y sea capaz de centrarse dentro de esta. En la segunda etapa se mantendrá el mismo esquema de la primera, además de incluir un obstáculo en la pista de pruebas, que el robot tendrá que evadir.\\
 
-Por cada una de las etapas se comprobará, de dos formas distintas, si la red neuronal está aprendiendo por medio del método de entrenamiento \emph{backpropagation}. La primera es evaluando el aprendizaje con un set de datos distinto al del entrenamiento, aquí se evalúa cuanto difiere la salida esperada con la que entrega la red. Esta diferencia se considera \emph{test error} (error de prueba) y esta será obtenida por la técnica de \emph{Validation Set Approach} (enfoque de conjunto de validación) la que consiste en dejar parte del conjunto de entrenamiento para validar cuan efectivo fue este.\\
+\section{Comprobación de aprendizaje}
 
+Por cada una de las etapas se comprobará de dos formas distintas si la red neuronal está aprendiendo. La primera es evaluando el aprendizaje con un set de datos de prueba, que no fue usado para el entrenamiento, aquí se evalúa cuánto difiere la salida teórica que debería entregar la red, salida esperada, con la que entrega realmente la red. Esta diferencia se considera \emph{test error} (error de prueba) y esta será obtenida por la técnica de \emph{Validation Set Approach} (enfoque de conjunto de validación) la que consiste en dejar parte del conjunto de entrenamiento para validar cuán efectivo fue este.\\
+ 
 [completar cuantos datos de entrenamiento fueron y cuantos se dejaron para validation set approach]
-la implementación de la red reordena de forma aleatoria el conjunto de datos y desde este crea un conjunto de datos para las pruebas.\\
+la implementación de la red reordena de forma aleatoria el conjunto de datos y desde este crea un conjunto de datos para las pruebas, que no será usado en el entrenamiento \cite{james2014introduction}.\\
+ 
+La cuantificación del error se mide de dos formas distintas: La primera es mediante es el error cuadrático medio \emph{MSE} (del ingles: \emph{mean squared error}):\\
 
-La cuantificación del error se realiza midiendo el porcentaje de efectividad de la red, contando la cantidad de veces que la salida de la red es una respuesta esperada, para saber si la salida satisface esta condición se establece un margen de aceptación de [porcentaje de aceptación], para qué se considere un entrenamiento efectivo la eficacia de la red debe estar sobre un [porcentaje de efectividad]\\ 
+\begin{equation}
+	MSE = \frac{1}{n} \sum^n_{x=1} (y_i-a^L(x_i))^2
+\end{equation}\\
 
+Donde $y_i$ es la salida esperada y $a^L(x_i)$ es la salida que da la última capa $L$ de la red neuronal con la entrada $x_i$, con un set de prueba de tamaño $n$. En el segundo método se mide el porcentaje de efectividad de la red, cuantificando la cantidad de veces que la red entrega una salida que satisface a una respuesta esperada sobre el total de respuestas entregadas. Para saber si la salida cumple esta condición se establece un margen de aceptación de [porcentaje de aceptación], donde la salida de la red no puede desviarse más allá de este porcentaje para que se considere salida correcta. El entrenamiento se considera exitoso si la eficacia de la red está sobre.\\
+ 
 La segunda comprobación de entrenamiento se realizará de forma empírica, comparando el comportamiento de la conducción manual del robot, contra la conducción autónoma guiada por la red neuronal, cada vez que el robot se desplace por la pista de pruebas se deja registro de su desplazamiento, por lo que se puede comparar el recorrido realizado de forma manual y el de forma autónoma. Para considerar la prueba exitosa la desviación de las dos trayectorias no debe ser mayor a [medida de desviación].\\
-
+ 
 La obtención del conjunto datos, para realizar las pruebas, consta de conducir de forma manual el robot repetidas veces por la pista de pruebas, colocando el robot en posiciones definidas al comienzo de la pista y dirigirlo hasta el final de esta.\\
-
-Para la primera etapa, sin importar la posición de inicio, tiene como objetivo mover el robot al centro de la pista direccionándolo solo de forma horizontal [mejorar descripción del movimiento de robot, para que de esta forma la red neuronal pueda aprender a direccionar el robot evadiendo los bordes de la pista.\\
-
+ 
+Para la primera etapa, sin importar la posición de inicio, tiene como objetivo mover el robot al centro de la pista direccionando sobre el eje $X$ mientras se desplaza al final de la pista por el eje $Y$, para que de esta forma la red neuronal pueda aprender a direccionar el robot evadiendo los bordes de la pista.\\
+ 
 En la segunda etapa se posicionará un obstáculo dentro de la pista, al igual que en la primera etapa, también se deberá centrar el robot dentro de la pista, pero al enfrentarse a un obstáculo este debe ser evadido.\\
 
-Para realizar la recopilación de datos, el inicio de la pista será dividido en [n] secciones iguales la que estarán divididas en [cm] una de otra, de donde comenzara el robot, por cada una de estas secciones se registrarán [n] recorridos del robot sobre la pista, obteniendo la información de flujo óptico y el recorrido echo por este. El recorrido registrado será a una velocidad constante [velocidad del robot] y recorrerá una distancia de [distancia a recorrer].\\
+\section{Obtención de datos de prueba}
 
-Para la recopilación de datos con obstáculos, se utilizará el mismo esquema anterior, pero se posicionará un obstáculo dentro de pista en distintas posiciones predefinas, estas posiciones son representadas dentro de la pista por una matriz, la cual será de [n] filas y [m] columnas, la separación entre las filas y las columnas será igual y de [cm], y estará posicionada en la pista a [distancia] del inicio de la pista y centrada con respecto a los bordes. Por cada obstáculo se recopilarán los datos [n] veces por cada posición de inicio de la pista.\\
-
-La construcción de la pista de pruebas necesita de un material que proporcione tracción a las ruedas del robot, por lo que se utiliza una alfombra de cubre pisos de 1 metro de ancho y 4 metros de largo, de color beige para proporcionar mayor contraste frente a los obstáculos, los bordes de la pista tendrán un alto de [cm] con un patrón regular líneas verticales blancas y negras de [cm] de ancho.
+Para realizar la recopilación de datos, el inicio de la pista será dividido en [n] secciones iguales la que estarán divididas en [cm] una de otra, de donde comienza el robot, por cada una de estas secciones se registran [n] recorridos del robot sobre la pista, obteniendo la información de flujo óptico y el recorrido hecho por este. El recorrido registrado es a una velocidad constante [velocidad del robot] y recorre una distancia de [distancia a recorrer].\\
+ 
+Para la recopilación de datos con obstáculos, se utilizará el mismo esquema anterior, pero se posiciona un obstáculo dentro de pista en distintas posiciones predefinidas, estas posiciones son representadas dentro de la pista por una matriz, la cual será de [n] filas y [m] columnas, la separación entre las filas y las columnas será igual y de [cm], y se coloca en la pista a [distancia] del inicio de la pista y centrada con respecto a los bordes. Por cada obstáculo se recopilan los datos [n] veces por cada posición de inicio de la pista.\\
+ 
+La construcción de la pista de pruebas necesita de un material que proporciona tracción a las ruedas del robot, por lo que se utiliza una alfombra de cubre pisos de 1 metro de ancho y 4 metros de largo, de color beige para proporcionar mayor contraste frente a los obstáculos, los bordes de la pista tendrán un alto de [cm] con un patrón regular líneas verticales blancas y negras de [cm] de ancho.
 
 \chapter{Resultados}
 

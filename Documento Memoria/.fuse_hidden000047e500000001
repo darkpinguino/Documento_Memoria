@@ -749,38 +749,38 @@ Donde $\pi/4$ es ángulo de $\vec{r_{1}}$ y $\vec{r_{2}}$ sobre el eje $X$. Si l
 
 \chapter{Pruebas}
 
-Las pruebas que se realizan para comprobar si la red neuronal aprende y es capaz de evadir obstáculos se dividen en dos etapas: La primera consta en mover el robot sobre la pista de pruebas sin colocar obstáculos, sólo con información visual a los costados, la que será captada como flujo óptico, esta permitirá que el robot evite los bordes de la pista y sea capaz de centrarse dentro de esta. En la segunda etapa se mantendrá el mismo esquema de la primera, además de incluir un obstáculo en la pista de pruebas, que el robot tendrá que evadir.\\
+Las pruebas que se realizan para comprobar si la red neuronal aprende y es capaz de evadir obstáculos se dividen en dos etapas: La primera consta en mover el robot sobre la pista de pruebas sin colocar obstáculos, solo con información visual a los costados, la que será captada como flujo óptico, esta permitirá que el robot evite los bordes de la pista y sea capaz de centrarse dentro de esta. En la segunda etapa se mantendrá el mismo esquema de la primera, además de incluir un obstáculo en la pista de pruebas, que el robot tendrá que evadir.\\
 
 \section{Comprobación de aprendizaje}
 
-Por cada una de las etapas se comprobará de dos formas distintas si la red neuronal está aprendiendo. La primera es evaluando el aprendizaje con un set de datos de prueba, que no fue usado para el entrenamiento, aquí se evalúa cuánto difiere la salida teórica que debería entregar la red, salida esperada, con la que entrega realmente la red. Esta diferencia se considera \emph{test error} (error de prueba) y esta será obtenida por la técnica de \emph{Validation Set Approach} (enfoque de conjunto de validación) la que consiste en dejar parte del conjunto de entrenamiento para validar cuán efectivo fue este.\\
- 
+Por cada una de las etapas se comprobará de dos formas distintas si la red neuronal está aprendiendo. La primera es evaluando el aprendizaje con un set de datos de prueba, que no fue usado para el entrenamiento, aquí se evalúa cuanto difiere la salida teorica que deberia entregar la red, salida esperada, con la que entrega realmente la red. Esta diferencia se considera \emph{test error} (error de prueba) y esta será obtenida por la técnica de \emph{Validation Set Approach} (enfoque de conjunto de validación) la que consiste en dejar parte del conjunto de entrenamiento para validar cuan efectivo fue este.\\
+
 [completar cuantos datos de entrenamiento fueron y cuantos se dejaron para validation set approach]
-la implementación de la red reordena de forma aleatoria el conjunto de datos y desde este crea un conjunto de datos para las pruebas, que no será usado en el entrenamiento \cite{james2014introduction}.\\
- 
-La cuantificación del error se mide de dos formas distintas: La primera es mediante es el error cuadrático medio \emph{MSE} (del ingles: \emph{mean squared error}):\\
+la implementación de la red reordena de forma aleatoria el conjunto de datos y desde este crea un conjunto de datos para las pruebas, que no sera usado en el entrenamiento \cite{james2014introduction}.\\
+
+La cuantificación del error se medida de dos formas distintas: La primera es mediante es el error cuadratico medio \emph{MSE} (del ingles: \emph{mean squared error}):\\
 
 \begin{equation}
 	MSE = \frac{1}{n} \sum^n_{x=1} (y_i-a^L(x_i))^2
 \end{equation}\\
 
-Donde $y_i$ es la salida esperada y $a^L(x_i)$ es la salida que da la última capa $L$ de la red neuronal con la entrada $x_i$, con un set de prueba de tamaño $n$. En el segundo método se mide el porcentaje de efectividad de la red, cuantificando la cantidad de veces que la red entrega una salida que satisface a una respuesta esperada sobre el total de respuestas entregadas. Para saber si la salida cumple esta condición se establece un margen de aceptación de [porcentaje de aceptación], donde la salida de la red no puede desviarse más allá de este porcentaje para que se considere salida correcta. El entrenamiento se considera exitoso si la eficacia de la red está sobre.\\
- 
+Donde $y_i$ es la salida esperada y $a^L(x_i)$ es la salida que da la ultima capa $L$ de la red nuronal con la entrada $x_i$, con un set de prueba de tamaño $n$. En el segundo metodo se mide el porcentaje de efectividad de la red, cuantificando la cantidad de veces que la red entrega una salida que satisface a una respuesta esperada sobre el total de respuestas entregadas. Para saber si la salida cumple esta condición se establece un margen de aceptación de [porcentaje de aceptación], done la salida de la red no puede desviarce más allá de este porcentaje para que se concidere salida correcta. El entrenamiento se considera exitoso si la eficacia de la red esta sobre.\\
+
 La segunda comprobación de entrenamiento se realizará de forma empírica, comparando el comportamiento de la conducción manual del robot, contra la conducción autónoma guiada por la red neuronal, cada vez que el robot se desplace por la pista de pruebas se deja registro de su desplazamiento, por lo que se puede comparar el recorrido realizado de forma manual y el de forma autónoma. Para considerar la prueba exitosa la desviación de las dos trayectorias no debe ser mayor a [medida de desviación].\\
- 
+
 La obtención del conjunto datos, para realizar las pruebas, consta de conducir de forma manual el robot repetidas veces por la pista de pruebas, colocando el robot en posiciones definidas al comienzo de la pista y dirigirlo hasta el final de esta.\\
- 
-Para la primera etapa, sin importar la posición de inicio, tiene como objetivo mover el robot al centro de la pista direccionando sobre el eje $X$ mientras se desplaza al final de la pista por el eje $Y$, para que de esta forma la red neuronal pueda aprender a direccionar el robot evadiendo los bordes de la pista.\\
- 
+
+Para la primera etapa, sin importar la posición de inicio, tiene como objetivo mover el robot al centro de la pista direccionándolo sobre el eje $X$ mientras se desplaza al final de la pista por el eje $Y$, para que de esta forma la red neuronal pueda aprender a direccionar el robot evadiendo los bordes de la pista.\\
+
 En la segunda etapa se posicionará un obstáculo dentro de la pista, al igual que en la primera etapa, también se deberá centrar el robot dentro de la pista, pero al enfrentarse a un obstáculo este debe ser evadido.\\
 
 \section{Obtención de datos de prueba}
 
-Para realizar la recopilación de datos, el inicio de la pista será dividido en [n] secciones iguales la que estarán divididas en [cm] una de otra, de donde comienza el robot, por cada una de estas secciones se registran [n] recorridos del robot sobre la pista, obteniendo la información de flujo óptico y el recorrido hecho por este. El recorrido registrado es a una velocidad constante [velocidad del robot] y recorre una distancia de [distancia a recorrer].\\
- 
-Para la recopilación de datos con obstáculos, se utilizará el mismo esquema anterior, pero se posiciona un obstáculo dentro de pista en distintas posiciones predefinidas, estas posiciones son representadas dentro de la pista por una matriz, la cual será de [n] filas y [m] columnas, la separación entre las filas y las columnas será igual y de [cm], y se coloca en la pista a [distancia] del inicio de la pista y centrada con respecto a los bordes. Por cada obstáculo se recopilan los datos [n] veces por cada posición de inicio de la pista.\\
- 
-La construcción de la pista de pruebas necesita de un material que proporciona tracción a las ruedas del robot, por lo que se utiliza una alfombra de cubre pisos de 1 metro de ancho y 4 metros de largo, de color beige para proporcionar mayor contraste frente a los obstáculos, los bordes de la pista tendrán un alto de [cm] con un patrón regular líneas verticales blancas y negras de [cm] de ancho.
+Para realizar la recopilación de datos, el inicio de la pista será dividido en [n] secciones iguales la que estarán divididas en [cm] una de otra, de donde ciemienza el robot, por cada una de estas secciones se registran [n] recorridos del robot sobre la pista, obteniendo la información de flujo óptico y el recorrido echo por este. El recorrido registrado es a una velocidad constante [velocidad del robot] y recorre una distancia de [distancia a recorrer].\\
+
+Para la recopilación de datos con obstáculos, se utilizará el mismo esquema anterior, pero se posiciona un obstáculo dentro de pista en distintas posiciones predefinas, estas posiciones son representadas dentro de la pista por una matriz, la cual será de [n] filas y [m] columnas, la separación entre las filas y las columnas será igual y de [cm], y se coloca en la pista a [distancia] del inicio de la pista y centrada con respecto a los bordes. Por cada obstáculo se recopilan los datos [n] veces por cada posición de inicio de la pista.\\
+
+La construcción de la pista de pruebas necesita de un material que proporcione tracción a las ruedas del robot, por lo que se utiliza una alfombra de cubre pisos de 1 metro de ancho y 4 metros de largo, de color beige para proporcionar mayor contraste frente a los obstáculos, los bordes de la pista tendrán un alto de [cm] con un patrón regular líneas verticales blancas y negras de [cm] de ancho.
 
 \chapter{Resultados}
 
