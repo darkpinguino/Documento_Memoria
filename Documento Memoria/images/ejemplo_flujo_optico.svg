@@ -531,7 +531,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
      inkscape:cx="1438.0841"
-     inkscape:cy="1528.6054"
+     inkscape:cy="271.46254"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -553,7 +553,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1509,7 +1509,7 @@
          id="tspan5310"
          x="-22.517231"
          y="833.48828"
-         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;font-family:TeX Gyre Bonum Math;-inkscape-font-specification:TeX Gyre Bonum Math">Flujo Optico 1-2</tspan></text>
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;font-family:TeX Gyre Bonum Math;-inkscape-font-specification:TeX Gyre Bonum Math">Flujo Óptico 1-2</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:56px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:TeX Gyre Bonum Math;-inkscape-font-specification:TeX Gyre Bonum Math"
@@ -1521,6 +1521,6 @@
          id="tspan5314"
          x="766.0542"
          y="833.48828"
-         style="text-align:center;text-anchor:middle;font-size:40px">Flujo Optico 2-3</tspan></text>
+         style="font-size:40px;text-align:center;text-anchor:middle">Flujo Óptico 2-3</tspan></text>
   </g>
 </svg>

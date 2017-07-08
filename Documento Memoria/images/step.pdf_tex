@@ -64,7 +64,7 @@
     \put(0.09776505,0.31475166){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{0.6}}}%
     \put(0.09779116,0.38761219){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{0.8}}}%
     \put(0.10233768,0.46046793){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{1}}}%
-    \put(0.5186769,0.50702324){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{función escalonada}}}%
+    \put(0.5186769,0.50702324){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Función escalonada}}}%
     \put(0.56191217,0.02087837){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$Z$}}}%
     \put(0.03320501,0.28235069){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{salida}}}%
   \end{picture}%

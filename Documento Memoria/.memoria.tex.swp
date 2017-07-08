@@ -152,7 +152,7 @@ Podemos definir un campo de movimiento, en el cual asignamos un vector de veloci
 \begin{figure}[H]
   \centering
   \includesvg[width = 300pt, svgpath = images/proyeccion_flujo_optico]{}
-  \caption{Proyección de un punto $P_0$ con movimoento $v_0$ en la escena  a un punto $P_i$ con movimiento $v_i$ sobre la imagen.}
+  \caption[Proyección de un punto sobre la imagen.]{Proyección de un punto $P_0$ con movimoento $v_0$ en la escena  a un punto $P_i$ con movimiento $v_i$ sobre la imagen.}
   \label{fig:proyeccion_flujo_optico}
 \end{figure}
 
@@ -163,7 +163,7 @@ Los vectores de velocidad producidos por el movimiento aparente son descritos de
 \begin{figure}[H]
   \centering
   \includesvg[width = 300pt, svgpath = images/ejemplo_flujo_optico]{}
-  \caption{Ejemplo de captura del flujo optico, por medio de cuandos de imagen consecutivos.}
+  \caption[Captura de flujo óptico.]{Ejemplo de captura del flujo óptico, por medio de cuadros de imagen consecutivos.}
   \label{fig:ejemplo_flujo_optico}
 \end{figure}
 
@@ -221,7 +221,7 @@ Una red neuronal tiene la finalidad de ser un modelo de una red neuronal biológ
   \begin{Large}
   \includesvg[width = 300pt, svgpath = images/perceptron]{}
   \end{Large}
-  \caption{Perceptrón con tres entradas: $x_{1}$, $x_{2}$ y $x_{3}$ que generea un salida binaria, con valor 0 o 1.}
+  \caption[Representación de un perceptrón.]{Perceptrón con tres entradas: $x_{1}$, $x_{2}$ y $x_{3}$ que genera un salida binaria, con valor 0 o 1.}
   \label{fig:perceptron}
 \end{figure}
 
@@ -243,7 +243,7 @@ La red neuronal es conformada por la interconexión de perceptrones, los que se 
   \begin{large}
   \includesvg[width = 400pt, svgpath = images/network]{}
   \end{large}
-  \caption{Red neuronal conformada por 3 capas, la primera con 3 perceptrones, la segunda con 4 y la tercera y ultima con 1 perceptron.}
+  \caption[Representación de una red neuronal.]{Red neuronal conformada por 3 capas, la primera con 3 perceptrones, la segunda con 4 y la tercera y última con 1 perceptrón.}
   \label{fig:red neuronal}
 \end{figure}
 
@@ -285,7 +285,7 @@ Al ser sigma una función continua, ahora la salida de la red no es binaria, si 
   \begin{small}
   \includesvg[width = 400pt, svgpath = images/sigmoid]{}
   \end{small}
-  \caption{Función que utiliza una neurona sigmoide, como se puede ver la salida de la neurona sera un valor continuo, entre 0 y 1.}
+  \caption[Función sigmoide.]{Función que utiliza una neurona sigmoide, como se puede ver la salida de la neurona será un valor continuo, entre 0 y 1.}
   \label{fig:sigmoid}
 \end{figure}
 
@@ -294,7 +294,7 @@ Al ser sigma una función continua, ahora la salida de la red no es binaria, si 
   \begin{small}
   \includesvg[width = 400pt, svgpath = images/step]{}
   \end{small}
-  \caption{Función escalonada que utilza un perceptron, el que tiene una salida binaria, con valores entre 0 y 1.}
+  \caption[Función escalonada.]{Función escalonada que utiliza un perceptrón, el que tiene una salida binaria, con valores entre 0 y 1.}
   \label{fig:step}
 \end{figure}
 
@@ -350,7 +350,7 @@ Un robot omnidireccional (referido en este documento inherentemente como robot o
 \begin{figure}[H]
   \centering
   \includesvg[width = 200pt, svgpath = images/image_omni_whell]{}
-  \caption{Direcciones en las cuales puede moverse una rueda omnidireccional.}
+  \caption[Movimiento rueda omnidireccional.]{Direcciones en las cuales puede moverse una rueda omnidireccional.}
   \label{fig:image_omni_whell}
 \end{figure}
 
@@ -364,7 +364,7 @@ Para lograr que el robot se desplace en cualquier dirección es necesario calcul
   \begin{footnotesize}
   \includesvg[width = 300pt, svgpath = images/omni_movement_up_down]{}
   \end{footnotesize}
-  \caption{Las flechas muestran la dirección en la que las ruedas deben girar para lograr los movimientos hacia adelante y atrás.}
+  \caption[Movimiento hacia adelante y atrás del robot omnidireccional.]{Las flechas muestran la dirección en la que las ruedas deben girar para lograr los movimientos hacia adelante y atrás.}
   \label{fig:omni_movement_up_down}
 \end{figure}
 
@@ -373,7 +373,7 @@ Para lograr que el robot se desplace en cualquier dirección es necesario calcul
   \begin{footnotesize}
   \includesvg[width = 300pt, svgpath = images/omni_movement_left_right]{}
   \end{footnotesize}
-  \caption{Las flechas muestran la dirección en la que las ruedas deben girar para lograr los movimientos hacia la derecha e izquierda.}
+  \caption[Movimiento hacia la derecha e izquierda del robot omnidireccional.]{Las flechas muestran la dirección en la que las ruedas deben girar para lograr los movimientos hacia la derecha e izquierda.}
   \label{fig:omni_movement_left_right}
 \end{figure}
 
@@ -384,7 +384,7 @@ En estos movimientos la velocidad de las ruedas siempre es la misma, solo cambia
   \begin{footnotesize}
   \includesvg[width = 300pt, svgpath = images/omni_movement_combined]{}
   \end{footnotesize}
-  \caption{Izquierda movimiento del robot en 45$^{\circ}$ donde solo se mueve un par de ruedas. Derecha movimiento del robot en 120$^{\circ}$ donde un par de ruedas se mueve más rápido que otro, representado por el grosor la fecha que acompaña a las ruedas.}
+  \caption[Movimiento en 45$^{\circ}$ y 120$^{\circ}$ del robot omnidireccional]{Izquierda movimiento del robot en 45$^{\circ}$ donde solo se mueve un par de ruedas. Derecha movimiento del robot en 120$^{\circ}$ donde un par de ruedas se mueve más rápido que otro, representado por el grosor la fecha que acompaña a las ruedas.}
   \label{fig:omni_movement_combined}
 \end{figure}
 
@@ -397,7 +397,7 @@ El nombre es derivado de su representación gráfica, como se muestra en la figu
 \begin{figure}[H]
   \centering
   \includesvg[width = 400pt, svgpath = images/H_bridge]{}
-  \caption{Funcionamiento de un puerte H. A estructura del puente H. B interruptores S1 y S4 cerrado. C interruptores S3 y S2 cerrados.}
+  \caption[Funcionamiento de un puente H.]{Funcionamiento de un puente H. A estructura del puente H. B interruptores S1 y S4 cerrado. C interruptores S3 y S2 cerrados.}
   \label{fig:H bridge}
 \end{figure}
 
@@ -408,7 +408,7 @@ El controlador utilizado es el L298, cual contiene dos puentes H compatibles con
   \fontfamily{cmss}\selectfont{
   \includesvg[width = 400pt, svgpath = images/H_bridge_circuit]{}
   }
-  \caption{Control logico dentro del L298 sobre uno de sus puente H.}
+  \caption[Control lógico del controlador L298]{Control lógico dentro del L298 sobre uno de sus puente H.}
   \label{fig:H bridge circuit}
 \end{figure}
 
@@ -452,7 +452,7 @@ El \emph{mouse} envía la información de estado de los botones, derecho, centra
 	\end{small}
 	
 }
-\caption{Paquete de datos del moviento del \emph{mouse}.}
+\caption[Paquete de datos de movimiento \emph{mouse} PS/2.]{Paquete de datos del movimiento del \emph{mouse}.}
 \label{tab:ps/2 package}
 \end{table}
 
@@ -541,7 +541,7 @@ La construcción consta de dos ruedas paralelas rotadas sobre el eje de giro 45$
 \begin{figure}[H]
   \centering
   \includesvg[width = 200pt, svgpath = images/image_omni_whell_2]{}
-  \caption{Diseño de rueda omnidireccional.}
+  \caption[Rueda omnidireccional.]{Diseño de rueda omnidireccional.}
   \label{fig:image_omni_whell_2}
 \end{figure}
 
@@ -550,7 +550,7 @@ Cada rueda cuenta con un acople, que en un extremo va atornillado a la rueda por
 \begin{figure}[H]
   \centering
   \includesvg[width = 200pt, svgpath = images/Coupling]{}
-  \caption{Acople para unir las ruedas del robot con la caja reductora de los motores.}
+  \caption[Acople entre la rueda y la caja reductora.]{Acople para unir las ruedas del robot con la caja reductora de los motores.}
   \label{fig:arm}
 \end{figure}
 
@@ -559,7 +559,7 @@ A su vez los motores y su respectiva caja reductora están unidos por una extens
 \begin{figure}[H]
   \centering
   \includesvg[width = 200pt, svgpath = images/arm]{}
-  \caption{Extension para unir los motores.}
+  \caption[Extensión para unir los motores.]{Extensión para unir los motores.}
   \label{fig:arm}
 \end{figure}
 
@@ -568,7 +568,7 @@ En el cuerpo principal se posicionan el resto de los componentes necesarios para
 \begin{figure}[H]
   \centering
   \includesvg[width = 300pt, svgpath = images/frame]{}
-  \caption{Cuerpo principla donde se alojan todos los componentes del robot omnidireccional.}
+  \caption[Cuerpo principal robot omnidireccional.]{Cuerpo principal donde se alojan todos los componentes del robot omnidireccional.}
   \label{fig:frame}
 \end{figure}
 
@@ -577,7 +577,7 @@ El compartimiento para las baterías es ubicado debajo de cuerpo principal, este
 \begin{figure}[H]
   \centering
   \includesvg[width = 300pt, svgpath = images/battery_compartment]{}
-  \caption{Compartimiento para colocar en serie las tres baterias de litio 18650.}
+  \caption[Compartimiento de baterías.]{Compartimiento para colocar en serie las tres baterías de litio 18650.}
   \label{fig:battery_compartment}
 \end{figure}
 
@@ -586,7 +586,7 @@ Debajo de este, en contacto con la superficie donde se desplaza el robot, va el 
 \begin{figure}[H]
   \centering
   \includesvg[width = 300pt, svgpath = images/mouse_holder]{}
-  \caption{Soporte para la instalación del sensor óptico que registra las trayectorias realizadas por el robot.}
+  \caption[Soporte sensor óptico.]{Soporte para la instalación del sensor óptico que registra las trayectorias realizadas por el robot.}
   \label{fig:mouse_holder}
 \end{figure}
 
@@ -595,7 +595,7 @@ Al frente del rebot va instalada la cámara digital, esta va sobre un soporte qu
 \begin{figure}[H]
   \centering
   \includesvg[width = 300pt, svgpath = images/camera_holder]{}
-  \caption{Soporte sobre el cual va la cámara digital.}
+  \caption[Soporte cámara digital.]{Soporte sobre el cual va la cámara digital.}
   \label{fig:camera_holder}
 \end{figure}
 
@@ -604,7 +604,7 @@ El ensamble completo con todos los componentes diseñados para la construcción 
 \begin{figure}[H]
   \centering
   \includesvg[width = 400pt, svgpath = images/robot_assembly]{}
-  \caption{Ensamble robot omnidireccional.}
+  \caption[Ensamble robot omnidireccional.]{Ensamble completo del robot omnidireccional.}
   \label{fig:robot_assembly}
 \end{figure}
 
@@ -631,7 +631,7 @@ El desplazamiento del robot es producido por cuatro motores, estos no van en con
 \begin{figure}[H]
   \centering
   \includesvg[width = 100pt, svgpath = images/motor]{}
-  \caption{Motor del robot omnidireccional.}
+  \caption[Motor con caja reductora del robot omnidireccional.]{Motor con caja reductora del robot omnidireccional.}
   \label{fig:motor}
 \end{figure}
 
@@ -646,7 +646,7 @@ Los movimientos del robot son realizados posteriormente al cálculo de las veloc
   \fontfamily{cmss}\selectfont{
   \includesvg[width = 400pt, svgpath = images/ATmega328_L298]{}
   }
-  \caption{Control del microcontrolador ATmega328 sobre uno de los motores, por medio del controlador L298.}
+  \caption[Control de de los motores.]{Control del microcontrolador ATmega328 sobre uno de los motores, por medio del controlador L298.}
   \label{fig:ATmega328_L298}
 \end{figure}
 
@@ -668,7 +668,7 @@ El control sobre los motores se hace de la siguiente manera: En el controlador L
 		\hline
 	\end{tabular}
 	}
-\caption{Comportamiento de las salidas del controlador L298. L = estado logico bajo, H = estado logico alto y X = cualquier estado.}
+\caption[Comportamiento de las salidas del controlador L298.]{Comportamiento de las salidas del controlador L298. L = estado lógico bajo, H = estado lógico alto y X = cualquier estado.}
 \label{tab:l298 in out}
 \end{table}
 
@@ -679,7 +679,7 @@ De esta forma variando el estado de las entradas es posible cambiar la direcció
   \fontfamily{cmss}\selectfont{
   \includesvg[width = 300pt, svgpath = images/pwm]{}
   }
-  \caption{Señal \emph{PWM} con distintos ciclos de trabajo.}
+  \caption[Ciclo de trabajo de señal \emph{PWM}]{Señal \emph{PWM} con distintos ciclos de trabajo.}
   \label{fig:pwm}
 \end{figure}
  
@@ -694,7 +694,7 @@ Para dar al robot su dirección y velocidad se utiliza un enlace de radio 2.4GHz
   \fontfamily{cmss}\selectfont{
   \includesvg[width = 300pt, svgpath = images/pwm_radio]{}
   }
-  \caption{Señal \emph{PWM} de distintos canales, el pulso tiene una tiempo de duracion minimo de 1000$\mu$s y maximo de 2000$\mu$s.}
+  \caption[Señal \emph{PWM} de los canales de radio.]{Señal \emph{PWM} de distintos canales, el pulso tiene una tiempo de duracion minimo de 1000$\mu$s y máximo de 2000$\mu$s.}
   \label{fig:pwm}
 \end{figure}
 
@@ -707,7 +707,7 @@ Los canales utilizados corresponden a uno y dos (ch1 y ch2), de estos se normali
   \fontfamily{cmss}\selectfont{
   \includesvg[width = 300pt, svgpath = images/radio_values]{}
   }
-  \caption{Vector formado por los valores de los canales uno y dos obtenidos desde el receptor de radio.}
+  \caption[Vector formado por las entradas de radio]{Vector formado por los valores de los canales uno y dos obtenidos desde el receptor de radio.}
   \label{fig:radio_values}
 \end{figure}
 
@@ -720,7 +720,7 @@ Primero se necesita establecer un marco de referencia, el robot es capaz de desp
   \fontfamily{cmss}\selectfont{
   \includesvg[width = 250pt, svgpath = images/omni_direction]{}
   }
-  \caption{Desplazamiento del robot sobre el plano conformado por los ejes $X$ e $Y$.}
+  \caption[Desplazamiento del robot sobre el plano $XY$.]{Desplazamiento del robot sobre el plano conformado por los ejes $X$ e $Y$.}
   \label{fig:omni_direcition}
 \end{figure}
 
@@ -733,7 +733,7 @@ Si bien el robot cuenta con cuatro ruedas, con los movimientos que se tiene cont
   \begin{large}
   \includesvg[width = 200pt, svgpath = images/omni_vector]{}
   \end{large}
-  \caption{$\vec{r_{1}}$ y $\vec{r_{2}}$ pares de ruedas que se mueven de forma paralela.}
+  \caption[Movimiento de las ruedas del robot omnidireccional.]{$\vec{r_{1}}$ y $\vec{r_{2}}$ pares de ruedas que se mueven de forma paralela.}
   \label{fig:omni_vector}
 \end{figure}
 
@@ -742,7 +742,7 @@ Si bien el robot cuenta con cuatro ruedas, con los movimientos que se tiene cont
   \begin{large}
   \includesvg[width = 200pt, svgpath = images/vec_sum]{}
   \end{large}
-  \caption{Suma de los vectores $\vec{r_{1}}$ y $\vec{r_{2}}$ que dan como resultado la dirección del robot.}
+  \caption[Suma de los vectores que dan la dirección del robot.]{Suma de los vectores $\vec{r_{1}}$ y $\vec{r_{2}}$ que dan como resultado la dirección del robot.}
   \label{fig:vec_sum}
 \end{figure}
 
@@ -760,7 +760,7 @@ Para realizar esta suma primero se obtienen las proyecciones de $\vec{d}$ sobre 
   \begin{large}
   \includesvg[width = 200pt, svgpath = images/vec_proyection]{}
   \end{large}
-  \caption{Proyeción del vector $\vec{d}$ sobre el eje $X$ e $Y$, dando los vectores $\vec{d_{x}}$ y $\vec{d_{y}}$ .}
+  \caption[Proyección del vector $\vec{d}$ sobre el eje $X$ e $Y$.]{Proyección del vector $\vec{d}$ sobre el eje $X$ e $Y$, dando los vectores $\vec{d_{x}}$ y $\vec{d_{y}}$ .}
   \label{fig:vec_proyection}
 \end{figure}
 

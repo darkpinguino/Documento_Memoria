@@ -23,7 +23,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -316,7 +316,7 @@
            id="tspan11026"
            x="452.2088"
            y="51.992188"
-           style="font-size:40px">función sigmoide</tspan></text>
+           style="font-size:40px">Función sigmoide</tspan></text>
     </g>
     <text
        sodipodi:linespacing="125%"

@@ -14,7 +14,7 @@
    id="svg11315"
    version="1.1"
    inkscape:version="0.48.5 r10040"
-   sodipodi:docname="Documento nuevo 45">
+   sodipodi:docname="step.svg">
   <defs
      id="defs11317" />
   <sodipodi:namedview
@@ -57,7 +57,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -323,7 +323,7 @@
              id="tspan11026"
              x="452.2088"
              y="51.992188"
-             style="font-size:40px">función escalonada</tspan></text>
+             style="font-size:40px">Función escalonada</tspan></text>
       </g>
       <text
          sodipodi:linespacing="125%"

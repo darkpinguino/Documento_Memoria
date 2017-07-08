@@ -53,7 +53,7 @@
     \put(0.16086803,0.60729787){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Cuadro 1}}}%
     \put(0.49998965,0.60729787){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Cuadro 2}}}%
     \put(0.84001675,0.60729787){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Cuadro 3}}}%
-    \put(0.33013302,0.25628864){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Flujo Optico 1-2}}}%
-    \put(0.67016013,0.25628864){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Flujo Optico 2-3}}}%
+    \put(0.33013302,0.25628864){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Flujo Óptico 1-2}}}%
+    \put(0.67016013,0.25628864){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Flujo Óptico 2-3}}}%
   \end{picture}%
 \endgroup%
