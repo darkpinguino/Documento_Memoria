@@ -51,7 +51,7 @@ Aquí va el resumen (en Castellano)...
 
 \section{Definición del problema}
 
-Los cuadricopteros tiene la capacidad de mantenerse en vuelo sin la intervención de un piloto, ya sea sobre una posición específica o siguiendo una ruta programada, esto es posible gracias al controlador de vuelo que cada multirrotor tiene a bordo, este controla cada movimiento que realiza y puede llegar a realizar muchas tareas de forma autónoma, como lo es despegar, aterrizar o desplazarse a un punto en específico en el aire.\\
+Los cuadricopteros tiene la capacidad de mantenerse en vuelo sin la intervención de un piloto, ya sea sobre una posición específica o siguiendo una ruta programada, esto es posible gracias al controlador de vuelo que cada multirrotor tiene a bordo, este controla cada movimiento que realiza y puede llegar a hacer muchas tareas de forma autónoma, como lo es despegar, aterrizar o desplazarse a un punto en específico en el aire.\\
  
 Las prestaciones mencionadas son realizadas por la adición de dispositivos al controlador de vuelo, estos le entregan información en distintos ámbitos, la que puede ser la posición georeferenciada mediante GPS, la altura por la medición barométrica, los movimientos que realiza el cuadricoptero con sensores de aceleración lineal y angular (acelerómetros y giroscopios), entre otros.\\
  
@@ -59,7 +59,7 @@ Si bien con toda la información que el controlador de vuelo puede recopilar del
  
 Es por este motivo que las aplicaciones de conducción autónoma se realizan en espacios abiertos donde exista poca intervención del entorno, pero si se requiere que estos vuelen en espacios más confinados o donde falla la asistencia de georreferencia por ejemplo, se debe hacer un vuelo manual asistido por un piloto.\\
  
-Entonces la carencia que presentan los multirrotores es la capacidad de ser reactivos ante eventos que ocurran en el entorno, si estos pudieran reaccionar frente a estos sin ser previstos de antemano al momento de planificar el vuelo los cuadricopteros podrían ampliar su rango de aplicaciones.\\
+Entonces la carencia que presentan los multirrotores es la capacidad de ser reactivos ante eventos que ocurran en el entorno, si pudieran reaccionar frente a estos sin ser previstos de antemano al momento de planificar el vuelo los cuadricopteros podrían ampliar su rango de aplicaciones.\\
  
 La falencia está en que no existe un sistema que proporcione una comprensión del entorno donde se realiza el vuelo y que permita tomar decisiones frente a eventualidades que puedan ocurrir durante este.\\
 

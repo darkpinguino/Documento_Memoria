@@ -51,7 +51,7 @@ Aquí va el resumen (en Castellano)...
 
 \section{Definición del problema}
 
-Los cuadricopteros tiene la capacidad de mantenerse en vuelo sin la intervención de un piloto, ya sea sobre una posición específica o siguiendo una ruta programada, esto es posible gracias al controlador de vuelo que cada multirrotor tiene a bordo. Este controla cada movimiento que realiza y puede llegar a hacer muchas tareas de forma autónoma, como lo es despegar, aterrizar o desplazarse a un punto en específico en el aire.\\
+Los cuadricopteros tiene la capacidad de mantenerse en vuelo sin la intervención de un piloto, ya sea sobre una posición específica o siguiendo una ruta programada, esto es posible gracias al controlador de vuelo que cada multirrotor tiene a bordo, este controla cada movimiento que realiza y puede llegar a hacer muchas tareas de forma autónoma, como lo es despegar, aterrizar o desplazarse a un punto en específico en el aire.\\
  
 Las prestaciones mencionadas son realizadas por la adición de dispositivos al controlador de vuelo, estos le entregan información en distintos ámbitos, la que puede ser la posición georeferenciada mediante GPS, la altura por la medición barométrica, los movimientos que realiza el cuadricoptero con sensores de aceleración lineal y angular (acelerómetros y giroscopios), entre otros.\\
  
@@ -59,7 +59,7 @@ Si bien con toda la información que el controlador de vuelo puede recopilar del
  
 Es por este motivo que las aplicaciones de conducción autónoma se realizan en espacios abiertos donde exista poca intervención del entorno, pero si se requiere que estos vuelen en espacios más confinados o donde falla la asistencia de georreferencia por ejemplo, se debe hacer un vuelo manual asistido por un piloto.\\
  
-Entonces la carencia que presentan los multirrotores es la capacidad de ser reactivos ante eventos que ocurran en el entorno, si pudieran reaccionar frente a estos, sin ser previstos de antemano al momento de planificar el vuelo, los cuadricopteros podrían ampliar su rango de aplicaciones.\\
+Entonces la carencia que presentan los multirrotores es la capacidad de ser reactivos ante eventos que ocurran en el entorno, si estos pudieran reaccionar frente a estos sin ser previstos de antemano al momento de planificar el vuelo los cuadricopteros podrían ampliar su rango de aplicaciones.\\
  
 La falencia está en que no existe un sistema que proporcione una comprensión del entorno donde se realiza el vuelo y que permita tomar decisiones frente a eventualidades que puedan ocurrir durante este.\\
 
@@ -99,11 +99,7 @@ Implementar un sistema que sea capaz de detectar obstáculos y entregar la infor
 %% contenido del segundo capítulo
 \chapter{Marco teórico}
 
-En este apartado se describen elementos que son necesarios para la comprensión del problema y la implementación de la solución. Se detalla que es un cuadricoptero, como este se mueve en el aire y por qué es importante para la implementación. Se profundiza en la teoría del software a utilizar, lo que abarca: visión por computador; flujo óptico, su definición y cómo es posible calcularlo; redes neuronales, que son, como funcionan y aprenden. Del hardware se introduce a los robot omnidireccionales y algunos elementos que se utilizan en la construcción de este, que son los controladores de motores y el sensor óptico de movimiento.\\
-
 \section{Vehículo aéreo no tripulado}
-
-La problemática descrita fue obtenida de los vehículos aéreos no tripulados, por lo que importante describir que son y qué elementos de estos son importantes para a tomar en cuenta en la solución propuesta.\\
 
 Un vehículo aéreo no tripulado, UAV (por sus siglas del inglés: \emph{unmanned aerial vehicle}) o dron, es cualquier aeronave que no cuente con un piloto o tripulación a bordo, por lo que ésta puede volar de forma autónoma por medio de un computador a bordo o ser controlada remotamente por un humano \cite{icao2011UAS}.\\
 
@@ -111,23 +107,33 @@ Dentro de los vehículos aéreos no tripulados se encuentran los multirrotores o
 
 Un tipo de mutirrotor son los cuadricópteros los cuales tiene dos pares de rotores con hélices iguales y paso fijo, dos giran en sentido horario y los otros dos en sentido antihorario, esta configuración permite que el torque de cada rotor se anule con el rotor correspondiente que gira en sentido contrario, de esta forma el cuadricóptero se estabiliza y no gira sobre su propio eje \cite{AllenQuadcopters}.\\
 
-Se describe este tipo de UAV porque la solución a entregar va a enfocada a este grupo de aeronaves, principalmente a los cuadricópteros que bordean los 250 mm de diámetro.\\  
-
 Como se mencionó anteriormente los movimientos de los multirrotores se logran variando la velocidad de cada rotor independientemente, referencia a la imagen, con esto el quadricóptero puede moverse sobre 3 ejes perpendiculares, por medio de los movimientos de \emph{pitch}, \emph{roll} y \emph{yaw}, además de desplazarse por el eje $Z$ variando su altitud.\\
 
 Con el movimiento \emph{pitch} el cuadricóptero rota sobre el eje $X$ y se desplaza hacia adelante o atrás por el eje $Y$, cuando ejecuta el movimiento de \emph{roll} rota sobre el eje Y y se desplaza de izquierda a derecha sobre el eje $X$ y gira sobre el eje $Z$ con el movimiento de \emph{yaw}. Con esto se logra tener control sobre 4 grados de libertad.\\
 
-Es necesario saber cómo son capaces de moverse los cuadricopteros, ya que en las pruebas a realizar se busca imitar los movimientos que estos realizan. De esta forma al capturar video se tenga una visión muy cercana a la que se tendría al hacerlo desde un cuadricoptero. Con la limitación de movimiento a solo dos ejes sobre una superficie por medio de un robot omnidireccional, véase sección \ref{omni_robot}.\\
 
-\section{Visión por Computador}
+
+\section{Mecanismos de percepción}
+
+\section{Software}
+
+\subsection{OpenCV}
+
+\emph{OpenCV} (Open Source Computer Vision Library) es una librería open source (código abierto) de \emph{computer visión}(visión por computador), distribuida bajo la licencia BSD, la cual está escrita en C y C++, siendo además multiplataforma. También existen interfaces para Python, Ruby, Matlab y otros lenguajes.\\
+
+OpenCV está diseñado para ser eficiente computacionalmente y enfocado en ser utilizado en aplicaciones de procesamiento en tiempo real. Para esto, fue escrito en C optimizado y toma ventaja de los procesadores multi núcleo.\\
+
+El proyecto fue iniciado por \emph{Intel Research Lablets} en 1990 con el propósito de hacer la infraestructura de la visión por computador universalmente disponible y de esta forma ampliar a su vez OpenCV fue pasado a código abierto \cite{bradski2008learning}.\\
+
+\subsection{Visión por Computador}
 
 \emph{Computer Vision} (visión por computador) es una disciplina que busca que los computadores puedan tener una comprensión de alto nivel sobre imágenes o videos digitales, por ejemplo, con el objetivo de automatizar tareas que el sistema visual humano ya puede hacer\cite{ballard1982computer, vandoni1996proceedings, sonka2008image}.\\
 
 Dentro de las tareas de la visión por computador están: la adquisición, procesamiento, análisis, el entendimiento de imágenes digitales y la extracción de información multi dimensional del mundo real, para producir información numérica o simbólica \cite{klette2014concise, shapiro2001computer, morris2004computer, forsyth2003computer}.\\
 
-Dado que nosotros percibimos el mundo principalmente por medio de la vista, parecería sencillo traspasar nuestra experiencia a la visión por computador, pero en realidad es una tarea muy difícil, debido a la complejidad de cómo funciona nuestro cerebro. Contamos con múltiples sistemas que reciben distinta información segmentada desde el sistema visual e incluso otros sistemas, pero en el caso de la visión por computación solo contamos con una imagen (en el caso de video una secuencia de imágenes) y esto es todo lo el computador puede \emph{"ver"}.\\
+Dado que nosotros percibimos el mundo principalmente por medio de la vista, parecería sencillo traspasar nuestra experiencia a la visión por computador, pero en realidad es una tarea muy difícil, debido a la complejidad de cómo funciona nuestro cerebro, contamos con múltiples sistemas que reciben distinta información segmentada desde el sistema visual e incluso otros sistemas, pero en el caso de la visión por computación solo contamos con una imagen (en el caso de video una secuencia de imágenes) y esto es todo lo el computador puede \emph{"ver"}.\\
 
-Cuando hablamos de una imagen nos estamos refiriendo a la información que nos es capaz de entregar la luz que es recibida desde el entorno o una escena. Esta información varia dependiendo del contexto en que se hable, si nos referimos a un marco biológico la luz incidirá en un ojo y las células en la retina generaran las señales eléctricas que el cerebro interpretará como imágenes, si hablamos de una cámara la imagen se formará en una película fogatica o en un sensor digital \cite{bradski2008learning}.\\
+Cuando hablamos de una imagen nos estamos refiriendo a la información que nos es capaz de entregar la luz que es recibida desde el entorno o una escena, esta información varia dependiendo del contexto en que se hable, si nos referimos a un marco biológico la luz incidirá en un ojo y las células en la retina generaran las señales eléctricas que el cerebro interpretará como imágenes, si hablamos de una cámara la imagen se formará en una película fogatica o en un sensor digital \cite{bradski2008learning}.\\
 
 Dado el ámbito de este documento, es preciso profundizar en las imágenes digitales, esta puede ser definida como la integración y muestreo de información analógica (luz incidiendo en un sensor fotográfico) en un dominio espacial. Esta consiste en un arreglo rectangular de pixeles $(x, y, u)$, cada uno contiene una ubicación $(x, y) \in \mathbb{Z}^2 $ y un valor $u$, muestreado en una ubicación $(x, y)$. $\in$ es conjunto de puntos $(x, y)$ del arreglo rectangular \cite{klette2014concise}. Entonces podemos definir una imagen como:
 \begin{equation}
@@ -136,9 +142,7 @@ Dado el ámbito de este documento, es preciso profundizar en las imágenes digit
 	\end{split}
 \end{equation}
 
-\section{Flujo óptico}\label{flujo_optico}
-
-El flujo óptico es uno de los elementos centrales en este documento. Es obtenido por medio del procesamiento de imágenes, con el fin de obtener información de la escena circundante. Esta informacion es la que será utilizada por la red neuronal posteriormente. En esta sección se describe que es el flujo óptico y como es calculado.\\
+\subsection{Flujo óptico}\label{flujo_optico}
 
 El flujo óptico es definido como el cambio de la estructura de la luz en una imagen, por ejemplo, en la retina de un ojo o en el sensor de una cámara, debido a movimiento relativo del observador y escena. Cuando los objetos se mueven frente a una cámara o esta se mueve en un entorno fijo, existe un cambio correspondiente a los movimientos en la imagen, estos cambios pueden utilizarse para recuperar información relativa al movimiento de las formas y los objetos.\\
 
@@ -154,7 +158,7 @@ Podemos definir un campo de movimiento, en el cual asignamos un vector de veloci
 
 El punto $P_{0}$ tiene una velocidad $v_{0}$ relativa a la cámara, esto induce un movimiento $v_{i}$ en el punto $P_{i}$ correspondiente en la imagen, como se puede ver en la figura \ref{fig:proyeccion_flujo_optico}\cite{horn1986robot}.\\
 
-Los vectores de velocidad producidos por el movimiento aparente son descritos de forma distinta, dependiendo del contexto en que se presenten, de un punto de vista biológico los cambios estructurados en los patrones de la luz en la retina de un ojo dejan la impresión de movimiento. En visión por computación los cambios en la escena son representados por serie de \emph{image frames} (cuadros de imagen), la figura \ref{fig:ejemplo_flujo_optico} muestra una secuencia de tres cuadros, mediante un muestreo espacial y temporal de la luz incidente en la imagen, es decir, como se desplazan los pixeles en la imagen a través del tiempo.\\
+Los vectores de velocidad producidos por el movimiento aparente son descritos de forma distinta, dependiendo del contexto en que se presenten, de un punto de vista biológico los cambios estructurados en los patrones de la luz en la retina de un ojo dejan la impresión de movimiento, en visión por computación los cambios en la escena son representados por serie de \emph{image frames} (cuadros de imagen), la figura \ref{fig:ejemplo_flujo_optico} muestra una secuencia de tres cuadros, mediante un muestreo espacial y temporal de la luz incidente en la imagen, es decir, como se desplazan los pixeles en la imagen a través del tiempo.\\
 
 \begin{figure}[H]
   \centering
@@ -163,13 +167,7 @@ Los vectores de velocidad producidos por el movimiento aparente son descritos de
   \label{fig:ejemplo_flujo_optico}
 \end{figure}
 
-Para calcular el flujo óptico por medio el análisis de imágenes se utiliza el método de \emph{Lucas-Kanade}, el cual funciona bajo dos suposiciones:
-
-\begin{itemize}
-\item La intensidad de un pixel en un determinado objeto no cambia entre cuadros consecutivos, refiriéndose a que un objeto no cambia en la escena, siempre la imagen proyectada de éste en la cámara es la misma.
-
-\item La segunda suposición dice que los vecinos cercanos a un pixel tiene un movimiento similar a este, esto permite evaluar una zona en la imagen.
-\end{itemize}
+Para calcular el flujo óptico por medio el análisis de imágenes se utiliza el método de \emph{Lucas-Kanade}, el cual funciona bajo dos suposiciones: la intensidad de un pixel en un determinado objeto no cambia entre cuadros consecutivos, refiriéndose a que un objeto no cambia en la escena, siempre la imagen proyectada de éste en la cámara es la misma. La segunda suposición dice que los vecinos cercanos a un pixel tiene un movimiento similar a este, esto permite evaluar una zona en la imagen.\\
 
 Consideramos un pixel $I(x, y,t)$ en la primera imagen ($x$ e $y$ coordenadas dentro de la imagen y $t$ un instante de tiempo) el cual se mueve una distancia de $(dx, dy)$ en el siguiente cuadro después de un instante de tiempo $dt$, bajo las suposiciones mencionadas, podemos decir que:\\
 
@@ -196,7 +194,7 @@ donde:\\
 	\end{split}
 \end{equation}\\
 
-Esta es la ecuación del flujo óptico, donde $f_x$ y $f_y$ son gradientes de la imagen, como $f_t$ es gradiente del tiempo. Pero $(u, v)$ son desconocidas, por lo que no podemos resolver la ecuación con dos incognitas. Aquí es donde el método \emph{Lucas-Kanade} toma grupos de pixeles de 3x3, considerando las suposiciones mencionadas anteriormente, donde estos tiene el mismo movimiento. Ahora es posible resolver $(f_x, f_y, f_t)$ ya que contamos con nueve ecuaciones y las mismas dos incógnitas, resultando con la siguiente ecuación:\\
+Esta es la ecuación del flujo óptico, donde $f_x$ y $f_y$ son gradientes de la imagen, como ft es gradiente del tiempo. Pero $(u, v)$ son desconocidas, por lo que no podemos resolver la ecuación con dos incognitas. Aquí es donde el método \emph{Lucas-Kanade} toma grupos de pixeles de 3x3, considerando las suposiciones mencionadas anteriormente, donde estos tiene el mismo movimiento. Ahora es posible resolver $(f_x, f_y, f_t)$ ya que contamos con nueve ecuaciones y las mismas dos incógnitas, resultando con la siguiente ecuación:\\
 
 \begin{equation}
 	\begin{split}
@@ -204,31 +202,19 @@ Esta es la ecuación del flujo óptico, donde $f_x$ y $f_y$ son gradientes de la
 	\end{split}
 \end{equation}\\
 
-De esta forma se toma un grupo de pixeles y calculamos el flujo óptico sobre ellos, pero el método descrito funciona solo con pequeños movimientos, fallando en condiciones cunado los pixeles en la imagen sufren grandes movimientos. Para solucionar este problema utilizamos el algoritmo de pyramid, el cual escala la imagen removiendo los pequeños movimientos y reduciendo los grandes movimientos a pequeños \cite{OpenCV}.\\
+De esta forma se toma un grupo de pixeles y calculamos el flujo óptico sobre ellos, pero el método descrito funciona solo con pequeños movimientos, fallando en condiciones cunado los pixeles en la imagen sufren grandes movimientos, para solucionar este problema utilizamos el algoritmo de pyramid, el cual escala la imagen removiendo los pequeños movimientos y reduciendo los grandes movimientos a pequeños \cite{OpenCV}.\\
 
 El algoritmo de \emph{pyrmid} se encarga de realizar \emph{downsampled}, este término se refiere a reducir la tasa de muestreo de alguna señal, a una imagen sucesivamente hasta algún límite dado, creando una colección de imágenes llamada pirámide. Existen dos tipos variantes del algoritmo de \emph{pyramid}: la gaussiana y la laplaciana, en el método de \emph{Lucas-Kanade} se utiliza la variante gaussiana, por lo que esta será descrita en detalle.\\
 
 Para agregar a la pirámide una nueva capa $G_{i+1}$, debemos aplicar a la capa $G_i$ un filtro gaussiano y luego eliminar las columnas y filas pares, esto nos genera una nueva imagen con un cuarto del área de la imagen en la capa $G_i$, iterando este proceso desde la imagen original $G_0$ producimos la pirámide entera \cite{bradski2008learning}.\\
 
-Cuando se realiza un proceso de muestreo en una señal, en este caso de una imagen, puede producirse \emph{alising}, el cual consiste en la distorsión de la señal orinal una vez que esta es muestreada. Para evitar esto el teorema de muestreo \emph{Nyquist-Shannon} dice que es necesario muestrear una señal al doble de su frecuencia \cite{ImagePyramid}.\\
+Cuando se realiza un proceso de muestreo en una señal, en este caso de una imagen, puede producirse \emph{alising}, el cual consiste en la distorsión de la señal orinal una vez que esta es muestreada, para evitar esto el teorema de muestreo \emph{Nyquist-Shannon} dice que es necesario muestrear una señal al doble de su frecuencia \cite{ImagePyramid}.\\
 
-Es por esta razón que \emph{pyramid} aplica un filtro gaussiano para la capa $G_i$ de la pirámide antes de producir la capa $G_{i+1}$, esto reduce la frecuencia de la imagen en la capa $G_i$ dando como resultado una imagen con menor distorsión en la capa $G_{i+1}$. Permitiendo tener una imagen de menor tamaño en una capa $G_j$, al final de la iteración, la cual tiene una baja distorsión frente a la imagen original en la capa $G_0$.\\
+Es por esta razón que \emph{pyramid} aplica un filtro gaussiano para la capa $G_i$ de la pirámide antes de producir la capa $G_{i+1}$, esto reduce la frecuencia de la imagen en la capa $G_i$ dando como resultado una imagen con menor distorsión en la capa $G_{i+1}$, permitiendo tener una imagen de menor tamaño en una capa $G_j$, al final de la iteración, la cual tiene una baja distorsión frente a la imagen original en la capa $G_0$.\\
 
-\section{OpenCV}
+\subsection{Redes neuronales}\label{redes_neuronales}
 
-Como se mencionó anteriormente, la obtención del flujo óptico se hace por el procesamiento de imágenes, para esto se utiliza como herramienta a \emph{OpenCV} que permitirá realizar la captura de imágenes desde una cámara digital, para luego calcular de estas el flujo óptico.\\
-
-\emph{OpenCV} (Open Source Computer Vision Library) es una librería open source (código abierto) de \emph{computer visión}(visión por computador), distribuida bajo la licencia BSD, la cual está escrita en C y C++, siendo además multiplataforma. También existen interfaces para Python, Ruby, Matlab y otros lenguajes.\\
-
-OpenCV está diseñado para ser eficiente computacionalmente y enfocado en ser utilizado en aplicaciones de procesamiento en tiempo real. Para esto, fue escrito en C optimizado y toma ventaja de los procesadores multi núcleo.\\
-
-El proyecto fue iniciado por \emph{Intel Research Lablets} en 1990 con el propósito de hacer la infraestructura de la visión por computador universalmente disponible y de esta forma ampliar a su vez OpenCV fue pasado a código abierto \cite{bradski2008learning}.\\
-
-\section{Redes neuronales}\label{redes_neuronales}
-
-Otro elemento importante en este documento al igual que el flujo óptico son las redes neuronales. Una red neuronal es la encargada de tomar como entrada el flujo óptico de una determinada imagen y con respecto a esto la red toma una decisión, esta decisión indica la dirección en la cual debe moverse según lo que haya en la escena en ese momento. Esta sección da la definición de que es una red neuronal, como estas funcionan y son capaces de aprender.\\
-
-Una red neuronal tiene la finalidad de ser un modelo de una red neuronal biológica, que recibe un número determinado de entradas, las que son procesadas dentro de la red y producen una o más salidas. Una red neuronal biológica está conformada por la interconexión de neuronas, las cuales son células nerviosas que reciben estímulos y conducen el impulso nervioso, por medio de un potencial de acción, a otras neuronas \cite{cayre2002common}. De la misma forma una red neuronal está formada por neuronas, a las que nos referimos por ahora como perceptrón, este funciona tomando varias entradas $ x_{1}, x_{2}, $ \dots, para producir una sola salida binaria, como se muestra en la figura \ref{fig:perceptron}.\\
+Una red neuronal tiene la finalidad de ser un modelo de una red neuronal biológica, que recibe un número determinado de entradas, las cuales son procesadas dentro de la red y producen una o más salidas. Una red neuronal biológica está conformada por la interconexión de neuronas, las cuales son células nerviosas que reciben estímulos y conducen el impulso nervioso, por medio de un potencial de acción, a otras neuronas \cite{cayre2002common}. De la misma forma una red neuronal está formada por neuronas, a las que nos referimos por ahora como perceptrón, este funciona tomando varias entradas $ x_{1}, x_{2}, $ \dots, para producir una sola salida binaria, como se muestra en la figura \ref{fig:perceptron}.\\
 
 \begin{figure}[H]
   \centering
@@ -308,7 +294,7 @@ Al ser sigma una función continua, ahora la salida de la red no es binaria, si 
   \begin{small}
   \includesvg[width = 400pt, svgpath = images/step]{}
   \end{small}
-  \caption[Función escalonada.]{Función escalonada que utiliza un perceptrón, el que tiene una salida binaria, con valores 0 y 1.}
+  \caption[Función escalonada.]{Función escalonada que utiliza un perceptrón, el que tiene una salida binaria, con valores entre 0 y 1.}
   \label{fig:step}
 \end{figure}
 
@@ -355,11 +341,11 @@ Y con respecto a los pesos:\\
 	\frac{\partial C}{\partial w^l_{jk}} = a^{l-1}_k \delta^l_j
 \end{equation}\\
 
-\section{Robot omnidireccional}\label{omni_robot}
+\section{Hardware}
 
-En la realización de las pruebas es necesaria la captura de video, esta debe ser lo más similar a lo que se obtendría si se utilizara una cámara sobre un cuadricoptero. Esa es la razón por qué se utiliza un robot omnidireccional, este permite imitar en cierto grado la forma en la cual puede moverse un cuadricoptero, con algunas limitantes. La siguiente sección explica cómo logra un robot omnidireccional hacer esto.\\
+\subsection{Robot omnidireccional}
 
-Un robot omnidireccional (referido en este documento inherentemente como robot o robot omnidireccional) es un robot que tiene la capacidad de moverse en cualquier dirección sin tener que rotar antes de moverse. Esto es posible por las ruedas omnidireccionales con que está construido el robot, estas tiene la capacidad de moverse libremente en dos direcciones, pueden rodar como una rueda normal o desplazarce lateralmente con las ruedas ubicadas perpendicularmente a lo largo de la circunferencia de la rueda, como se muestra en la figura \ref{fig:image_omni_whell}.\\
+Un robot omnidireccional (referido en este documento inherentemente como robot o robot omnidireccional) es un robot que tiene la capacidad de moverse en cualquier dirección sin tener que rotar antes de moverse, esto es posible por las ruedas omnidireccionales con que está construido el robot, esta tiene la capacidad de moverse libremente en dos direcciones, pueden rodar como una rueda normal o desplazarce lateralmente con las ruedas ubicadas perpendicularmente a lo largo de la circunferencia de la rueda, como se muestra en la figura \ref{fig:image_omni_whell}.\\
 
 \begin{figure}[H]
   \centering
@@ -369,9 +355,9 @@ Un robot omnidireccional (referido en este documento inherentemente como robot o
 \end{figure}
 
 
-Esto permite que el robot puede trazar un camino en línea recta, en cualquier dirección, sin tener que hacer giros, además de poder combinar el trayecto con algún tipo de rotación para cambiar la dirección a la que apunta el robot, si es necesario. Esto es definido como un robot holonómico, en comparación con un robot normal no-holonómico el cual tiene 1,5 grados de libertad que puede desplazarse a través de los ejes coordenados $X$ e $Y$, pero requiere movimientos complejos para poder moverse en alguno de los dos ejes. Un robot holonómico que tiene 2 grados de libertad puede moverse libremente por ambos ejes $X$ e $Y$ \cite{jayakody2015omnirobot}.\\
+Esto permite que el robot puede trazar un camino en línea recta, en cualquier dirección, sin tener que hacer giros, además de poder combinar el trayecto con algún tipo de rotación para cambiar la dirección a la que apunta el robot, si es necesario. Esto es definido como un robot holonómico, en comparación con un robot normal no-holonómico el cual tiene 1,5 grados de libertad que puede desplazarse a través de los ejes coordenados $X$ e $Y$, pero requiere movimientos complejos para poder moverse en alguno de los dos ejes. Un robot holonómico tiene 2 grados de libertad por lo que puede moverse libremente por ambos ejes $X$ e $Y$ \cite{jayakody2015omnirobot}.\\
 
-Para lograr que el robot se desplace en cualquier dirección es necesario calcular la velocidad y dirección de giro para cada rueda de forma independiente. En la figura \ref{fig:omni_movement_up_down} se muestra la dirección en la que deben girar las ruedas para mover el robot hacia adelante y atrás, en la figura \ref{fig:omni_movement_left_right} hacia la derecha e izquierda.
+Para lograr que el robot se desplace en cualquier dirección es necesario calcular la velocidad y dirección de giro para cada rueda de forma independiente, en la figura \ref{fig:omni_movement_up_down} se muestra la dirección en la que deben girar las ruedas para mover el robot hacia adelante y atrás, en la figura \ref{fig:omni_movement_left_right} hacia la derecha e izquierda.
 
 \begin{figure}[H]
   \centering
@@ -402,41 +388,11 @@ En estos movimientos la velocidad de las ruedas siempre es la misma, solo cambia
   \label{fig:omni_movement_combined}
 \end{figure}
 
-\section{Microcontrolador}
+\subsubsection{Controlador para motores}
 
-Para el control y comunicación del robot es necesario contar con alguna unidad de procesamiento, en este caso se hace uso de un microcontrolador. Este se encarga recibir las señales de radio control e interpretarlas, comunicarse vía puerto serial con el computador externo y controlar la dirección y velocidad de los motores.\\
+Un controlador para motores es un dispositivo que maneja el desempeño de un motor eléctrico, este incluye mecanismos para arrancar y detener el motor, seleccionar la dirección de rotación, si es hacia adelante o atrás y regulando la velocidad de este \cite{siskind1963electrical}. La mayoría de los controladores utilizan un circuito eléctrico llamado puente H (también referido como \emph{full-bridge}, este permite aplicar corriente sobre una carga en cualquier dirección, con esto un motor de corriente continua girar en ambas direcciones \cite{williams2002microcontroller}.\\
 
-Un microcontrolador es un pequeño computador fabricado en un solo circuito integrado, lo que es llamado sistema en un chip (SoC por sus siglas del inglés: \emph{system on a chip}). Un microcontrolador consta de uno o más CPUs junto con memoria, periféricos de entradas y salidas programables y almacenamiento destinado al alojamiento del programa que ejecuta el microcontrolador.\\
-
-Como se puede ver un microcontrolador está compuesto de distintos elementos embebidos que permiten su funcionamiento de forma autónoma con la adición poco o ningún componente, evitando la dependencia de elementos periféricos.\\
-
-El microcontrolador utilizado es un ATmega328 y dentro de los elementos que lo conforman se encuentran:\\
-
-CPU: Se encarga de la ejecución de programas, teniendo acceso la memoria, ejecutando cálculos, controlando periféricos y manejando interrupciones. La CPU utiliza una arquitectura Harvard que se caracteriza en tener buses y memoria separados para los programas y los datos. Además de hacer uso de un set de instrucciones RISC (del inglés \emph{reduced instruction set computer}) funcionando a una frecuencia de 16 MHz.\\
-
-Registros: Espacios dentro de la CPU donde se almacenan datos que se utilizan para realizar las operaciones dentros de los demás componentes de la CPU, además se guardan los resultados de la ejecución de instrucciones. El ATmega328 cuenta con 32 registros de 8 bit cada uno.\\
-
-Memoria: Se cuentan con tres tipos de memoria:
-\begin{itemize}
-    \item SRAM: 2 KBytes de memoria interna compartida con los registros de entrada y salida.
-    \item Flash Program Memory: Esta memoria reprogramable es compartida para almacenar los programas y el \emph{Boot
-Loader}, con una capacidad de 32 KBytes.
-    \item EEPROM: Memoria para almacenar datos con una capacidad de 1 KBytes.
-\end{itemize}
-
-Entradas y salida: Todos los pines del ATmega328 tiene la funcionalidad \emph{Read-Modify-Write} lo que significa que la dirección de cada pin puede ser cambiada. Se cuenta con 23 pines de los que por sus funciones especiales quedan disponibles para libre uso 20 puertos. Los pines PB6 y PB7 son usados para el cristal externo y PC6 para reiniciar el microcontrolador. Estos pines también comparten funcionalidades especializadas como lo son: SPI, PWM, puerto serial, conversor análogo digital y ISCP \cite{atemel:atemega328}.\\
-
-El microcontrolador es utilizado bajo la plataforma de desarrollo \emph{Arduino}, la que se define como una plataforma de código abierto basada en hardware y software fácil de usar. Esta proporciona el hardware por medio de las \emph{Arduino Board} y el software en \emph{Arduino programming language} y el IDE de desarrollo \emph{Arduino Software} \cite{arduino:introduction}.\\
-
-En específico se utiliza la placa \emph{Arduino} UNO Rev 2, especificaciones en el anexo \ref{appendix:arduino uno}, y el IDE en su versión 1.8.2.\\
-
-\section{Controlador para motores}
-
-Un elemento necesario para el funcionamiento del robot son los controladores para motores, estos componentes son un intermediario entre el microcontrolador y los motores. Estos permiten que las señales de control puedan actuar sobre los motores.\\
-
-Un controlador para motores es un dispositivo que maneja el desempeño de un motor eléctrico, este incluye mecanismos para arrancar y detener el motor, seleccionar la dirección de rotación y regular la velocidad \cite{siskind1963electrical}. La mayoría de los controladores utilizan un circuito eléctrico llamado puente H (también referido como \emph{full-bridge}, este permite aplicar corriente sobre una carga en cualquier dirección, con esto un motor de corriente continua puede girar en ambas direcciones \cite{williams2002microcontroller}.\\
-
-El nombre es derivado de su representación gráfica, como se muestra en la figura \ref{fig:H bridge}.A, que tiene una forma de H. El circuito cuenta con cuatro interruptores, los que son accionados de apares, según la figura \ref{fig:H bridge}.B, S1 y S4 pueden estar en estado cerrado, mientras S2 y S3 en abierto, en esta configuración la corriente circula en una dirección a través del motor M, si en cambio S2 y S3 están cerrados y S1 y S4 abiertos como en la figura \ref{fig:H bridge}.C la corriente sobre el motor M circulara en la dirección opuesta. Los interruptores S1 y S2, al igual que S3 y S4 nunca son activados al mismo tiempo, ya que esto genera un corto circuito sobre la fuente de voltaje.\\
+El nombre es derivado de su representación gráfica, como se muestra en la figura \ref{fig:H bridge}.A, el cual cuenta con cuatro interruptores, los que son accionados de apares, según la figura \ref{fig:H bridge}.B S1 y S4 pueden estar en estado cerrado, mientras S2 y S3 en abierto, en esta configuración la corriente circula en una dirección en el motor, si en cambio S2 y S3 están cerrados y S1 y S4 abiertos como en la figura \ref{fig:H bridge}.C la corriente sobre el motor M circulara en la dirección opuesta. Los interruptores S1 y S2, al igual que S3 y S4 nunca son activados al mismo tiempo, ya que esto genera un corto circuito sobre la fuente de voltaje.\\
 
 \begin{figure}[H]
   \centering
@@ -445,7 +401,7 @@ El nombre es derivado de su representación gráfica, como se muestra en la figu
   \label{fig:H bridge}
 \end{figure}
 
-El controlador utilizado es el L298, cual contiene dos puentes H compatibles con nivel lógico estándar TTL y puede manejar cargas inductivas, como motores de corriente directa. Cuenta con dos entradas de control para cada motor además de una para la habilitación del puente H. En la descripción de un puente H se mencionó el control sobre 4 interruptores, pero el controlador solo cuenta dos entradas de control por cada puente H, esto se debe a que dos interruptores nunca son activados al mismo tiempo, por ejemplo: S1 y S2. Esto permite que el control sobre estos interruptores puede ser compartida negando la señal de entrada a uno de estos, es decir, que cuando un interruptor está activado el otro siempre esta desactivado. Esta misma situación se da para los interruptores S3 y S4. En la figura \ref{fig:H bridge circuit} se muestra el control lógico que realiza el L298 sobre el puente H y la utilización de transistores de canal-N  como interruptores.\\
+El controlador utilizado es el L298, cual contiene dos puentes H compatibles con nivel lógico estándar TTL y puede manejar cargas inductivas, como motores de corriente directa. Cuenta con dos entradas de control para cada motor además de una para la habilitación del puente H. En la descripción de un puente H se mencionó el control sobre 4 interruptores, pero el controlador solo cuenta dos entradas de control por cada puente H, esto se debe a que dos interruptores nunca son activados al mismo tiempo, por ejemplo: S1 y S2, por lo que el control sobre estos puede ser compartida negando la señal de entrada a un interruptor, es decir, que cuando un interruptor está activado el otro siempre esta desactivado, esta misma situación se da para los interruptores S3 y S4. En la figura \ref{fig:H bridge circuit} se muestra el control lógico que realiza el L298 sobre el puente H y la utilización de transistores de canal-N  como interruptores.\\
 
 \begin{figure}[H]
   \centering
@@ -456,15 +412,17 @@ El controlador utilizado es el L298, cual contiene dos puentes H compatibles con
   \label{fig:H bridge circuit}
 \end{figure}
 
-Además se puede ver que el controlador recibe una tercera entrada En (sigla del inglés: \emph{Enable}), está activa o desactiva el puente H dependiendo del estado lógico que presente: Si el estado es alto el puente H funcionara según corresponda con las entradas In1 e In2, pero si está en estado bajo desconecta ambas salidas OUT1 y OUT2 \cite{st:l298}.
+Además se puede ver que el controlador recibe una tercera entrada En (sigla del inglés: \emph{Enable}), está activa o desactiva el puente H dependiendo del estado lógico que presente: Si el estado es alto el puente H funcionara según corresponda con las entradas In1 e In2, pero si está en estado bajo desconecta ambas salidas OUT1 y OUT2.
 
-\section{Sensor óptico de movimiento}
+\subsection{Microcontrolador}
 
-Este es otro componente que es parte del robot omnidireccional, permite registrar los movimientos realizados sobre la superficie en la que se ha desplazado. Estos datos son necesarios ya que forman una estrecha relación con la salida que entrega la red neuronal y son son utilizados tanto para realizar el entrenamiento de la red como comprobar si este entrenamiento ha sido efectivo o no. A continuación se muestra el funcionamiento del sensor y cómo entrega la información de posicionamiento.\\
+\subsection{Camara}
 
-El sensor óptico de movimiento acoplado al robot que tiene la función registrar las trayectorias que este sigue, proviene de un \emph{mouse} óptico (referido en este documento indistintamente como \emph{mouse} o \emph{mouse} optico). Este utiliza una fuente de luz, en este caso un LED rojo y detector de luz como una matriz de fotodiodos, los que forman una pequeña cámara digital, para detectar el movimiento relativo a una superficie.\\
+\subsection{Sensor óptico de movimiento}
 
-El sensor del \emph{mouse} forma una imagen capturando las texturas sobre la superficie en que se encuentra, estas texturas son resaltadas por el ángulo de incidencia de la luz proveniente del LED. Se toma una continua sucesión de imágenes de la superficie, las que son comparadas unas con otras para determinar cuánto se ha movido el \emph{mouse}.\\
+El sensor óptico de movimiento acoplado al robot que tiene la función registrar las trayectorias que este sigue, proviene de un \emph{mouse} óptico (referido en este documento indistintamente como \emph{mouse} o \emph{mouse} optico. Este utiliza una fuente de luz, en este caso un LED rojo y detector de luz como una matriz de fotodiodos, los que forman una pequeña cámara digital, para detectar el movimiento relativo a una superficie.\\
+
+El sensor del \emph{mouse} forma una imagen capturando las texturas sobre la superficie que se encuentra, estas texturas son resaltadas por el ángulo de incidencia de la luz proveniente del LED. Se toma una continua sucesión de imágenes de la superficie, las que son comparadas unas con otras para determinar cuánto en \emph{mouse} se ha movido.\\
 
 Para determinar esto el \emph{mouse} evalúa dos imágenes consecutivas y busca coincidencias de la primera imagen en la segunda, cuantificando cuanto se desplazado la segunda imagen sobre la primera, así se puede cuantificar el movimiento del \emph{mouse}.\\
 
@@ -503,38 +461,21 @@ El \emph{mouse} envía la información de estado de los botones, derecho, centra
 %% contenido del tercer capítulo
 \chapter{Implementación}
 
-En este capítulo se detallan los elementos que fueron necesarios implementar para poder cumplir con el objetivo principal. Dentro de estos esta la forma como se obtiene el flujo óptico desde la captura de video; el funcionamiento de la red neuronal, el procesamiento de una entrada para producir una salida y el entrenamiento de esta; el diseño y construcción del robot omnidireccional.\\
- 
 \section{Flujo óptico}
 
 El flujo óptico es la informacion que se obtiene desde la captura de imagenes y la que posteriormente sera entregada a la red neuroral. Para procesar las imagenes y obtener como resultado el flujo óptico se utiliza la librería \emph{OpenCV}, esta entrega el metodo \emph{calcOpticalFlowPyrLK} que implementa el algoritmo de \emph{Lucas-Kanade}, más detalle en la sección \ref{flujo_optico}, la cual recive como paramatros dos imagenes $Img_0$ e $Img_1$ y los puntos $P_0$ donde calcular el flujo optico.\\
 
 Los puntos $P_0$ son una susecion de pares coordenados dentro de $Img_0$, los que tiene una posicion predefinida a un intervalo regular de pixeles. El algoritmo usa los pixeles de $Img_0$ correspondientes a los puntos de definidos y calcula donde se han desplazado en $Img_1$, dando como resultado una nueva susecion de puntos, estos nuevos puntos $P_1$ indican la nueva posicion qué tiene $P_0$ en $Img_1$.\\
 
-Las imagenes $Img_0$ e $Img_1$ son obtenidas secuencialmente \emph{frame} por \emph{frame} desde la funte de video, la cual puede ser un archivo de video o directamente de una camara digital. $Img_1$ es el siguiente \emph{frame} despues de $Img_0$, cuando se procesa $img_0$ se copia el \emph{frame} a $img_1$ para luego obtener el siguiente \emph{frame} para $Img_0$.\\
+Las imagenes $Img_0$ e $Img_1$ son obtenidas secuencialmente \emph{frame} por \emph{frame} desde la funte de video, la cual cual puede ser un archivo de video o directamente de una camara digital. $Img_1$ es el siguiente \emph{frame} despues de $Img_0$, cuando se procesa $img_0$ se copia el \emph{frame} a $img_1$ para luego obtener el siguiente \emph{frame} para $Img_0$.\\
 
-El flujo optico es representado por el desplazamiento que tiene $P_0$ en $P_1$, el que es en el plano de imagen tanto en eje $X$ como en el $Y$.\\
+El flujo optico es representado por el desplazamiento que tiene $P_0$ en $P_1$, el que es en el plano de imagen tanto en eje $X$ como en el $Y$. Este plano es perpendicular al que se mueve el robot, por lo que solo se entrega a la red neuronal el flujo optico en el eje $X$ de la imagen evaluada.\\
+
+
 
 \subsection{Captura de flujo óptico}
 
-Para obtener el flujo óptico se utiliza una cámara de digital conectada por USB con una resolución de 640x480 píxeles, Con formato de pixel YUV 4:2:2, velocidad de obturación de hasta 1/30 seg\\
-
-De las imágenes obtenidas desde la cámara se calcula el flujo óptico en una matriz de 21x5 puntos, cada punto está separado por 30 píxeles uno del otro. La matriz se extiende a todo el ancho la imagen y desde los 220 hasta 330 píxeles de alto.\\
-
-Los puntos se ubican en esta posición para así obtener la información que entrega la pista de pruebas.\\
-
-El plano de la cámara está ubicado perpendicularmente al del desplazamiento del robot, por lo que solo se entrega a la red neuronal el flujo óptico que es calculado en el eje $X$ de la imagen, es decir, la cuantificación del desplazamiento lateral de los pixeles en la imagen.\\
-
-Por cada \emph{frame} en el se calcula el flujo óptico se obtiene un arreglo con un tamaño de 210 elementos que proporciona el desplazamiento de los puntos con respecto a la matriz antes descrita. Además del desplazamiento que tuvo el robot sobre el eje $X$ de la pista, en la figura \ref{fig:optical_flow} se muestra un ejemplo de esto. Esta es la información que posteriormente se le entrega a la red neuronal.\\
-
-\begin{figure}[H]
-\centering
-\begin{verbatim}
-	[15.1345, 45.7654, 75.4358,... 615.5472, 645.8256, 675.1234], [185]
-\end{verbatim}
-\caption[Captura del flujo óptico de un \emph{frame}.]{Ejemplo del flujo óptico obtenido de un \emph{frame} más el desplazamiento del robot.}
-  \label{fig:optical_flow}
-\end{figure}
+\subsection{Procesado de flujo óptico}
 
 \section{Red neuronal}
 
@@ -579,17 +520,15 @@ Donde $a^{L}$ y $z^{L}$ pertenecen a la última capa $L$, el arreglo $\delta^{L}
 
 Este procedimiento se propaga hacia atrás en la red por las capas $L-1, L-2, L-3...$ hasta alcanzar la primera capa. Para luego actualizar los parametros de red aplicando las diferencias obtenidas bajo un coeficiente de aprendizaje, este determina cuanto se deben modificar los parametros existentes en la red con respecto a las diferencias obtenidas del algoritmo de \emph{backpropagation}.
 
-%\subsection{Diseño de capas}
+\subsection{Diseño de capas}
 
 \subsection{Entrenamiento}
 
 Para entrenar la red neuronal se utiliza como entrada el flujo óptico obtenido de la captura de video de la pista de pruebas y como salida esperada la dirección en la cual se mueve el robot sobre el eje $X$ de la pista. Para modificar los parametros al interior de la red (pesos y sesgos), que se traduce como el aprendizaje de la red, se utiliza la técnica de \emph{backpropagation}.\\
 
-La implementación de red reorganiza de forma aleatoria los datos de entrenamiento e itera el entrenamiento un número determinado de veces. Al final de cada iteración se valida en entrenamiento con los datos de prueba, así se evalúa el transcurso del entrenamiento.\\
-
 La generación de set de datos del cual la red aprende se hace por medio de un esquema \emph{on-the-fly} \cite{pomerleau1989alvinn}, el cual tiene como objetivo que la red neuronal imite el comportamiento de un humano al realizar la misma tarea, la que cual es desplazar el robot por la pista de pruebas. Por lo que el flujo óptico y la dirección del robot se obtiene de la conducción manual del robot.\\
 
-La salida esperada de la red neuronal, que representa la dirección en la que se mueve el robot en forma horizontal y que es utilizada como parámetro en el entrenamiento por \emph{backpropagation}, es obtenida por el seguimiento de los movimientos que realice el robot por medio de un sensor óptico de movimiento. La arquitectura de la red neuronal tendrá una sola salida la que estará normalizada entre cero y uno, por lo que la dirección del robot será representada por un solo valor.\\
+La salida esperada de la red neuronal, que representa la dirección en la que se mueve el robot en forma horizontal y que es utilizada como parámetro en el entrenamiento por \emph{backpropagation}, es obtenida por el seguimiento de los movimientos que realice el robot por medio de un sensor óptico de movimiento. La arquitectura de la red neuronal tendrá una sola salida la que estará normalizada [rango de la salida], por lo que la dirección del robot será representada por un solo valor.\\
 
 \section{Robot omnidireccional}
 
@@ -842,9 +781,10 @@ Las pruebas que se realizan para comprobar si la red neuronal aprende y es capaz
 
 \section{Comprobación de aprendizaje}
 
-Por cada una de las etapas se comprobará de dos formas distintas si la red neuronal está aprendiendo. La primera es evaluando el aprendizaje con un set de datos de prueba, que no fue usado para el entrenamiento, aquí se evalúa cuánto difiere la salida teórica que debería entregar la red, salida esperada, con la que entrega realmente la red. Esta diferencia se considera \emph{test error} (error de prueba) y esta será obtenida por la técnica de \emph{Validation Set Approach} (enfoque de conjunto de validación) la que consiste en dejar parte del conjunto de entrenamiento para validar cuán efectivo fue este \cite{james2014introduction}.\\
+Por cada una de las etapas se comprobará de dos formas distintas si la red neuronal está aprendiendo. La primera es evaluando el aprendizaje con un set de datos de prueba, que no fue usado para el entrenamiento, aquí se evalúa cuánto difiere la salida teórica que debería entregar la red, salida esperada, con la que entrega realmente la red. Esta diferencia se considera \emph{test error} (error de prueba) y esta será obtenida por la técnica de \emph{Validation Set Approach} (enfoque de conjunto de validación) la que consiste en dejar parte del conjunto de entrenamiento para validar cuán efectivo fue este.\\
  
-[completar cuantos datos de entrenamiento fueron y cuantos se dejaron para validation set approach].\\
+[completar cuantos datos de entrenamiento fueron y cuantos se dejaron para validation set approach]
+la implementación de la red reordena de forma aleatoria el conjunto de datos y desde este crea un conjunto de datos para las pruebas, que no será usado en el entrenamiento \cite{james2014introduction}.\\
  
 La cuantificación del error se mide de dos formas distintas: La primera es mediante es el error cuadrático medio \emph{MSE} (del ingles: \emph{mean squared error}):\\
 
@@ -864,11 +804,11 @@ Para la primera etapa, sin importar la posición de inicio, tiene como objetivo 
  
 En la segunda etapa se posicionará un obstáculo dentro de la pista, al igual que en la primera etapa, también se deberá centrar el robot dentro de la pista, pero al enfrentarse a un obstáculo este debe ser evadido.\\
 
-Para realizar la recopilación de datos, el inicio de la pista será dividido en [n] secciones iguales la que estarán divididas en [cm] una de otra, de donde comienza el robot, por cada una de estas secciones se registran [n] recorridos del robot sobre la pista, obteniendo la información de flujo óptico y el recorrido hecho por este. El recorrido registrado es a una velocidad constante [velocidad del robot] y recorre una distancia de 2 mt.\\
+Para realizar la recopilación de datos, el inicio de la pista será dividido en [n] secciones iguales la que estarán divididas en [cm] una de otra, de donde comienza el robot, por cada una de estas secciones se registran [n] recorridos del robot sobre la pista, obteniendo la información de flujo óptico y el recorrido hecho por este. El recorrido registrado es a una velocidad constante [velocidad del robot] y recorre una distancia de [distancia a recorrer].\\
  
 Para la recopilación de datos con obstáculos, se utilizará el mismo esquema anterior, pero se posiciona un obstáculo dentro de pista en distintas posiciones predefinidas, estas posiciones son representadas dentro de la pista por una matriz, la cual será de [n] filas y [m] columnas, la separación entre las filas y las columnas será igual y de [cm], y se coloca en la pista a [distancia] del inicio de la pista y centrada con respecto a los bordes. Por cada obstáculo se recopilan los datos [n] veces por cada posición de inicio de la pista.\\
  
-La construcción de la pista de pruebas necesita de un material que proporciona tracción a las ruedas del robot, por lo que se utiliza una alfombra de cubre pisos de 1 metro de ancho y 4 metros de largo, de color \emph{beige} para proporcionar mayor contraste frente a los obstáculos, los bordes de la pista tendrán un alto de 25 cm con un patrón regular líneas verticales blancas y negras de 5 cm de ancho.
+La construcción de la pista de pruebas necesita de un material que proporciona tracción a las ruedas del robot, por lo que se utiliza una alfombra de cubre pisos de 1 metro de ancho y 4 metros de largo, de color beige para proporcionar mayor contraste frente a los obstáculos, los bordes de la pista tendrán un alto de [cm] con un patrón regular líneas verticales blancas y negras de [cm] de ancho.
 
 \chapter{Resultados}
 
@@ -906,57 +846,6 @@ La construcción de la pista de pruebas necesita de un material que proporciona 
 \appendixpart
 
 %% contenido del primer anexo
-\appendix{Arduino UNO rev 2}
-\label{appendix:arduino uno}
-Espesificaciones de la placa \emph{Arduino} UNO rev 2.
-
-\begin{table}[H]
-\centering
-    \fontfamily{cmss}\selectfont{
-    \begin{tabular}{|c|c|}
-
-        \hline
-            Microcontrolador & ATmega328P\\
-        \hline
-            Voltaje de operación & 5V\\
-        \hline
-            Voltaje de entrada (recomendado) & 7-12V\\
-        \hline
-            Voltaje de entrada (limite) & 6-20V\\
-        \hline
-            Pin digitales & 14 (6 proporcionan salida PWM)\\
-        \hline
-            Pin digitales PWM & 6\\
-        \hline
-            Pin de entrada analogica & 6\\
-        \hline
-            Corriente por pin & 20 mA\\
-        \hline
-            Corriente por pin 3.3V & 50 mA\\
-        \hline
-            Memoria Flash & 32 KBytes de los cuales 0.5 KBytes\\  & son usados por el bootloader\\
-        \hline
-            SRAM & 2 KBytes\\
-        \hline
-            EEPROM & 1 KBytes\\
-        \hline
-            Velocidad de reloj & 16 MHz\\
-        \hline
-            LED\_BUILTIN & 13\\
-        \hline
-            Largo & 68.6 mm\\
-        \hline
-            Ancho & 53.4 mm\\
-        \hline
-            Peso & 25 g\\
-        \hline
-    \end{tabular}
-    }
-\caption[Especificaciones Arduino UNO.]{Especificaciones Arduino UNO.}
-\label{tab:arduino uno}
-\end{table}
-
-
 \appendix{Configuración impresora 3D}
 \label{appendix:3D printer setting}
 Configuración completa de la impresora 3D al momento de construir las piezas para el robot omnidireccional.

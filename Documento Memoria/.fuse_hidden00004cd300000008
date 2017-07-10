@@ -51,7 +51,7 @@ Aquí va el resumen (en Castellano)...
 
 \section{Definición del problema}
 
-Los cuadricopteros tiene la capacidad de mantenerse en vuelo sin la intervención de un piloto, ya sea sobre una posición específica o siguiendo una ruta programada, esto es posible gracias al controlador de vuelo que cada multirrotor tiene a bordo. Este controla cada movimiento que realiza y puede llegar a hacer muchas tareas de forma autónoma, como lo es despegar, aterrizar o desplazarse a un punto en específico en el aire.\\
+Los cuadricopteros tiene la capacidad de mantenerse en vuelo sin la intervención de un piloto, ya sea sobre una posición específica o siguiendo una ruta programada, esto es posible gracias al controlador de vuelo que cada multirrotor tiene a bordo, este controla cada movimiento que realiza y puede llegar a hacer muchas tareas de forma autónoma, como lo es despegar, aterrizar o desplazarse a un punto en específico en el aire.\\
  
 Las prestaciones mencionadas son realizadas por la adición de dispositivos al controlador de vuelo, estos le entregan información en distintos ámbitos, la que puede ser la posición georeferenciada mediante GPS, la altura por la medición barométrica, los movimientos que realiza el cuadricoptero con sensores de aceleración lineal y angular (acelerómetros y giroscopios), entre otros.\\
  
@@ -99,11 +99,9 @@ Implementar un sistema que sea capaz de detectar obstáculos y entregar la infor
 %% contenido del segundo capítulo
 \chapter{Marco teórico}
 
-En este apartado se describen elementos que son necesarios para la comprensión del problema y la implementación de la solución. Se detalla que es un cuadricoptero, como este se mueve en el aire y por qué es importante para la implementación. Se profundiza en la teoría del software a utilizar, lo que abarca: visión por computador; flujo óptico, su definición y cómo es posible calcularlo; redes neuronales, que son, como funcionan y aprenden. Del hardware se introduce a los robot omnidireccionales y algunos elementos que se utilizan en la construcción de este, que son los controladores de motores y el sensor óptico de movimiento.\\
+En este apartado se describen elementos que son necesarios para la comprensión del problema y la implementación de la solución. Se detalla que es un cuadricoptero como este se mueve en el aire y por qué es importante para la implementación. Se profundiza en la teoría del software a utilizar lo que abarca: visión por computador; flujo óptico, que es y cómo se obtiene; redes neuronales, que son, como funcionan y aprenden. Del hardware se introduce a los robot omnidireccionales y algunos elementos que se utilizaran en la construcción de este, que son los controladores de motores y el sensor óptico de movimiento.\\
 
 \section{Vehículo aéreo no tripulado}
-
-La problemática descrita fue obtenida de los vehículos aéreos no tripulados, por lo que importante describir que son y qué elementos de estos son importantes para a tomar en cuenta en la solución propuesta.\\
 
 Un vehículo aéreo no tripulado, UAV (por sus siglas del inglés: \emph{unmanned aerial vehicle}) o dron, es cualquier aeronave que no cuente con un piloto o tripulación a bordo, por lo que ésta puede volar de forma autónoma por medio de un computador a bordo o ser controlada remotamente por un humano \cite{icao2011UAS}.\\
 
@@ -111,15 +109,21 @@ Dentro de los vehículos aéreos no tripulados se encuentran los multirrotores o
 
 Un tipo de mutirrotor son los cuadricópteros los cuales tiene dos pares de rotores con hélices iguales y paso fijo, dos giran en sentido horario y los otros dos en sentido antihorario, esta configuración permite que el torque de cada rotor se anule con el rotor correspondiente que gira en sentido contrario, de esta forma el cuadricóptero se estabiliza y no gira sobre su propio eje \cite{AllenQuadcopters}.\\
 
-Se describe este tipo de UAV porque la solución a entregar va a enfocada a este grupo de aeronaves, principalmente a los cuadricópteros que bordean los 250 mm de diámetro.\\  
-
 Como se mencionó anteriormente los movimientos de los multirrotores se logran variando la velocidad de cada rotor independientemente, referencia a la imagen, con esto el quadricóptero puede moverse sobre 3 ejes perpendiculares, por medio de los movimientos de \emph{pitch}, \emph{roll} y \emph{yaw}, además de desplazarse por el eje $Z$ variando su altitud.\\
 
 Con el movimiento \emph{pitch} el cuadricóptero rota sobre el eje $X$ y se desplaza hacia adelante o atrás por el eje $Y$, cuando ejecuta el movimiento de \emph{roll} rota sobre el eje Y y se desplaza de izquierda a derecha sobre el eje $X$ y gira sobre el eje $Z$ con el movimiento de \emph{yaw}. Con esto se logra tener control sobre 4 grados de libertad.\\
 
-Es necesario saber cómo son capaces de moverse los cuadricopteros, ya que en las pruebas a realizar se busca imitar los movimientos que estos realizan. De esta forma al capturar video se tenga una visión muy cercana a la que se tendría al hacerlo desde un cuadricoptero. Con la limitación de movimiento a solo dos ejes sobre una superficie por medio de un robot omnidireccional, véase sección \ref{omni_robot}.\\
+\section{Software}
 
-\section{Visión por Computador}
+\subsection{OpenCV}
+
+\emph{OpenCV} (Open Source Computer Vision Library) es una librería open source (código abierto) de \emph{computer visión}(visión por computador), distribuida bajo la licencia BSD, la cual está escrita en C y C++, siendo además multiplataforma. También existen interfaces para Python, Ruby, Matlab y otros lenguajes.\\
+
+OpenCV está diseñado para ser eficiente computacionalmente y enfocado en ser utilizado en aplicaciones de procesamiento en tiempo real. Para esto, fue escrito en C optimizado y toma ventaja de los procesadores multi núcleo.\\
+
+El proyecto fue iniciado por \emph{Intel Research Lablets} en 1990 con el propósito de hacer la infraestructura de la visión por computador universalmente disponible y de esta forma ampliar a su vez OpenCV fue pasado a código abierto \cite{bradski2008learning}.\\
+
+\subsection{Visión por Computador}
 
 \emph{Computer Vision} (visión por computador) es una disciplina que busca que los computadores puedan tener una comprensión de alto nivel sobre imágenes o videos digitales, por ejemplo, con el objetivo de automatizar tareas que el sistema visual humano ya puede hacer\cite{ballard1982computer, vandoni1996proceedings, sonka2008image}.\\
 
@@ -136,9 +140,7 @@ Dado el ámbito de este documento, es preciso profundizar en las imágenes digit
 	\end{split}
 \end{equation}
 
-\section{Flujo óptico}\label{flujo_optico}
-
-El flujo óptico es uno de los elementos centrales en este documento. Es obtenido por medio del procesamiento de imágenes, con el fin de obtener información de la escena circundante. Esta informacion es la que será utilizada por la red neuronal posteriormente. En esta sección se describe que es el flujo óptico y como es calculado.\\
+\subsection{Flujo óptico}\label{flujo_optico}
 
 El flujo óptico es definido como el cambio de la estructura de la luz en una imagen, por ejemplo, en la retina de un ojo o en el sensor de una cámara, debido a movimiento relativo del observador y escena. Cuando los objetos se mueven frente a una cámara o esta se mueve en un entorno fijo, existe un cambio correspondiente a los movimientos en la imagen, estos cambios pueden utilizarse para recuperar información relativa al movimiento de las formas y los objetos.\\
 
@@ -214,19 +216,7 @@ Cuando se realiza un proceso de muestreo en una señal, en este caso de una imag
 
 Es por esta razón que \emph{pyramid} aplica un filtro gaussiano para la capa $G_i$ de la pirámide antes de producir la capa $G_{i+1}$, esto reduce la frecuencia de la imagen en la capa $G_i$ dando como resultado una imagen con menor distorsión en la capa $G_{i+1}$. Permitiendo tener una imagen de menor tamaño en una capa $G_j$, al final de la iteración, la cual tiene una baja distorsión frente a la imagen original en la capa $G_0$.\\
 
-\section{OpenCV}
-
-Como se mencionó anteriormente, la obtención del flujo óptico se hace por el procesamiento de imágenes, para esto se utiliza como herramienta a \emph{OpenCV} que permitirá realizar la captura de imágenes desde una cámara digital, para luego calcular de estas el flujo óptico.\\
-
-\emph{OpenCV} (Open Source Computer Vision Library) es una librería open source (código abierto) de \emph{computer visión}(visión por computador), distribuida bajo la licencia BSD, la cual está escrita en C y C++, siendo además multiplataforma. También existen interfaces para Python, Ruby, Matlab y otros lenguajes.\\
-
-OpenCV está diseñado para ser eficiente computacionalmente y enfocado en ser utilizado en aplicaciones de procesamiento en tiempo real. Para esto, fue escrito en C optimizado y toma ventaja de los procesadores multi núcleo.\\
-
-El proyecto fue iniciado por \emph{Intel Research Lablets} en 1990 con el propósito de hacer la infraestructura de la visión por computador universalmente disponible y de esta forma ampliar a su vez OpenCV fue pasado a código abierto \cite{bradski2008learning}.\\
-
-\section{Redes neuronales}\label{redes_neuronales}
-
-Otro elemento importante en este documento al igual que el flujo óptico son las redes neuronales. Una red neuronal es la encargada de tomar como entrada el flujo óptico de una determinada imagen y con respecto a esto la red toma una decisión, esta decisión indica la dirección en la cual debe moverse según lo que haya en la escena en ese momento. Esta sección da la definición de que es una red neuronal, como estas funcionan y son capaces de aprender.\\
+\subsection{Redes neuronales}\label{redes_neuronales}
 
 Una red neuronal tiene la finalidad de ser un modelo de una red neuronal biológica, que recibe un número determinado de entradas, las que son procesadas dentro de la red y producen una o más salidas. Una red neuronal biológica está conformada por la interconexión de neuronas, las cuales son células nerviosas que reciben estímulos y conducen el impulso nervioso, por medio de un potencial de acción, a otras neuronas \cite{cayre2002common}. De la misma forma una red neuronal está formada por neuronas, a las que nos referimos por ahora como perceptrón, este funciona tomando varias entradas $ x_{1}, x_{2}, $ \dots, para producir una sola salida binaria, como se muestra en la figura \ref{fig:perceptron}.\\
 
@@ -355,9 +345,9 @@ Y con respecto a los pesos:\\
 	\frac{\partial C}{\partial w^l_{jk}} = a^{l-1}_k \delta^l_j
 \end{equation}\\
 
-\section{Robot omnidireccional}\label{omni_robot}
+\section{Hardware}
 
-En la realización de las pruebas es necesaria la captura de video, esta debe ser lo más similar a lo que se obtendría si se utilizara una cámara sobre un cuadricoptero. Esa es la razón por qué se utiliza un robot omnidireccional, este permite imitar en cierto grado la forma en la cual puede moverse un cuadricoptero, con algunas limitantes. La siguiente sección explica cómo logra un robot omnidireccional hacer esto.\\
+\subsection{Robot omnidireccional}
 
 Un robot omnidireccional (referido en este documento inherentemente como robot o robot omnidireccional) es un robot que tiene la capacidad de moverse en cualquier dirección sin tener que rotar antes de moverse. Esto es posible por las ruedas omnidireccionales con que está construido el robot, estas tiene la capacidad de moverse libremente en dos direcciones, pueden rodar como una rueda normal o desplazarce lateralmente con las ruedas ubicadas perpendicularmente a lo largo de la circunferencia de la rueda, como se muestra en la figura \ref{fig:image_omni_whell}.\\
 
@@ -402,37 +392,7 @@ En estos movimientos la velocidad de las ruedas siempre es la misma, solo cambia
   \label{fig:omni_movement_combined}
 \end{figure}
 
-\section{Microcontrolador}
-
-Para el control y comunicación del robot es necesario contar con alguna unidad de procesamiento, en este caso se hace uso de un microcontrolador. Este se encarga recibir las señales de radio control e interpretarlas, comunicarse vía puerto serial con el computador externo y controlar la dirección y velocidad de los motores.\\
-
-Un microcontrolador es un pequeño computador fabricado en un solo circuito integrado, lo que es llamado sistema en un chip (SoC por sus siglas del inglés: \emph{system on a chip}). Un microcontrolador consta de uno o más CPUs junto con memoria, periféricos de entradas y salidas programables y almacenamiento destinado al alojamiento del programa que ejecuta el microcontrolador.\\
-
-Como se puede ver un microcontrolador está compuesto de distintos elementos embebidos que permiten su funcionamiento de forma autónoma con la adición poco o ningún componente, evitando la dependencia de elementos periféricos.\\
-
-El microcontrolador utilizado es un ATmega328 y dentro de los elementos que lo conforman se encuentran:\\
-
-CPU: Se encarga de la ejecución de programas, teniendo acceso la memoria, ejecutando cálculos, controlando periféricos y manejando interrupciones. La CPU utiliza una arquitectura Harvard que se caracteriza en tener buses y memoria separados para los programas y los datos. Además de hacer uso de un set de instrucciones RISC (del inglés \emph{reduced instruction set computer}) funcionando a una frecuencia de 16 MHz.\\
-
-Registros: Espacios dentro de la CPU donde se almacenan datos que se utilizan para realizar las operaciones dentros de los demás componentes de la CPU, además se guardan los resultados de la ejecución de instrucciones. El ATmega328 cuenta con 32 registros de 8 bit cada uno.\\
-
-Memoria: Se cuentan con tres tipos de memoria:
-\begin{itemize}
-    \item SRAM: 2 KBytes de memoria interna compartida con los registros de entrada y salida.
-    \item Flash Program Memory: Esta memoria reprogramable es compartida para almacenar los programas y el \emph{Boot
-Loader}, con una capacidad de 32 KBytes.
-    \item EEPROM: Memoria para almacenar datos con una capacidad de 1 KBytes.
-\end{itemize}
-
-Entradas y salida: Todos los pines del ATmega328 tiene la funcionalidad \emph{Read-Modify-Write} lo que significa que la dirección de cada pin puede ser cambiada. Se cuenta con 23 pines de los que por sus funciones especiales quedan disponibles para libre uso 20 puertos. Los pines PB6 y PB7 son usados para el cristal externo y PC6 para reiniciar el microcontrolador. Estos pines también comparten funcionalidades especializadas como lo son: SPI, PWM, puerto serial, conversor análogo digital y ISCP \cite{atemel:atemega328}.\\
-
-El microcontrolador es utilizado bajo la plataforma de desarrollo \emph{Arduino}, la que se define como una plataforma de código abierto basada en hardware y software fácil de usar. Esta proporciona el hardware por medio de las \emph{Arduino Board} y el software en \emph{Arduino programming language} y el IDE de desarrollo \emph{Arduino Software} \cite{arduino:introduction}.\\
-
-En específico se utiliza la placa \emph{Arduino} UNO Rev 2, especificaciones en el anexo \ref{appendix:arduino uno}, y el IDE en su versión 1.8.2.\\
-
-\section{Controlador para motores}
-
-Un elemento necesario para el funcionamiento del robot son los controladores para motores, estos componentes son un intermediario entre el microcontrolador y los motores. Estos permiten que las señales de control puedan actuar sobre los motores.\\
+\subsubsection{Controlador para motores}
 
 Un controlador para motores es un dispositivo que maneja el desempeño de un motor eléctrico, este incluye mecanismos para arrancar y detener el motor, seleccionar la dirección de rotación y regular la velocidad \cite{siskind1963electrical}. La mayoría de los controladores utilizan un circuito eléctrico llamado puente H (también referido como \emph{full-bridge}, este permite aplicar corriente sobre una carga en cualquier dirección, con esto un motor de corriente continua puede girar en ambas direcciones \cite{williams2002microcontroller}.\\
 
@@ -456,11 +416,9 @@ El controlador utilizado es el L298, cual contiene dos puentes H compatibles con
   \label{fig:H bridge circuit}
 \end{figure}
 
-Además se puede ver que el controlador recibe una tercera entrada En (sigla del inglés: \emph{Enable}), está activa o desactiva el puente H dependiendo del estado lógico que presente: Si el estado es alto el puente H funcionara según corresponda con las entradas In1 e In2, pero si está en estado bajo desconecta ambas salidas OUT1 y OUT2 \cite{st:l298}.
+Además se puede ver que el controlador recibe una tercera entrada En (sigla del inglés: \emph{Enable}), está activa o desactiva el puente H dependiendo del estado lógico que presente: Si el estado es alto el puente H funcionara según corresponda con las entradas In1 e In2, pero si está en estado bajo desconecta ambas salidas OUT1 y OUT2.
 
-\section{Sensor óptico de movimiento}
-
-Este es otro componente que es parte del robot omnidireccional, permite registrar los movimientos realizados sobre la superficie en la que se ha desplazado. Estos datos son necesarios ya que forman una estrecha relación con la salida que entrega la red neuronal y son son utilizados tanto para realizar el entrenamiento de la red como comprobar si este entrenamiento ha sido efectivo o no. A continuación se muestra el funcionamiento del sensor y cómo entrega la información de posicionamiento.\\
+\subsection{Sensor óptico de movimiento}
 
 El sensor óptico de movimiento acoplado al robot que tiene la función registrar las trayectorias que este sigue, proviene de un \emph{mouse} óptico (referido en este documento indistintamente como \emph{mouse} o \emph{mouse} optico). Este utiliza una fuente de luz, en este caso un LED rojo y detector de luz como una matriz de fotodiodos, los que forman una pequeña cámara digital, para detectar el movimiento relativo a una superficie.\\
 
@@ -517,7 +475,7 @@ El flujo optico es representado por el desplazamiento que tiene $P_0$ en $P_1$, 
 
 \subsection{Captura de flujo óptico}
 
-Para obtener el flujo óptico se utiliza una cámara de digital conectada por USB con una resolución de 640x480 píxeles, Con formato de pixel YUV 4:2:2, velocidad de obturación de hasta 1/30 seg\\
+Para obtener el flujo óptico se utiliza una cámara de digital conectada por USB con una resolución de 640x480 pixeles.\\
 
 De las imágenes obtenidas desde la cámara se calcula el flujo óptico en una matriz de 21x5 puntos, cada punto está separado por 30 píxeles uno del otro. La matriz se extiende a todo el ancho la imagen y desde los 220 hasta 330 píxeles de alto.\\
 
@@ -579,7 +537,7 @@ Donde $a^{L}$ y $z^{L}$ pertenecen a la última capa $L$, el arreglo $\delta^{L}
 
 Este procedimiento se propaga hacia atrás en la red por las capas $L-1, L-2, L-3...$ hasta alcanzar la primera capa. Para luego actualizar los parametros de red aplicando las diferencias obtenidas bajo un coeficiente de aprendizaje, este determina cuanto se deben modificar los parametros existentes en la red con respecto a las diferencias obtenidas del algoritmo de \emph{backpropagation}.
 
-%\subsection{Diseño de capas}
+\subsection{Diseño de capas}
 
 \subsection{Entrenamiento}
 
@@ -906,57 +864,6 @@ La construcción de la pista de pruebas necesita de un material que proporciona 
 \appendixpart
 
 %% contenido del primer anexo
-\appendix{Arduino UNO rev 2}
-\label{appendix:arduino uno}
-Espesificaciones de la placa \emph{Arduino} UNO rev 2.
-
-\begin{table}[H]
-\centering
-    \fontfamily{cmss}\selectfont{
-    \begin{tabular}{|c|c|}
-
-        \hline
-            Microcontrolador & ATmega328P\\
-        \hline
-            Voltaje de operación & 5V\\
-        \hline
-            Voltaje de entrada (recomendado) & 7-12V\\
-        \hline
-            Voltaje de entrada (limite) & 6-20V\\
-        \hline
-            Pin digitales & 14 (6 proporcionan salida PWM)\\
-        \hline
-            Pin digitales PWM & 6\\
-        \hline
-            Pin de entrada analogica & 6\\
-        \hline
-            Corriente por pin & 20 mA\\
-        \hline
-            Corriente por pin 3.3V & 50 mA\\
-        \hline
-            Memoria Flash & 32 KBytes de los cuales 0.5 KBytes\\  & son usados por el bootloader\\
-        \hline
-            SRAM & 2 KBytes\\
-        \hline
-            EEPROM & 1 KBytes\\
-        \hline
-            Velocidad de reloj & 16 MHz\\
-        \hline
-            LED\_BUILTIN & 13\\
-        \hline
-            Largo & 68.6 mm\\
-        \hline
-            Ancho & 53.4 mm\\
-        \hline
-            Peso & 25 g\\
-        \hline
-    \end{tabular}
-    }
-\caption[Especificaciones Arduino UNO.]{Especificaciones Arduino UNO.}
-\label{tab:arduino uno}
-\end{table}
-
-
 \appendix{Configuración impresora 3D}
 \label{appendix:3D printer setting}
 Configuración completa de la impresora 3D al momento de construir las piezas para el robot omnidireccional.
