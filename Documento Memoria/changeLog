@@ -1,3 +1,8 @@
+	
+	-add pseudocode calOpticalFlow section 3.1 "Flujo óptico"
+	-add Pseudocode DataCapture section 3.1.1 "Captura de Flujo óptico"
+	-improvement test description
+	----10-07-2017----
 	-add short caption for figures and tables
 	-add subsection 3.1.1 "Captura flujo óptico"
 	-add chapter introduction

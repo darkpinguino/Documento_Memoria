@@ -509,32 +509,75 @@ En este capítulo se detallan los elementos que fueron necesarios implementar pa
 
 El flujo óptico es la informacion que se obtiene desde la captura de imagenes y la que posteriormente sera entregada a la red neuroral. Para procesar las imagenes y obtener como resultado el flujo óptico se utiliza la librería \emph{OpenCV}, esta entrega el metodo \emph{calcOpticalFlowPyrLK} que implementa el algoritmo de \emph{Lucas-Kanade}, más detalle en la sección \ref{flujo_optico}, la cual recive como paramatros dos imagenes $Img_0$ e $Img_1$ y los puntos $P_0$ donde calcular el flujo optico.\\
 
-Los puntos $P_0$ son una susecion de pares coordenados dentro de $Img_0$, los que tiene una posicion predefinida a un intervalo regular de pixeles. El algoritmo usa los pixeles de $Img_0$ correspondientes a los puntos de definidos y calcula donde se han desplazado en $Img_1$, dando como resultado una nueva susecion de puntos, estos nuevos puntos $P_1$ indican la nueva posicion qué tiene $P_0$ en $Img_1$.\\
+Los puntos $P_0$ son una susecion de pares coordenados dentro de $img_0$, los que tiene una posicion predefinida a un intervalo regular de pixeles. El algoritmo usa los pixeles de $img_0$ correspondientes a los puntos definidos y calcula donde se han desplazado en $img_1$, dando como resultado una nueva susecion de puntos, estos nuevos puntos $p_1$ indican la nueva posicion qué tiene $p_0$ en $img_1$.\\
 
-Las imagenes $Img_0$ e $Img_1$ son obtenidas secuencialmente \emph{frame} por \emph{frame} desde la funte de video, la cual puede ser un archivo de video o directamente de una camara digital. $Img_1$ es el siguiente \emph{frame} despues de $Img_0$, cuando se procesa $img_0$ se copia el \emph{frame} a $img_1$ para luego obtener el siguiente \emph{frame} para $Img_0$.\\
+Una vez obtenido $p_1$ estos son procesados para dejar solo los puntos que han podido ser calculados correctamente. Esto se hace analizando la distancia de desplazamiento y las banderas de estado y error que acompañan a cada punto, si el desplazamiento es mayor a 50 pixeles o una de las banderas esta como \emph{False} ese punto es descartado y reemplazado por su valor correspondiente en $p_0$.\\
+
+Las imagenes $img_0$ e $img_1$ son obtenidas secuencialmente \emph{frame} por \emph{frame} desde la funte de video, la cual puede ser un archivo de video o directamente de una camara digital. $img_1$ es el siguiente \emph{frame} despues de $img_0$, cuando se procesa $img_0$ se copia el \emph{frame} a $img_1$, para luego obtener el siguiente \emph{frame} para $img_0$.\\
 
 El flujo optico es representado por el desplazamiento que tiene $P_0$ en $P_1$, el que es en el plano de imagen tanto en eje $X$ como en el $Y$.\\
+
+A continuacion en el algoritmo \ref{CalOpticalFlow} se describe el pseudocodigo del calculo del flujo óptico.
+
+\begin{algorithm}
+\caption{Calculo Flujo Óptico}\label{CalOpticalFlow}
+\begin{algorithmic}[1]
+\Function{CalOpticalFlow}{}
+\State $frame \gets cam.read()$ \Comment Obtiene el siguiente \emph{frame} de la fuente de video
+\State $img_1 \gets gray(frame)$ \Comment Combierte el \emph{frame} a escala de grices
+\State $p_1,\, st,\, err \gets calcOpticalFlowPyrLK(img_0,\, img_1,\, p_0) $
+\State $img_0 \gets img_1$
+\State $p_1 \gets goodPoints(p_1,\, st,\, err)$ \Comment 
+\State \textbf{return} $p_1$
+
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
 
 \subsection{Captura de flujo óptico}
 
 Para obtener el flujo óptico se utiliza una cámara de digital conectada por USB con una resolución de 640x480 píxeles, Con formato de pixel YUV 4:2:2, velocidad de obturación de hasta 1/30 seg\\
 
-De las imágenes obtenidas desde la cámara se calcula el flujo óptico en una matriz de 21x5 puntos, cada punto está separado por 30 píxeles uno del otro. La matriz se extiende a todo el ancho la imagen y desde los 220 hasta 330 píxeles de alto.\\
+De las imágenes obtenidas desde la cámara se calcula el flujo óptico en una matriz de 21x5 puntos, cada punto está separado por 30 píxeles uno del otro. La matriz se extiende a todo el ancho la imagen y desde los 200 hasta 330 píxeles de alto.\\
 
 Los puntos se ubican en esta posición para así obtener la información que entrega la pista de pruebas.\\
 
 El plano de la cámara está ubicado perpendicularmente al del desplazamiento del robot, por lo que solo se entrega a la red neuronal el flujo óptico que es calculado en el eje $X$ de la imagen, es decir, la cuantificación del desplazamiento lateral de los pixeles en la imagen.\\
 
-Por cada \emph{frame} en el se calcula el flujo óptico se obtiene un arreglo con un tamaño de 210 elementos que proporciona el desplazamiento de los puntos con respecto a la matriz antes descrita. Además del desplazamiento que tuvo el robot sobre el eje $X$ de la pista, en la figura \ref{fig:optical_flow} se muestra un ejemplo de esto. Esta es la información que posteriormente se le entrega a la red neuronal.\\
+Por cada \emph{frame} en el que se calcula el flujo óptico se obtiene un arreglo con un tamaño de 105 elementos que proporciona el desplazamiento de los puntos con respecto a la matriz antes descrita. Además del desplazamiento que tuvo el robot sobre el eje $X$ de la pista, en la figura \ref{fig:optical_flow} se muestra un ejemplo de esto. Esta es la información que posteriormente se le entrega a la red neuronal.\\
 
 \begin{figure}[H]
 \centering
 \begin{verbatim}
-	[15.1345, 45.7654, 75.4358,... 615.5472, 645.8256, 675.1234], [185]
+	[15.1345, 45.7654, 75.4358,... 615.5472, 645.8256, 675.1234], [0.75]
 \end{verbatim}
 \caption[Captura del flujo óptico de un \emph{frame}.]{Ejemplo del flujo óptico obtenido de un \emph{frame} más el desplazamiento del robot.}
   \label{fig:optical_flow}
 \end{figure}
+
+El algoritmo \ref{DataCapture} muestra el pseudocodigo de como se realiza la captura del flujo óptico.
+
+\begin{algorithm}
+\caption{Captura de datos}\label{DataCapture}
+\begin{algorithmic}[1]
+\Function{DataCapture}{}
+\State $data\_input \gets [\,]$
+\State $data\_output \gets [\,]$
+\State $data\_mouse \gets [\,]$
+\While{video\_capture}
+\State $optical\_flow\_calc \gets calcOpticalFlow()$ 
+\State $optical\_flow\_data \gets getXComponent(optical\_flow\_calc)$ \Comment Obtiene el compoenete $X$ del flujo óptico
+\State $x,\, y \gets getMovement()$ \Comment Obtiene el desplazamiento del robot
+\State $data\_input.append(optical\_flow\_data)$
+\State $data\_output.append(normalize(x))$
+\State $data\_mouse.append([x,\, y])$
+\EndWhile
+
+\State $saveData(data\_input,\, data\_output,\, data\_mouse)$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
 
 \section{Red neuronal}
 
@@ -860,19 +903,28 @@ La segunda comprobación de entrenamiento se realizará de forma empírica, comp
  
 La obtención del conjunto datos, para realizar las pruebas, consta de conducir de forma manual el robot repetidas veces por la pista de pruebas, colocando el robot en posiciones definidas al comienzo de la pista y dirigirlo hasta el final de esta.\\
  
-Para la primera etapa, sin importar la posición de inicio, tiene como objetivo mover el robot al centro de la pista direccionando sobre el eje $X$ mientras se desplaza al final de la pista por el eje $Y$, para que de esta forma la red neuronal pueda aprender a direccionar el robot evadiendo los bordes de la pista.\\
+Para la primera etapa, sin importar la posición de inicio, tiene como objetivo mover el robot al centro de la pista direccionando sobre el eje $X$ mientras se desplaza por la pista en el eje $Y$, para que de esta forma la red neuronal pueda aprender a direccionar el robot evadiendo los bordes de la pista.\\
  
 En la segunda etapa se posicionará un obstáculo dentro de la pista, al igual que en la primera etapa, también se deberá centrar el robot dentro de la pista, pero al enfrentarse a un obstáculo este debe ser evadido.\\
 
-Para realizar la recopilación de datos, el inicio de la pista será dividido en [n] secciones iguales la que estarán divididas en [cm] una de otra, de donde comienza el robot, por cada una de estas secciones se registran [n] recorridos del robot sobre la pista, obteniendo la información de flujo óptico y el recorrido hecho por este. El recorrido registrado es a una velocidad constante [velocidad del robot] y recorre una distancia de 2 mt.\\
+Para la recopilación de datos el recorrido del robot comienza en tres posiciones distintas en el inicio de la pista, las posiciones están a [cm] del borde derecho, al centro y a [cm] del borde izquierdo. Por cada una de estas se registran 30 recorridos del robot sobre la pista para los datos de entrenamiento y 10 para los datos de prueba. Obteniendo la información de flujo óptico y el recorrido hecho por este. El recorrido registrado es a una velocidad constante [velocidad del robot] y una distancia de 2 mt.\\
  
-Para la recopilación de datos con obstáculos, se utilizará el mismo esquema anterior, pero se posiciona un obstáculo dentro de pista en distintas posiciones predefinidas, estas posiciones son representadas dentro de la pista por una matriz, la cual será de [n] filas y [m] columnas, la separación entre las filas y las columnas será igual y de [cm], y se coloca en la pista a [distancia] del inicio de la pista y centrada con respecto a los bordes. Por cada obstáculo se recopilan los datos [n] veces por cada posición de inicio de la pista.\\
+Para la recopilación de datos con obstáculos, se utilizará el mismo esquema anterior, pero se posiciona un obstáculo dentro de pista en distintas posiciones predefinidas. El obstáculo está construido con tres cilindros de cartón pintados de negro con una franja vertical blanca de [cm] de ancho (para aumentar el flujo óptico registrado por el robot), cada cilindro tiene un diámetro de [cm] y [cm] de alto.\\
+
+El obstáculo es posicionado en tres lugares distintos dentro de la pista, a [cm] del borde derecho de la pista, al centro de la pista y a [cm] del borde izquierdo, cada posición está a 1,5 mt del inicio de la pista.\\
+
+Por cada posición del obstáculo se registran cinco recorridos para los datos de entrenamiento y tres para los da prueba por cada cada posición de inicio, dando un total de quince recorridos para el entrenamiento y nueve para las pruebas por cada posición del obstáculo.\\
  
 La construcción de la pista de pruebas necesita de un material que proporciona tracción a las ruedas del robot, por lo que se utiliza una alfombra de cubre pisos de 1 metro de ancho y 4 metros de largo, de color \emph{beige} para proporcionar mayor contraste frente a los obstáculos, los bordes de la pista tendrán un alto de 25 cm con un patrón regular líneas verticales blancas y negras de 5 cm de ancho.
 
 \chapter{Resultados}
 
-
+\begin{figure}[H]
+  \centering
+  \includegraphics[width = 450pt]{images/plot.pdf}
+  \caption[Proyección de un punto sobre la imagen.]{Proyección de un punto $P_0$ con movimoento $v_0$ en la escena  a un punto $P_i$ con movimiento $v_i$ sobre la imagen.}
+  \label{fig:proyeccion_flujo_optico}
+\end{figure}
 
 
 %% ambiente glosario
