@@ -15,10 +15,12 @@
 \RequirePackage{svg}
 \RequirePackage{float}
 \RequirePackage{array}
+\RequirePackage{booktabs}
+\RequirePackage{longtable}
+
 %\RequirePackage{adjustbox}
 
 \RequirePackage{algorithm}
-%\RequirePackage{algpseudocode}
 \RequirePackage{algpseudocode}
 
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
