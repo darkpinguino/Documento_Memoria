@@ -73,6 +73,8 @@ Una vez que se obtenga el flujo óptico, será entregado a una red neuronal, vea
 
 \section{Objetivos}
 
+En esta seccion de describe los elementos que son necesarios desarrollar para poder dar solucion al problema. Se menciona el objetivo general y que se necesita para este se pueda satisfacer, ademas de dar a conocer las limitaciones del sistema a implementar.
+
 \subsection{Objetivo general}
 
 Implementar un sistema que sea capaz de detectar obstáculos y entregar la información necesaria de como evadirlos, mediante flujo óptico y redes neuronales.
@@ -475,6 +477,7 @@ El protocolo de comunicación utilizado es PS/2 (\emph{IBM Personal System 2}), 
 El \emph{mouse} envía la información de estado de los botones, derecho, central e izquierdo, además del desplazamiento en el eje $X$ e $Y$ en un paquete de tres \emph{byte}, que se muestra en la tabla \ref{tab:ps/2 package}. El movimiento es un entero de 9 \emph{bite} a complemento 2, el \emph{bit} más significativo es $Y$ sign y $X$ sign que aparece en el primer \emph{byte}. Este valor representa la diferencia relativa a la posición del \emph{mouse} desde la última vez que se envió el paquete de datos. El rango va de -255 a +255, si el rango es excedido el correspondiente \emph{bit} de \emph{overflow} es activado \cite{ps2mouse}.\\
 
 \begin{table}[H]
+\caption[Paquete de datos de movimiento \emph{mouse} PS/2.]{Paquete de datos del movimiento del \emph{mouse}.}\label{tab:ps/2 package}
 \makebox[\textwidth][c]{
 	\begin{small}
 	\fontfamily{cmss}\selectfont{
@@ -492,10 +495,7 @@ El \emph{mouse} envía la información de estado de los botones, derecho, centra
 	\end{tabular}
 	}
 	\end{small}
-	
 }
-\caption[Paquete de datos de movimiento \emph{mouse} PS/2.]{Paquete de datos del movimiento del \emph{mouse}.}
-\label{tab:ps/2 package}
 \end{table}
 
 
@@ -774,6 +774,7 @@ Los movimientos del robot son realizados posteriormente al cálculo de las veloc
 El control sobre los motores se hace de la siguiente manera: En el controlador L298N las salidas reflejan el estado en el que se encuentran las entradas, por lo que OUT1 tendrá el mismo estado que In1, lo mismo sucede cuando con OUT2 y In2, siempre y cuando En este en estado lógico alto. La tabla \ref{tab:l298 in out} muestra el comportamiento del controlador con respecto a las distintas entradas.\\
 
 \begin{table}[H]
+\caption[Comportamiento de las salidas del controlador L298.]{Comportamiento de las salidas del controlador L298N. L = estado lógico bajo, H = estado lógico alto y X = cualquier estado.}
 \centering
 	\fontfamily{cmss}\selectfont{
 	\begin{tabular}{|c|c|c||c|c|}
@@ -789,7 +790,7 @@ El control sobre los motores se hace de la siguiente manera: En el controlador L
 		\hline
 	\end{tabular}
 	}
-\caption[Comportamiento de las salidas del controlador L298.]{Comportamiento de las salidas del controlador L298N. L = estado lógico bajo, H = estado lógico alto y X = cualquier estado.}
+
 \label{tab:l298 in out}
 \end{table}
 
@@ -940,7 +941,11 @@ La construcción de la pista de pruebas necesita de un material que proporciona 
 
 A continuación se muestran los resultados obtenidos al realizar la comprobación del entrenamiento de la red neuronal y las pruebas empíricas de conducción autónoma del robot tanto para la primera etapa, que consta de evitar los bordes de la pista, como para segunda que tiene como objetivo evadir los obstáculos que se le presentan al robot.\\
 
-\section{Evasión de bordes}
+\section{Entrenamiento de la red neuronal}
+
+En este apartado se muestran los resultados obtenidos después de entrenar la red neuronal en los dos escenarios descritos en las pruebas: en la evasión de los bordes de la pista y la evasión de objetos.\\
+
+\subsection{Evasión de bordes}
 
 El entrenamiento de la red neuronal en esta etapa se hace con un set de 34755 datos y la validación con un set de 7367 datos. El entrenamiento consta de 30 iteraciones, es decir que la red se entrena por \emph{backpropagation} luego se calcula el \emph{test error} por medio de su efectividad y MSE, luego con red ya entrenada se repite el proceso por un total de 30 veces. El entrenamiento es realizado a dos redes distintas la primera con una sola capa oculta de 50 neuronas (denotada a continuación como Red.1.A), la segunda con 4 capas ocultas de 100, 70, 40, 10 neuronas respectivamente (denotada a continuación como Red.1.B). En la figura \ref{fig:net.1.a} y \ref{fig:net.1.b} se muestran los resultados obtenidos con las dos redes neuronales.\\
 
@@ -995,7 +1000,7 @@ En la tabla \ref{tab:Red.1.A vs Red.1.B} muestra una comparativa entre el entren
 \label{tab:Red.1.A vs Red.1.B}
 \end{table}
 
-\section{Evasión de obstaculos}
+\subsection{Evasión de obstaculos}
 
 En esta etapa se utilizan los mismos datos que en la evasión de bordes, pero a estos se le suman 31542 elementos al set de entrenamiento y 13268 al de validación, obtenidos de los recorridos realizados por la conducción del robot evadiendo obstáculos. Con estos nuevos conjuntos de datos que tienen un total de 66297 elementos para el entrenamiento y 20635 para la validación, se vuelve a hacer el proceso de entrenamiento, iterar 30 veces para ambas redes neuronales (denotadas como Red.2.A y Red.2.B) y al término de cada entrenamiento hacer la comprobación con los datos de validación. La figura \ref{fig:net.2.a} y \ref{fig:net.2.b} muestra los resultados del proceso.\\
 
@@ -1049,6 +1054,100 @@ La tabla \ref{tab:Red.2.A vs Red.2.B} muestra la comparativa entre la Red.2.A y 
 \end{table}
 
 En el anexo \ref{appendix:entrenamiento red} se muestran los resultados completos del entrenamiento realizado a las distintas redes neuronales, se listan las iteraciones y en cada una la efectividad y MSE conseguidos.\\
+
+\section{Conducción autonoma}
+
+Una vez que se terminó de entrenar las redes neuronales se probó la capacidad que estas tenían de conducir el robot por la pista de pruebas. Primero se prueba sin ningún objeto que evadir, el robot sólo tiene que dirigirse por el centro de la pista, con el objetivo de replicar el comportamiento de la conducción manual.\\
+
+Al momento de realizar la primera prueba se registra que el robot no reacciona frente al flujo óptico, sin importar la información que recibe el comportamiento de este es el mismo, no cambia la dirección de la trayectoria. La respuesta que entrega la red debería modificar el recorrido en el eje $X$ de la pista, pero en la prueba la información que se le entrega al robot indica que este no debe realizar ningún movimiento. Esto se traduce en que el movimiento siempre es en línea recta.\\
+
+El resultado obtenido se repitió con las dos redes entrenadas, tanto con Red.1.A como Red.1.B, la salida de la red está normalizada entre 0 y 1, cuando toma el valor mayor a 0.5 el robot debe moverse a la derecha, si el valor es menor a la izquierda y si permanece en 0.5 la dirección no debe cambiar. La salida analizada siempre se mantenía en 0.5 o muy cercana a este valor, sin importar el flujo óptico que se utilizaba como entrada para la red.\\
+
+Dado el comportamiento obtenido con la utilización de la red neuronal para la conducción autónoma se puede considerar que la prueba fue fallida, aunque los resultados de la validación de entrenamientos haya sido exitosos.\\
+
+\section{Análisis}
+
+Como se deja ver en los resultados obtenidos existe una contradicción entre la validación del entrenamiento de la red y la conducción autónoma, por esta razón se revisa la forma en que se realiza el entrenamiento. Este tiene una estrecha relación con los datos capturados, los que son el flujo óptico y los movimientos del robot, ambos capturados de los recorridos hechos en la pista de prueba.\\
+
+Los movimientos del robot que son capturados por el sensor de movimientos tiene un valor mínimo de -255 y máximo de 255, los que son normalizados entre 0 y 1. Estos registran el desplazamiento del robot sobre el eje $X$. Se analiza la distribución que tienen estos en los datos de entrenamiento.\\
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width = 450pt]{images/hist_motion_robot.pdf}
+  \caption[Histograma movimiento robot en el eje $X$]{Histogram del movimiento registrado en el desplazamiento del robot por el eje $X$ de la pista.}
+  \label{fig:hist motion robot}
+\end{figure}
+
+En la figura \ref{fig:hist motion robot} se puede ver que la concentración de los datos se encuentra alrededor del valor 0.5, lo que significa que a lo largo de la captura de datos de entrenamiento no se registró el desplazamiento que hacía lateralmente el robot. Esto trae como consecuencia que al momento de hacer el entrenamiento la red aprende que indistintamente del flujo óptico que recibe como entrada la salida que debe entregar es 0.5.\\
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width = 450pt]{images/hist_motion_robot_training_vs_test.pdf}
+  \caption[Histograma movimiento robot entrenamiento v/s validación]{Comparativa de histogramas entre datos de entrenamiento y validación del movimiento registrado en el desplazamiento del robot por el eje X de la pista.}
+  \label{fig:hist motion robot training test}
+\end{figure}
+
+Ahora si se analiza los datos para la validación del entrenamiento, se ve que estos tiene una distribución que concuerda con los datos con que se realizó el entrenamiento, figura \ref{fig:hist motion robot training test} muestra la comparativa entre los datos de entrenamiento y validación. Es por esta razón que cuando se valida el entrenamiento el resultado obtenido es una alta efectividad, a pesar de que el entrenamiento no cumple con el objetivo que se busca.\\
+
+Las razones por la que se obtuvieron estos datos están estrechamente relacionados con el sensor óptico de movimiento, el desplazamiento hecho por el robot en el intervalo de dos \emph{frames} consecutivos pudo ser captado como un movimiento muy pequeño o nulo por el sensor. Otro motivo por el cual no se registraron los datos esperados es que el sensor no puedo captar el movimiento por no estar funcionando bajo las especificaciones para las que fue diseñado, como el no esta en un tipo de superficie compatible o estar fuera del rango de distancia que se necesita para captar el movimiento relativo a la superficie donde se desplaza.\\
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width = 450pt]{images/hist_motion_robot_y.pdf}
+  \caption[Histograma movimiento robot en eje $Y$]{Histogram del movimiento registrado en el desplazamiento del robot por el eje $Y$ de la pista.}
+  \label{fig:hist motion robot y}
+\end{figure}
+
+Al analizar el movimiento del robot en el eje $Y$ gana más sustento el segundo motivo descrito anteriormente, al momento de capturar los datos el el robot siempre estuvo en movimiento sobre este eje, por lo que el sensor nunca debió entregar un valor de 0.5 ya que esto significa que robot no se está desplazando. Al ver los datos del sensor se puede apreciar que al igual en el eje $X$ la mayor concentración está alrededor del valor 0.5, la figura \ref{fig:hist motion robot y} muestra la distribución que estos tuvieron.\\
+
+Teniendo estos antecedentes en cuenta se puede concluir que efectivamente al momento de capturar los datos, tanto de entrenamiento como de validación, no se capturó adecuadamente el movimiento del robot. El sensor de movimiento en la mayoría de los casos no alertó desplazamiento alguno cuando en la realidad el robot estuvo en constante movimiento mientras se obtenían los datos.\\
+
+Este fallo en la percepción de movimiento del robot no fue alertado con anterioridad por tener en pruebas preliminares buenos resultados en la validación del entrenamiento. Esos resultados no sugieren tener una falencia en los datos utilizados para entrenar red neuronal. Tampoco se contaba con una retroalimentación visual de la cuantificación del desplazamiento como si se tenía de la captura de flujo óptico.\\
+
+Para corregir esta falencia es necesario hacer un rediseño en el robot omnidireccional que permita un buen funcionamiento del sensor de movimiento, garantizando que cualquier movimiento hecho por este pueda ser percibido por el sensor. Otra opción es utilizar un tipo diferente de sensor que se adapte mejor a los requerimientos específicos de cuantificar el desplazamiento hecho por el robot.\\
+
+\chapter{Conclusión}
+
+En este capitulo se revisa el trabajo realizado desde el punto de vista de los planteamientos hechos en un comienzo y si fue posible cumplir con estos. Se revisan los objetivos planteados, como fueron abordados y si pudieron ser completados.\\
+
+Además de exponer las experiencias que se tuvieron a lo largo de la implementacion de la solución y el porqué se abordo la problematica de esta forma.\\
+
+Para finalmentr ver cual es el trabajo que queda pendiente y que cosas se podrian hacer en el futuro para ampliar el mabito de la solución.\\
+
+\section{Objetivos}
+
+Con todos los antecedentes recopilados y redactados en este documento no es posible decir que se logró cumplir con el objetivo principal que se planteó, debido a las razones ya argumentadas anteriormente. Por otro lado no se descarta que la solución planteada pueda llevarse a cabo si redefinen ciertos puntos de la implementación, que son necesarios para resolver la problemática, haciendo referencia a falencia de la captura de movimiento del robot.\\
+
+Ahora si se revisan los objetivos específicos, que desglosan el trabajo realizado durante la construcción de la solución a la problema planteada se puede decir lo siguiente:
+
+
+\begin{itemize}
+	\item {\bf Definir herramientas que permitan la obtención del flujo óptico desde la captura de video}: Este era un de los objetivos principales de solución, marca el punto de partida para el resto de la implementación que se trabajó posteriormente. Se logró desarrollar el \emph{software} necesario para calcular el flujo óptico, teniendo que indagar y comprender el funcionamiento de algoritmos de procesamiento de imágenes, como lo es el método \emph{Lucas-Kanade}. Con esto se logró diseñar una solución con al que podemos decir que este objetivo fue cumplido.\\
+	\item {\bf Implementación de una red neuronal que permita el procesamiento del flujo óptico:} Las investigaciones que se realizaron permitieron encontrar una implementación de una red neuronal que pudo ser adaptada a las necesidades específicas de este trabajo. Apesar de que era un trabajo ya desarrollado de todos modos fue necesario hacer un estudio detallado de cómo fue realizada esta implementación y analizar su funcionamiento. El cumplimiento de este objetivo implica a su vez manipular la información obtenida del flujo óptico, ya que no basta  solo con la obtención de datos si no que es necesaria la adaptación de estos para lograr el trabajo en conjunto con la red neuronal. Permitiendo poder procesar el flujo óptico por medio de una red neuronal.\\
+	\item {\bf Entrenamiento de una red neuronal para que sea capaz de aprender cómo evadir obstáculos:} Si bien se logró llevar a cabo el entrenamiento de una red neuronal mediante datos obtenidos del cálculo de flujo óptico, este entrenamiento no dio los resultados esperados, a pesar de que la cuantificación obtenida cumplia con las metricas definidas para dar este como exitoso. Esto muestra que a pesar de tener buenos resultados estos no siempre son los que se necesitan o son los que permitirán cumplir con los objetivos planteados. Por las pruebas hechas posteriormente se pudo determinar que este objetivo no pudo ser cumplido.\\
+	\item {\bf Implementación de un robot omnidireccional que permite la obtencion de datos para entrenar la red neuronal:} Este objetivo es el que necesito mayor trabajo para ser completado. Abarcaba distintas areas interdecilinarias ya que el diseño tomo solo algunas referencias a elementos ya contruidos y desde estas se realizo el diseño y construccion completa del robot. Fue necesaria la aplicacion de dibersos conocimientos como: modelado 3D, fabricacion de piezar por impresion 3D, electronica de microcontroladores y desarollo de software, entre otros. Logrando así la construccion de una herramienta que además puede ser utilizada en el desarrollo de futuras investigaciones en este o otroas ambitos.\\
+	\item {\bf Realizar pruebas con el robot para evaluar el comportamiento de la red neuronal ante obstáculos:} Este objetivo es el que permite determinar si fue o no posible dar como exitoso el objetivo principal. Además de aglomerar todo el trabajo realizado. Una vez construido el robot y hecho el entrenamiento pertinente a la red neuronal se necesita saber si en conjunto pueden servir de solución al problema planteado, lo que se logra por medio del desarrollo de pruebas y posterior análisis de resultados. Estos dejaron en evidencia una falencia que compromete el cumplimiento del objetivo principal, pero a su vez permitieron dar con un diagnóstico y posibles soluciones para poder llegar a cumplir el objetivo. Si bien el robot cumple con su función de realizar las pruebas necesarias los resultados obtenidos no fueron los esperados. Estos dan a conocer que el entrenamiento realizado no permite la evasión de obstáculos por medio de la conducción autónoma del robot.\\
+\end{itemize}
+
+\section{Trabajo realizado}
+
+Un punto importante fue la motivación que llevó el desarrollo de la solución planteada, la cual fue tomar como referencia elementos que existen en la naturaleza. Partir de esos referentes y usarlos como ejemplo para traspasar esos conceptos por medio de la construcción de un sistema que imite el desempeño de algunas entidades biológicas. El punto central indaga en el funcionamiento de las conexiones que hacen las neuronas para poder procesar informacion, de esto se basa la utilización de redes neuronales para analizar otro elemento que proviene de la naturaleza que es el flujo óptico. Todo esto culmina con la construcción de un robot que no solo pretende tener conducción autónoma, sino que busca ser un reflejo de lo el mundo natural puede hacer.\\
+
+Sin dudas esto lleva a un objetivo ambicioso pero que buscaba abarcar otras áreas que no son cubiertas o por lo menos no en profundidad en la formación profesional. Si bien el desempeño como ingeniero civil en computación cumple un rol fundamental de forma transversal en toda la implementación de este proyecto, también quise añadir otras áreas que estuvieran fuera del ámbito central que se estudia a lo largo de carrera y que son se mi interés, como lo es la computación física. Para mi es muy llamativo el diseño de elementos que puedan interactuar de forma más tangible en nuestro entorno, como lo es la construcción de robot, estos permiten la unión del conocimiento adquiridos de los estudios como los aprendidos de forma autónoma por simple motivación.\\
+
+A medida que se iba avanzando en el cumplimientos de los objetivos, fue posible darse cuenta de las diferencias que existen en la construcción de elementos que son abstractos en comparación con la implementaciones de objetos que tiene que lidiar con el mundo físico. La forma acostumbrada trabajar es tomar un idea, modelar y plasmarla como una pieza de software, sin embargo cuando se parte de la misma base pero esta tiene que ser implementada y construida físicamente, esta no se comporta como uno espera o no puede prever los inconvenientes que pueden surgir. En contraste con el desarrollo de \emph{software} donde se trabaja en un ambiente que es controlado y se conce todas la variables que influyen en su comportamiento. Esto llevó a distintos eventos no anticipados en los que se debió buscar soluciones para poder seguir adelante con el desarrollo, sin embargo situaciones como esas comprometieron el cumplimiento de objetivos planteados.\\
+
+Por último, si bien no se obtuvieron los resultados esperados, de todos modos fue satisfactorio el trabajo realizado, ya que durante este fue necesario conocer sobre nuevas áreas, como por ejemplo los cuadricopteros, a demás de concluir la construcción del robot omnidireccional, el que no solo forma parte de este ámbito en particular, sino que puede ser utilizado como una herramienta para trabajar en proyectos futuros.\\
+
+\section{Trabajo futuro}
+
+Como quedaron elementos pendientes en los objetivos planteados, en primer lugar se debe solucionar los problemas encontrados, para que de esta forma se pueden volver a efectuar las pruebas planteadas y obtener los resultados esperados. Por otro lado debido a los ámbitos especificados falta la construcción de nuevos elementos que permitan en un futuro poder implementar este sistema en vehículos aéreos no tripulados y de esta forma poder dar un solución al problema planteado.\\
+
+Dentro de estos elementos está por ejemplo ampliar las pruebas a condiciones más complejas, como evadir múltiples objetos en más de una dirección y que puedan estar en movimiento, también poder portar el sistema al \emph{hardware} adecuado para que este, por ejemplo, pueda funcionar a bordo de un cuadricoptero y ver cómo se comporta el sistema en una situación real.\\
+
+También sería de interés poder ampliar el sistema para que pueda trabajar no solo con la información proveniente del flujo óptico, si no que poder contar una red neuronal que sea capaz de procesar distintos tipos de información a la vez y de estar forma poder agregar mayor capacidad al sistema planteado.\\
+
+Otra alternativa es expandir el ámbito en el cual se planteó el problema y no solo usar el sistema para mejorar la autonomía de los vehículos aéreos no tripulados, si no que analizar en qué otra áreas podría ser de utilidad, por ejemplo, como asistencia a personas con visión reducida para puedan desplazarse con mayor facilidad.\\
 
 %% ambiente glosario
 \begin{glosario}
@@ -1172,7 +1271,7 @@ En el anexo \ref{appendix:entrenamiento red} se muestran los resultados completo
 
 \end{longtable}
 
-\section{Red.1.B}
+\section{Red.2.A}
 
 \begin{longtable}{ccc} 
 \caption{Datos del entrenamiento realizado a la Red.2.A.}\label{tab:training Red.2.A}\\
@@ -1215,6 +1314,8 @@ En el anexo \ref{appendix:entrenamiento red} se muestran los resultados completo
 	\bottomrule
 
 \end{longtable}
+
+\section{Red.2.B}
 
 \begin{longtable}{ccc} 
 \caption{Datos del entrenamiento realizado a la Red.2.B.}\label{tab:training Red.2.B}\\
@@ -1264,6 +1365,7 @@ En el anexo \ref{appendix:entrenamiento red} se muestran los resultados completo
 Espesificaciones de la placa \emph{Arduino} UNO rev 2.
 
 \begin{table}[H]
+\caption[Especificaciones Arduino UNO.]{Especificaciones Arduino UNO.}
 \centering
     \fontfamily{cmss}\selectfont{
     \begin{tabular}{|c|c|}
@@ -1305,7 +1407,6 @@ Espesificaciones de la placa \emph{Arduino} UNO rev 2.
         \hline
     \end{tabular}
     }
-\caption[Especificaciones Arduino UNO.]{Especificaciones Arduino UNO.}
 \label{tab:arduino uno}
 \end{table}
 
@@ -1449,22 +1550,6 @@ wipe = 0
 xy_size_compensation = 0
 z_offset = 0
 \end{verbatim}
-
-\section{La primera sección del primer anexo}
-Aquí va el texto de la primera sección del primer anexo...
-
-\section{La segunda sección del primer anexo}
-Aquí va el texto de la segunda sección del primer anexo...
-
-\subsection{La primera subsección de la segunda sección del primer anexo}
-
-
-%% contenido del segundo anexo
-\appendix{El segundo Anexo}
-Aquí va el texto del segundo anexo...
-
-\section{La primera sección del segundo anexo}
-Aquí va el texto de la primera sección del segundo anexo...
 
 %% fin
 \end{document}
