@@ -51,6 +51,6 @@
   \begin{picture}(1,0.4486255)%
     \put(0,0){\includegraphics[width=\unitlength]{omni_movement_up_down.pdf}}%
     \put(0.20865514,0.0122401){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Movimiento hacia adelante}}}%
-    \put(0.7946653,0.01076028){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Movimeinto hacia atras}}}%
+    \put(0.7946653,0.01076028){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Movimiento hacia atras}}}%
   \end{picture}%
 \endgroup%

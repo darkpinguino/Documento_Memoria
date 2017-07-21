@@ -49,6 +49,7 @@
 \def\tblcontname{Tabla de Contenidos}
 \def\indfigname{Índice de Figuras}
 \def\indtblname{Índice de Tablas}
+\def\indalgname{Índice de Algoritmos}
 \def\glosname{Glosario}
 \def\appendixpartname{Anexos}
 
@@ -393,6 +394,27 @@ Memoria para optar al título de Ingeniero Civil en Computación\\}%} \\}
   \newpage
   \def\thepage{\csname @arabic\endcsname \c@page}
 }
+
+%%%
+% List of Algorithms
+%%%
+
+\renewcommand\listofalgorithms{
+  \addcontentsline{toc}{chapter}{\indalgname}
+  \onehalfspacing
+  \def\thepage{\csname @roman\endcsname \c@page}
+  \thispagestyle{plain}
+  \centerline{\bf\MakeUppercase{\indalgname}}
+  \begin{flushright} \pagename \end{flushright}
+  \par
+  \let\l@algorithm\l@figure
+  \@starttoc{loa}
+  
+  \newpage
+  \def\thepage{\csname @arabic\endcsname \c@page}
+}
+
+%\def\indalgname{Índice de Algoritmos}
 
 %%%
 % Formato encabezado capítulo
